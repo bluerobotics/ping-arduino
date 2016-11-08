@@ -27,18 +27,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -------------------------------*/
 
-#include <Wire.h>
+#include <SoftwareSerial.h>
 #include "Ping.h"
 
-Ping sonar(&Serial);
+SoftwareSerial pingSerial(10, 11); // RX, TX
+
+Ping sonar(&pingSerial);
 
 void setup() {
-  
   Serial.begin(9600);
+  pingSerial.begin(115200);
   
   Serial.println("Starting");
-  
-  Wire.begin();
 
   sonar.init();
   

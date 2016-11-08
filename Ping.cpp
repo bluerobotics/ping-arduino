@@ -6,7 +6,7 @@ Ping::Ping(Stream *_stream) {
 }
 
 void Ping::init() {
-
+	
 }
 
 void Ping::setSpeedOfSound(float speed) {
