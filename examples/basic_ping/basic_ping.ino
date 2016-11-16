@@ -1,11 +1,11 @@
 /* Blue Robotics Ping Library Example
 -----------------------------------------------------
- 
+
 Title: Blue Robotics Ping Library Example
 Description: This example demonstrates the Ping Library with a connected
 sensor. The example reads the sensor and prints the resulting values
 to the serial terminal.
-The code is designed for the Arduino Uno board and can be compiled and 
+The code is designed for the Arduino Uno board and can be compiled and
 uploaded via the Arduino 1.0+ software.
 -------------------------------
 The MIT License (MIT)
@@ -36,25 +36,15 @@ Ping sonar(&pingSerial);
 
 void setup() {
   Serial.begin(9600);
-  pingSerial.begin(115200);
-  
+  pingSerial.begin(9600);
   Serial.println("Starting");
 
   sonar.init();
-  
   sonar.setSpeedOfSound(1400); // m/s
 }
 
 void loop() {
   sonar.read();
-
-  Serial.print("Altitude: "); 
-  Serial.print(sonar.altitude()); 
-  Serial.print(" meters | ");
-  
-  Serial.print("Confidence: "); 
-  Serial.print(sonar.confidence()); 
-  Serial.println(" %");
-
+  sonar.request();
   delay(500);
 }
