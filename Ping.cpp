@@ -45,7 +45,6 @@ void Ping::read() {
 			// 	Serial.print("|");
 			// }
 			// Serial.print("\n");
-
 		}
 		else
 		{

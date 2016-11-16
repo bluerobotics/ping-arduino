@@ -47,11 +47,12 @@ public:
 	 */
 	void setSpeedOfSound(float speed);
 
-	/** The read from the serial buffer. Reads all messages until there
-	 *  are not enough bytes available to read another.
+	/** The read the next packet in the serial buffer
 	 */
 	void read();
 
+	/**Prompt Ping for another depth reading
+	*/
 	void request();
 
 	/** Altitude above bottom, meters
@@ -65,39 +66,13 @@ public:
 private:
 	float c;
 
+	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
 	char test_2 = 0;
+
+	//Characters to validate start sequences
 	char validation_1 = 68;
 	char validation_2 = 67;
-
-	//Char array for incoming bytes
-	byte input[1024];
-	//Points to where data is being placed
-	int p = 0;
-
-	struct sonar_report {
-		char	s1;												// 's'
-		char	s2;												// 's'
-		uint16_t	fw_version_major;
-		uint16_t	fw_version_minor;
-		int16_t 	num_results;								// SAMPLES_TO_REPORT
-		int32_t	supply_millivolts;
-		int32_t	start_mm;
-		int32_t	length_mm;
-		int32_t	this_ping_depth_mm;
-		int32_t	smoothed_depth_mm;
-		int16_t	smoothed_depth_confidence_percent;	// 1..100
-		int16_t	ping_duration_usec;						// pulse_usec;
-		int16_t	goertzel_N;
-		int16_t	goertzel_m;
-		int32_t	analog_gain;
-		uint32_t	ping_number;
-		uint32_t	timestamp_msec;
-		int16_t	index_of_bottom_result;
-		uint16_t	results[200];			// actually num_results, but hard coded size for now
-		char	e1;												// 'e'
-		char	e2;												// 'e'
-	};
 
 	struct sonar_report_minimal {
 		char    s1; // 'D'
@@ -106,9 +81,7 @@ private:
 		int32_t    smoothed_depth_mm;                        //
 		char    e1; // 'e'
 		char    e2; // 'e'
-	};
-
-	sonar_report_minimal new_sonar_report;
+	} new_sonar_report ;
 
 	Stream *stream;
 
