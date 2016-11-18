@@ -36,19 +36,11 @@ void Ping::read() {
 			Serial.print("Depth: ");
 			Serial.print(new_sonar_report.smoothed_depth_mm);
 			Serial.print("mm");
-
-			//Print out the packets as they come in
-			// Serial.print("\n");
-			// for (int i = 0; i < 10; i++) {
-			// 	Serial.print("|");
-			// 	Serial.print(input_buffer[i]);
-			// 	Serial.print("|");
-			// }
-			// Serial.print("\n");
 		}
 		else
 		{
 			//Invalid start sequence
+			//Move byte to the first index
 			test_1 = test_2;
 		}
 		Serial.write("\n");
