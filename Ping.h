@@ -63,8 +63,28 @@ public:
 	 */
 	uint8_t confidence();
 
+	/**
+	Set configuration options on startup
+	*/
+	void setConfiguration(uint8_t rate, uint16_t c);
+
+	/**
+	Set the range that Ping will scan in
+	*/
+	void setRange(uint8_t auto, uint16_t start, uint16_t range);
+
+	/**
+	Special debug options for testing
+	*/
+	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c)
+
+
+
 private:
 	float c;
+
+	bool validateCRC();
+
 
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
