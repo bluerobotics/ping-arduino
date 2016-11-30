@@ -43,8 +43,7 @@ void setup() {
 }
 
 void loop() {
-  sonar.read();
-  sonar.request();
+  sonar.update();
 
   //Delay for readability in the terminal
   //This number can be any value.

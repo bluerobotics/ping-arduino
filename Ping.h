@@ -43,48 +43,28 @@ public:
 
 	void init();
 
-	/** Set speed of sound based on fluid type.
-	 */
+	//Set speed of sound based on fluid type
 	void setSpeedOfSound(float speed);
 
-	/** The read the next packet in the serial buffer
-	 */
-	void read();
+	//Request a new packet, read it, and save it
+	void update();
 
-	/**Prompt Ping for another depth reading
-	*/
-	void request();
+	//Altitude above bottom, meters
+	float getDepth();
 
-	/** Altitude above bottom, meters
-	 */
-	float altitude();
-
-	/** Confidence of the altitude measurement, 0-100
-	 */
-	uint8_t confidence();
-
-	/**
-	Set configuration options on startup
-	*/
+	//Set initial configuration options
 	void setConfiguration(uint8_t rate, uint16_t c);
 
-	/**
-	Set the range that Ping will scan in
-	*/
+	//Set the range that Ping will scan in
 	void setRange(uint8_t auto, uint16_t start, uint16_t range);
 
-	/**
-	Special debug options for testing
-	*/
+	//Special debug options for testing
 	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c)
-
-
 
 private:
 	float c;
 
 	bool validateCRC();
-
 
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
@@ -105,9 +85,7 @@ private:
 
 	Stream *stream;
 
-	/** Performs calculations to adjust measurement based on speed of
-	  * sound.
-	  */
+	//Performs calculations to adjust measurement based on speed of
 	void calculate();
 };
 
