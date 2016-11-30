@@ -43,7 +43,11 @@ void setup() {
 }
 
 void loop() {
+  //Get a new reading and save it
   sonar.update();
+
+  //Print the latest depth reading
+  Serial.print(sonar.getDepth());
 
   //Delay for readability in the terminal
   //This number can be any value.

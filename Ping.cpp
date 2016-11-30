@@ -8,13 +8,19 @@ Ping::Ping(Stream *_stream) {
 void Ping::init() {
 	//Set quiet mode
 	stream->write("@Q1\n");
+
 	//Wait to be sure that quiet mode is enabled
+	//Not sure if necessary
 	delay(100);
 }
 
 void Ping::update() {
-	stream->write("@D\n");
+	//Request a new reading
+	request();
+	read();
+}
 
+void Ping::read(){
 	while (stream->available() >= 8){
 		test_2 = stream->read();
 
@@ -56,15 +62,21 @@ float Ping::getConfidence(){
 //Control Methods
 /////////////////
 
-
+void setSpeedOfSound(float speed){
+		//TODO implement
+}
 
 //Configuration
 ///////////////1
+
+void Ping::request(){
+	stream->write("@D\n");
+}
 
 void Ping::setSpeedOfSound(float speed) {
 	c = speed;
 }
 
 void Ping::calculate() {
-
+	//TODO implement
 }

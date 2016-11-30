@@ -43,14 +43,32 @@ public:
 
 	void init();
 
-	//Set speed of sound based on fluid type
-	void setSpeedOfSound(float speed);
+	// I/O
+	//////
 
-	//Request a new packet, read it, and save it
+	//Request a new reading from Ping
+	void request();
+
+	//Read in a new packet
+	void read();
+
+	//Request + Read
 	void update();
 
-	//Altitude above bottom, meters
+	//Accessor Methods
+	//////////////////
+
+	//Altitude above bottom, mm
 	float getDepth();
+
+	//Confidence in depth measurement, as a percentage
+	float getConfidence();
+
+	//Control Methods
+	/////////////////
+
+	//Set speed of sound based on fluid type
+	void setSpeedOfSound(float speed);
 
 	//Set initial configuration options
 	void setConfiguration(uint8_t rate, uint16_t c);
