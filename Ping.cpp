@@ -8,14 +8,19 @@ Ping::Ping(Stream *_stream) {
 void Ping::init() {
 	//Set quiet mode
 	stream->write("@Q1\n");
+
+	//Wait to be sure that quiet mode is enabled
+	//Not sure if necessary
 	delay(100);
 }
 
-void Ping::setSpeedOfSound(float speed) {
-	c = speed;
+void Ping::update() {
+	//Request a new reading
+	request();
+	read();
 }
 
-void Ping::read() {
+void Ping::read(){
 	while (stream->available() >= 8){
 		test_2 = stream->read();
 
@@ -31,11 +36,8 @@ void Ping::read() {
 				input_buffer[i] = byte(stream->read());
 			}
 
+			//Take recorded data and save it
 			memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
-
-			Serial.print("Depth: ");
-			Serial.print(new_sonar_report.smoothed_depth_mm);
-			Serial.print("mm");
 		}
 		else
 		{
@@ -43,23 +45,43 @@ void Ping::read() {
 			//Move byte to the first index
 			test_1 = test_2;
 		}
-		Serial.write("\n");
 	}
-
 }
 
-void Ping::request() {
+//Accessor Methods
+/////////////////
+
+float Ping::getDepth(){
+	return (float)(new_sonar_report.smoothed_depth_mm);
+}
+
+float Ping::getConfidence(){
+	return (float)(new_sonar_report.smoothed_depth_confidence_percent);
+}
+
+//Control Methods
+/////////////////
+
+void setSpeedOfSound(float speed){
+		//TODO implement
+		//stream->write();
+}
+
+//Configuration
+///////////////
+
+void Ping::request(){
 	stream->write("@D\n");
 }
 
+void Ping::setSpeedOfSound(float speed) {
+	c = speed;
+}
+
 void Ping::calculate() {
-
+	//TODO implement
 }
 
-float Ping::altitude() {
-	return 0.0f;
-}
-
-uint8_t Ping::confidence() {
-	return 0x00;
+bool validateCRC(){
+	//TODO Copy paste crc implementation here
 }

@@ -33,58 +33,58 @@ THE SOFTWARE.
 #include "Arduino.h"
 #include <Stream.h>
 
+//TODO update this for new protocol
 #define MIN_PACKET_LENGTH 16
 
 class Ping {
 public:
 	static const float Pa = 100.0f;
-
 	Ping(Stream *stream);
-
 	void init();
 
-	/** Set speed of sound based on fluid type.
-	 */
-	void setSpeedOfSound(float speed);
 
-	/** The read the next packet in the serial buffer
-	 */
-	void read();
+	// I/O
+	//////
 
-	/**Prompt Ping for another depth reading
-	*/
+	//Request a new reading from Ping
 	void request();
 
-	/** Altitude above bottom, meters
-	 */
-	float altitude();
+	//Read in a new packet
+	void read();
 
-	/** Confidence of the altitude measurement, 0-100
-	 */
-	uint8_t confidence();
+	//Request + Read
+	void update();
 
-	/**
-	Set configuration options on startup
-	*/
+
+	//Accessor Methods
+	//////////////////
+
+	//Altitude above bottom, mm
+	float getDepth();
+
+	//Confidence in depth measurement, as a percentage
+	float getConfidence();
+
+
+	//Control Methods
+	/////////////////
+
+	//Set speed of sound based on fluid type
+	void setSpeedOfSound(float speed);
+
+	//Set initial configuration options
 	void setConfiguration(uint8_t rate, uint16_t c);
 
-	/**
-	Set the range that Ping will scan in
-	*/
+	//Set the range that Ping will scan in
 	void setRange(uint8_t auto, uint16_t start, uint16_t range);
 
-	/**
-	Special debug options for testing
-	*/
+	//Special debug options for testing
 	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c)
-
-
 
 private:
 	float c;
 
 	bool validateCRC();
-
 
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
@@ -94,6 +94,7 @@ private:
 	char validation_1 = 68;
 	char validation_2 = 67;
 
+	//V1 Sonar Struct
 	struct sonar_report_minimal {
 		char    s1; // 'D'
 		char    s2; // 'C'
@@ -103,11 +104,11 @@ private:
 		char    e2; // 'e'
 	} new_sonar_report ;
 
+
+
 	Stream *stream;
 
-	/** Performs calculations to adjust measurement based on speed of
-	  * sound.
-	  */
+	//Performs calculations to adjust measurement based on speed of
 	void calculate();
 };
 
