@@ -64,10 +64,11 @@ float Ping::getConfidence(){
 
 void setSpeedOfSound(float speed){
 		//TODO implement
+		//stream->write();
 }
 
 //Configuration
-///////////////1
+///////////////
 
 void Ping::request(){
 	stream->write("@D\n");
@@ -79,4 +80,8 @@ void Ping::setSpeedOfSound(float speed) {
 
 void Ping::calculate() {
 	//TODO implement
+}
+
+bool validateCRC(){
+	//TODO Copy paste crc implementation here
 }

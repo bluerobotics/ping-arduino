@@ -33,15 +33,15 @@ THE SOFTWARE.
 #include "Arduino.h"
 #include <Stream.h>
 
+//TODO update this for new protocol
 #define MIN_PACKET_LENGTH 16
 
 class Ping {
 public:
 	static const float Pa = 100.0f;
-
 	Ping(Stream *stream);
-
 	void init();
+
 
 	// I/O
 	//////
@@ -55,6 +55,7 @@ public:
 	//Request + Read
 	void update();
 
+
 	//Accessor Methods
 	//////////////////
 
@@ -63,6 +64,7 @@ public:
 
 	//Confidence in depth measurement, as a percentage
 	float getConfidence();
+
 
 	//Control Methods
 	/////////////////
@@ -92,6 +94,7 @@ private:
 	char validation_1 = 68;
 	char validation_2 = 67;
 
+	//V1 Sonar Struct
 	struct sonar_report_minimal {
 		char    s1; // 'D'
 		char    s2; // 'C'
@@ -100,6 +103,8 @@ private:
 		char    e1; // 'e'
 		char    e2; // 'e'
 	} new_sonar_report ;
+
+
 
 	Stream *stream;
 
