@@ -67,6 +67,16 @@ void setSpeedOfSound(float speed){
 		//stream->write();
 }
 
+void setRange(uint8_t auto, uint16_t start, uint16_t range){
+	if (auto == 0){
+		//Set Manual mode
+		//Set depth range
+	}
+	else {
+		//Set Auto mode
+	}
+}
+
 //Configuration
 ///////////////
 
@@ -83,5 +93,5 @@ void Ping::calculate() {
 }
 
 bool validateCRC(){
-	//TODO Copy paste crc implementation here
+	//TODO implement CRC Here
 }

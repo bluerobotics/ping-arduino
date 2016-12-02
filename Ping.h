@@ -27,10 +27,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -------------------------------*/
 
+
 #ifndef PING_H_BLUEROBOTICS
 #define PING_H_BLUEROBOTICS
 
 #include "Arduino.h"
+#include "crc.h"
 #include <Stream.h>
 
 //TODO update this for new protocol
@@ -79,7 +81,7 @@ public:
 	void setRange(uint8_t auto, uint16_t start, uint16_t range);
 
 	//Special debug options for testing
-	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c)
+	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c);
 
 private:
 	float c;
