@@ -38,6 +38,14 @@ THE SOFTWARE.
 //TODO update this for new protocol
 #define MIN_PACKET_LENGTH 16
 
+
+//Messages
+//////////
+#define AUTO_ENABLE
+#define AUTO_DISABLE
+
+
+
 class Ping {
 public:
 	static const float Pa = 100.0f;

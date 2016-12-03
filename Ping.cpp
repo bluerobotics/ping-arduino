@@ -69,13 +69,16 @@ void setSpeedOfSound(float speed){
 
 void setRange(uint8_t auto, uint16_t start, uint16_t range){
 	//TODO implement
-	// if (auto == 0){
-	// 	//Set Manual mode
-	// 	//Set depth range
-	// }
-	// else {
-	// 	//Set Auto mode
-	// }
+	if (auto == 0){
+		//Set Manual mode
+		stream->write(AUTO_DISABLE);
+
+		//Set depth range
+	}
+	else {
+		//Set Auto Mode
+		stream->write(AUTO_ENABLE);
+	}
 }
 
 //Configuration
@@ -94,13 +97,18 @@ void Ping::calculate() {
 }
 
 bool validateCRC(){
-	// uint16_t crc = 0xFFFF;
-	//
-  // for ( unsigned int i = 0 ; i < length ; i++ ) {
-  //   msgBuffer[i] = Serial->read();
-  //   crc = _crc_ccitt_update(crc,msgBuffer[i]);
-  // }
-  // crc = ~crc;
-	//
-  // Serial.print("CRC: ");Serial.println(crc);
+	//Initialize
+	uint16_t crc = 0xFFFF;
+
+	//Fake message
+	byte message[] = "0123456789"
+
+  for ( unsigned int i = 0 ; i < strlen(message) ; i++ ) {
+		//Get next byte of message
+		//msgBuffer[i] = Serial->read();
+
+		//Adjust CRC based on that byte
+    crc = _crc_ccitt_update(crc,msgBuffer[i]);
+  }
+  crc = ~crc;
 }
