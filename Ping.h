@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define PING_H_BLUEROBOTICS
 
 #include "Arduino.h"
-#include "crc.h"
+#include <util/crc16.h>
 #include <Stream.h>
 
 //TODO update this for new protocol
