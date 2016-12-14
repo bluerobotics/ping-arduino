@@ -29,12 +29,14 @@ Configures Ping in quiet mode, which is best for using on Arduino. Quiet mode ru
 <br/>
 
 * `setSpeedOfSound(float speed)`
+
 Sets the speed of sound in water. This is necessary to get an accurate depth reading. 
 <br/>
 <br/>
 
 
 * `setRange(uint8_8 auto, uint16_t start, uint16_t range)`
+
 Set the range that Ping will scan for the bottom. Set `auto` to 1 for auto mode, 0 for manual. If manual mode is set, you may specify the start depth and range that Ping will scan, or set 0 to leave that value unchanged.
 <br/>
 <br/>
