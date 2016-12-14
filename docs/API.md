@@ -1,85 +1,40 @@
 #Ping API Reference
 
-##Methods
+##Accessor Methods
 
-* `getResults()`
-
-Returns list of all results from last ping. Each point is on a scale of 0 to 255
-<br/>
-<br/>
-
-* `getDepth()`
+* `float getDepth()`
 
 Returns the most recent smoothed depth reading in mm
 <br/>
 <br/>
 
-* `getConfidence()`
+* `float getConfidence()`
 
 Returns the confidence in the depth measurement, as a percentage
 <br/>
 <br/>
 
-* `getInstantDepth()`
+* `float getInstantDepth()`
 
 Returns the best guess for this individual ping in mm. It is recommended to use getDepth() instead
 <br/>
 <br/>
 
-* `getStartDepth()`
+##Control Methods
 
-Returns the shallowest depth that Ping will look at, in mm
+* `setQuiet()`
+
+Configures Ping in quiet mode, which is best for using on Arduino. Quiet mode runs at the highest possible ping rate, but only returns a depth measurement when prompted to do so with `update()` . 
 <br/>
 <br/>
 
-* `getDepthRange()`
-
-Returns the range of depth that is being scanned in mm. Beginning at the start depth
+* `setSpeedOfSound(float speed)`
+Sets the speed of sound in water. This is necessary to get an accurate depth reading. 
 <br/>
 <br/>
 
-* `getVersion()`
 
-Returns a string of Ping's firmware version number
+* `setRange(uint8_8 auto, uint16_t start, uint16_t range)`
+Set the range that Ping will scan for the bottom. Set `auto` to 1 for auto mode, 0 for manual. If manual mode is set, you may specify the start depth and range that Ping will scan, or set 0 to leave that value unchanged.
 <br/>
 <br/>
-
-* `getNumResults()`
-
-Returns the number of data points in the last ping
-<br/>
-<br/>
-
-* `getVoltage()`
-
-Returns the operating voltage in mV. Expected to be around 5000mV
-<br/>
-<br/>
-
-* `getPingDuration()`
-
-Returns the duration of the sent ping, in microseconds
-<br/>
-<br/>
-
-* `getGain()`
-
-Retuns the index of the analog gain
-<br/>
-<br/>
-
-* `getPingNumber()`
-
-Returns the number of pings that Ping has sent
-<br/>
-<br/>
-
-* `getTimestamp()`
-
-Returns the uptime, in milliseconds
-<br/>
-<br/>
-
-* `getBottomIndex()`
-
-Returns the index of the depth reading that was chosen as the bottom
