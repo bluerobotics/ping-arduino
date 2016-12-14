@@ -44,8 +44,6 @@ THE SOFTWARE.
 #define AUTO_ENABLE
 #define AUTO_DISABLE
 
-
-
 class Ping {
 public:
 	static const float Pa = 100.0f;
@@ -113,8 +111,6 @@ private:
 		char    e1; // 'e'
 		char    e2; // 'e'
 	} new_sonar_report ;
-
-
 
 	Stream *stream;
 

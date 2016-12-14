@@ -14,6 +14,13 @@ void Ping::init() {
 	delay(100);
 }
 
+// I/O
+//////
+
+void Ping::request(){
+	stream->write("@D\n");
+}
+
 void Ping::update() {
 	//Request a new reading
 	request();
@@ -81,16 +88,11 @@ void setRange(uint8_t auto, uint16_t start, uint16_t range){
 	}
 }
 
-//Configuration
-///////////////
-
-void Ping::request(){
-	stream->write("@D\n");
-}
-
 void Ping::setSpeedOfSound(float speed) {
 	c = speed;
 }
+
+/////////////////
 
 void Ping::calculate() {
 	//TODO implement

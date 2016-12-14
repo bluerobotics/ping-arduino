@@ -1,56 +1,33 @@
-# ping-arduino
-Arduino library to read the Ping sonar.
+#ping-arduino
 
-[Serial Protocol](https://docs.google.com/spreadsheets/d/1GEdD_m40-l4DRaxBIQBRx3V6PIbvXZjdtkLDASdfLvo/edit?usp=sharing)
-
-
-##Data Format
-
-|    Byte     |   Type   |    Name    |                      Value                      |
-|-------------|----------|------------|-------------------------------------------------|
-| 0           | uint8_t  | startByte1 | "B"                                             |
-| 1           | uint8_t  | startByte2 | "R"                                             |
-| 2-3         | uint16_t | length     | Length of message body (not including checksum) |
-| 4-5         | uint16_t | messageID  | Message identifier                              |
-| 6-n         |          | data       | data packet                                     |
-| (n+1)-(n+2) | uint16_t | checksum   | CRC16                                           |
+<a href="https://bluerobotics.com">
+<img src="https://avatars2.githubusercontent.com/u/7120633?v=3&s=200" align="left" hspace="10" vspace="6">
+</a>
 
 
-##Message Definitions
+Arduino library for the Ping sonar. Ping is the simple, affordable, and compact ultrasonic depthfinder for any aquatic project.
 
-###Altitude
+This library exposes simple functionality for the device. Such as switching modes, and reading the current depth measurement.
 
-Message ID: 0x01
+[Available here](http://www.bluerobotics.com/)
 
-| Byte |   Type   |    Name    |           Value           |
-|------|----------|------------|---------------------------|
-| 5    | uint8_t  | confidence | Percent confidence, 0-100 |
-| 6-9  | uint32_t | altitude   | Measured altitude, in mm  |
+<br/>
+<br/>
 
+## Resources
 
-###Profile
+* [API Reference](http://github.com/bluerobotics/ping_arduino/blob/master/docs/API.md)
+* [Device Specifications](http://www.bluerobotics.com/)
+* [Packet Format](http://github.com/bluerobotics/ping-python/blob/master/docs/Format.md)
+* [Support](http://docs.bluerobotics.com)
+* [License](http://github.com/bluerobotics/ping_arduino/blob/master/LICENSE)
 
-Message ID: 0x02
+##Installing
+* `mkdir -p ~/sketchbook/libraries/`
+* `cd ~/sketchbook/libraries/`
+* `git clone --recursive http://github.com/bluerobotics/ping_arduino.git`
+* `cd ping_arduino`
 
-|        Byte         |   Type   |    Name    |                  Value                   |
-|---------------------|----------|------------|------------------------------------------|
-| 5                   | uint8_t  | confidence | Percent confidence, 0-100                |
-| 6-9                 | uint32_t | altitude   | Measured altitude, in mm                 |
-| 10-13               | uint32_t | startAlt   | Upper altitude range of returned profile |
-| 14-17               | uint32_t | endAlt     | Low altitude range of returned profile   |
-| 18-19               | uint16_t | gain       | Analog gain value                        |
-| 20                  | uint8_t  | pulse      | Pulse length in µs from 0-255            |
-| 21-22               | uint16_t | numPoints  | Number of data points returned           |
-| 23-(23+numPoints-1) | uint8_t  | data       | Echo data array                          |
+##Quick Start
 
-
-###Status
-
-Message ID: 0x03
-
-| Byte |   Type   |      Name      |             Value             |
-|------|----------|----------------|-------------------------------|
-| 5-6  | uint16_t | fwVersionMajor | Major firmware version number |
-| 7-8  | uint16_t | fwVersionMinor | Minor firmware version number |
-| 9-10 | uint16_t | voltage        | Supply voltage in millivolts  |
-| 11   | uint8_t  | error          | Error code bitmask            |
+You can run a simple example that prints the depth reading repeatedly by flashing the basic_ping sketch.
