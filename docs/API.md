@@ -2,7 +2,17 @@
 
 ##Accessor Methods
 
-* `uint32_t  getDepth()`
+These methods are used to acquire data from the device
+
+-----
+
+* `void update()`
+
+Request and read in new data from Ping. You can then access this data with the methods below. 
+<br/>
+<br/>
+
+* `uint32_t getDepth()`
 
 Returns the most recent smoothed depth reading in mm
 <br/>
@@ -23,6 +33,8 @@ Returns the best guess for this individual ping in mm. It is recommended to use 
 ##Control Methods
 
 These methods are to control the device. Leave any argument as 0 to ignore, or leave as the default. 
+
+-----
 
 * `sendConfig(uint8_t rate, uint16_t cWater)`
 
