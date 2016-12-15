@@ -12,21 +12,21 @@ Request and read in new data from Ping. You can then access this data with the m
 <br/>
 <br/>
 
-* `uint32_t getDepth()`
+* `uint32_t getAltitude()`
 
-Returns the most recent smoothed depth reading in mm
+Returns the most recent smoothed altitude reading in mm
 <br/>
 <br/>
 
 * `uint8_t getConfidence()`
 
-Returns the confidence in the depth measurement, as a percentage
+Returns the confidence in the altitude measurement, as a percentage
 <br/>
 <br/>
 
-* `uint32_t getInstantDepth()`
+* `uint32_t getInstantAltitude()`
 
-Returns the best guess for this individual ping in mm. It is recommended to use getDepth() instead
+Returns the best guess for this individual ping in mm. It is recommended to use getAltitude() instead
 <br/>
 <br/>
 
