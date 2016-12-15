@@ -1,13 +1,13 @@
-#ping-arduino
+#ping_arduino
 
 <a href="https://bluerobotics.com">
 <img src="https://avatars2.githubusercontent.com/u/7120633?v=3&s=200" align="left" hspace="10" vspace="6">
 </a>
 
 
-Arduino library for the Ping sonar. Ping is the simple, affordable, and compact ultrasonic depthfinder for any aquatic project.
+Arduino library for the Ping sonar. Ping is the simple, affordable, and compact ultrasonic altimeter for any aquatic project.
 
-This library exposes simple functionality for the device. Such as switching modes, and reading the current depth measurement.
+This library exposes simple functionality for the device. Such as switching modes, and reading the current altitude measurement.
 
 [Available here](http://www.bluerobotics.com/)
 
@@ -30,4 +30,4 @@ This library exposes simple functionality for the device. Such as switching mode
 
 ##Quick Start
 
-You can run a simple example that prints the depth reading repeatedly by flashing the basic_ping sketch.
+You can run a simple example that prints the altitude reading repeatedly by flashing the basic_ping sketch.

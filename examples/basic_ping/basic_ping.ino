@@ -46,8 +46,8 @@ void loop() {
   //Get a new reading and save it
   sonar.update();
 
-  //Print the latest depth reading
-  Serial.print(sonar.getDepth());
+  //Print the latest altitude reading
+  Serial.print(sonar.getAltitude());
 
   //Delay for readability in the terminal
   //This number can be any value.

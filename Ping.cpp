@@ -74,7 +74,7 @@ void setSpeedOfSound(float speed){
 		//stream->write();
 }
 
-void setRange(uint8_t auto, uint16_t start, uint16_t range){
+void setRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 	//TODO implement
 	if (auto == 0){
 		//Set Manual mode

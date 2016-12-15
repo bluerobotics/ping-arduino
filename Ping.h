@@ -68,9 +68,9 @@ public:
 	//////////////////
 
 	//Altitude above bottom, mm
-	float getDepth();
+	float getAltitude();
 
-	//Confidence in depth measurement, as a percentage
+	//Confidence in altitude measurement, as a percentage
 	float getConfidence();
 
 
@@ -84,7 +84,7 @@ public:
 	void setConfiguration(uint8_t rate, uint16_t c);
 
 	//Set the range that Ping will scan in
-	void setRange(uint8_t auto, uint16_t start, uint16_t range);
+	void setRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm);
 
 	//Special debug options for testing
 	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c);
@@ -106,8 +106,8 @@ private:
 	struct sonar_report_minimal {
 		char    s1; // 'D'
 		char    s2; // 'C'
-		int16_t    smoothed_depth_confidence_percent;    // 1..100
-		int32_t    smoothed_depth_mm;                        //
+		int16_t    smoothed_altitude_confidence_percent;    // 1..100
+		int32_t    smoothed_altitude_mm;                        //
 		char    e1; // 'e'
 		char    e2; // 'e'
 	} new_sonar_report ;
