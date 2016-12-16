@@ -58,12 +58,12 @@ void Ping::read(){
 //Accessor Methods
 /////////////////
 
-float Ping::getDepth(){
-	return (float)(new_sonar_report.smoothed_depth_mm);
+float Ping::getAltitude(){
+	return (float)(new_sonar_report.smoothed_altitude_mm);
 }
 
 float Ping::getConfidence(){
-	return (float)(new_sonar_report.smoothed_depth_confidence_percent);
+	return (float)(new_sonar_report.smoothed_altitude_confidence_percent);
 }
 
 //Control Methods

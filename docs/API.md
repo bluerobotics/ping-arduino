@@ -8,7 +8,7 @@ These methods are used to acquire data from the device
 
 * `void update()`
 
-Request and read in new data from Ping. You can then access this data with the methods below. 
+Request and read in new data from Ping. You can then access this data with the methods below.
 <br/>
 <br/>
 
@@ -32,7 +32,7 @@ Returns the best guess for this individual ping in mm. It is recommended to use 
 
 ##Control Methods
 
-These methods are to control the device. Leave any argument as 0 to ignore, or leave as the default. 
+These methods are to control the device. Leave any argument as 0 to ignore, or leave as the default.
 
 -----
 
@@ -53,7 +53,7 @@ Sends configuration options to Ping. See [here](http://keisan.casio.com/exec/sys
 
 * `sendRequest(uint16_t messageID)`
 
-Requests a message from Ping. See the [Serial Protocol](http://github.com/bluerobotics/ping-python/blob/master/docs/Format.md) for message formats. 
+Requests a message from Ping. See the [Serial Protocol](http://github.com/bluerobotics/ping-python/blob/master/docs/Format.md) for message formats.
 
 |      Argument      | Value |  Result  |
 |--------------------|-------|----------|
@@ -68,7 +68,7 @@ Requests a message from Ping. See the [Serial Protocol](http://github.com/bluero
 
 * `sendRange(uint8_8 auto, uint16_t start, uint16_t range)`
 
-Set the range that Ping will scan for the bottom. If manual mode is set, you may specify the start depth and range that Ping will scan, or set 0 to leave those values unchanged.
+Set the range that Ping will scan for the bottom. If manual mode is set, you may specify the start distance and range that Ping will scan, or set 0 to leave those values unchanged.
 
 |    Argument    |   Value     |               Result               |
 |----------------|-------------|------------------------------------|
