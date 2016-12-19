@@ -67,10 +67,10 @@ public:
 	//Accessor Methods
 	//////////////////
 
-	//Altitude above bottom, mm
-	float getAltitude();
+	//Distance, mm
+	float getDistance();
 
-	//Confidence in altitude measurement, as a percentage
+	//Confidence in distance measurement, as a percentage
 	float getConfidence();
 
 
@@ -106,8 +106,8 @@ private:
 	struct sonar_report_minimal {
 		char    s1; // 'D'
 		char    s2; // 'C'
-		int16_t    smoothed_altitude_confidence_percent;    // 1..100
-		int32_t    smoothed_altitude_mm;                        //
+		int16_t    smoothed_distance_confidence_percent;    // 1..100
+		int32_t    smoothed_distance_mm;                        //
 		char    e1; // 'e'
 		char    e2; // 'e'
 	} new_sonar_report ;

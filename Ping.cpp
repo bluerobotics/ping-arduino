@@ -58,12 +58,12 @@ void Ping::read(){
 //Accessor Methods
 /////////////////
 
-float Ping::getAltitude(){
-	return (float)(new_sonar_report.smoothed_altitude_mm);
+float Ping::getDistance(){
+	return (float)(new_sonar_report.smoothed_distance_mm);
 }
 
 float Ping::getConfidence(){
-	return (float)(new_sonar_report.smoothed_altitude_confidence_percent);
+	return (float)(new_sonar_report.smoothed_distance_confidence_percent);
 }
 
 //Control Methods
@@ -80,7 +80,7 @@ void setRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 		//Set Manual mode
 		stream->write(AUTO_DISABLE);
 
-		//Set depth range
+		//Set distance range
 	}
 	else {
 		//Set Auto Mode

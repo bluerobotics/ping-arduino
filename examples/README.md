@@ -1,3 +1,3 @@
 #Examples
 --------
-* basic_ping: Simply loops and prints out altitude measurements to the console
+* basic_ping: Simply loops and prints out distance measurements to the console

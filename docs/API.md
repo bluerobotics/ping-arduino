@@ -12,27 +12,27 @@ Request and read in new data from Ping. You can then access this data with the m
 <br/>
 <br/>
 
-* `uint32_t getAltitude()`
+* `uint32_t getDistance()`
 
-Returns the most recent smoothed altitude reading in mm
+Returns the most recent smoothed distance reading in mm
 <br/>
 <br/>
 
 * `uint8_t getConfidence()`
 
-Returns the confidence in the altitude measurement, as a percentage
+Returns the confidence in the distance measurement, as a percentage
 <br/>
 <br/>
 
-* `uint32_t getInstantAltitude()`
+* `uint32_t getInstantDistance()`
 
-Returns the best guess for this individual ping in mm. It is recommended to use getAltitude() instead
+Returns the best guess for this individual ping in mm. It is recommended to use getDistance() instead
 <br/>
 <br/>
 
 ##Control Methods
 
-These methods are to control the device. Leave any argument as 0 to ignore, or leave as the default.
+These methods are to control the device. Leave any argument as 0 to ignore.
 
 -----
 
@@ -42,10 +42,10 @@ Sends configuration options to Ping. See [here](http://keisan.casio.com/exec/sys
 
 |    Argument     |    Value    |             Result             |
 |-----------------|-------------|--------------------------------|
-| uint8_t rate    | 0           | Default / unchanged            |
+| uint8_t rate    | 0           | Ignore                         |
 |                 | 1           | Single                         |
 |                 | 2           | Continuous with Automatic rate |
-| uint16_t cWater | 0           | Default / unchanged            |
+| uint16_t cWater | 0           | Ignore                         |
 |                 | 1000 - 2000 | Sets the speed of sound in m/s |
 
 <br/>
@@ -57,7 +57,7 @@ Requests a message from Ping. See the [Serial Protocol](http://github.com/bluero
 
 |      Argument      | Value |  Result  |
 |--------------------|-------|----------|
-| uint16_t messageID | 0x01  | altitude |
+| uint16_t messageID | 0x01  | distance |
 |                    | 0x02  | profile  |
 |                    | 0x03  | status   |
 
@@ -74,9 +74,9 @@ Set the range that Ping will scan for the bottom. If manual mode is set, you may
 |----------------|-------------|------------------------------------|
 | uint8_t auto   | 0           | Automatic scanning range           |
 |                | 1           | Manual scanning range              |
-| uint16_t start | 0           | Default / unchanged                |
-|                | 1 - 60000   | Set start depth in mm              |
-| uint16_t range | 0           | Default / unchanged                |
+| uint16_t start | 0           | Ignore                             |
+|                | 1 - 60000   | Set start distance in mm           |
+| uint16_t range | 0           | Ignore                             |
 |                | 500 - 60000 | Set length of scanning range in mm |
 
 <br/>

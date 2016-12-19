@@ -7,7 +7,7 @@
 
 Arduino library for the Ping sonar. Ping is the simple, affordable, and compact ultrasonic altimeter for any aquatic project.
 
-This library exposes simple functionality for the device. Such as switching modes, and reading the current altitude measurement.
+This library exposes simple functionality for the device. Such as switching modes, and reading the current distance measurement.
 
 [Available here](http://www.bluerobotics.com/)
 
@@ -30,4 +30,4 @@ This library exposes simple functionality for the device. Such as switching mode
 
 ##Quick Start
 
-You can run a simple example that prints the altitude reading repeatedly by flashing the basic_ping sketch.
+You can run a simple example that prints the distance reading repeatedly by flashing the basic_ping sketch.
