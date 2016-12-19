@@ -72,7 +72,7 @@ Set the range that Ping will scan for the bottom. If manual mode is set, you may
 
 |    Argument    |   Value     |               Result               |
 |----------------|-------------|------------------------------------|
-| uint98_8 auto  | 0           | Automatic scanning range           |
+| uint8_t auto   | 0           | Automatic scanning range           |
 |                | 1           | Manual scanning range              |
 | uint16_t start | 0           | Default / unchanged                |
 |                | 1 - 60000   | Set start depth in mm              |
