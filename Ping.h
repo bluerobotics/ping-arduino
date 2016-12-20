@@ -38,9 +38,9 @@ THE SOFTWARE.
 //TODO update this for new protocol
 #define MIN_PACKET_LENGTH 16
 
-
 //Messages
 //////////
+#define REQUEST_MINIMAL "@D\n"
 #define AUTO_ENABLE
 #define AUTO_DISABLE
 
@@ -49,7 +49,6 @@ public:
 	static const float Pa = 100.0f;
 	Ping(Stream *stream);
 	void init();
-
 
 	// I/O
 	//////
@@ -60,39 +59,34 @@ public:
 	//Read in a new packet
 	void read();
 
-	//Request + Read
-	void update();
-
-
 	//Accessor Methods
 	//////////////////
 
+	//Request + Read
+	void update();
+
 	//Distance, mm
-	float getDistance();
+	uint32_t getDistance();
 
 	//Confidence in distance measurement, as a percentage
-	float getConfidence();
-
+	uint32_t getConfidence();
 
 	//Control Methods
 	/////////////////
 
 	//Set speed of sound based on fluid type
-	void setSpeedOfSound(float speed);
+	void sendConfig(uint8_t rate, uint16_t cWater);
 
 	//Set initial configuration options
-	void setConfiguration(uint8_t rate, uint16_t c);
+	void sendRequest(uint16_t messageID);
 
 	//Set the range that Ping will scan in
-	void setRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm);
-
-	//Special debug options for testing
-	void setDebugOptions(uint8_t raw, uint8_t auto, uint16_t gain, uint16_t c);
+	void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm);
 
 private:
 	float c;
 
-	bool validateCRC();
+	bool validateChecksum();
 
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
@@ -104,18 +98,15 @@ private:
 
 	//V1 Sonar Struct
 	struct sonar_report_minimal {
-		char    s1; // 'D'
-		char    s2; // 'C'
+		char    s1;                                         // 'D'
+		char    s2;                                         // 'C'
 		int16_t    smoothed_distance_confidence_percent;    // 1..100
-		int32_t    smoothed_distance_mm;                        //
-		char    e1; // 'e'
-		char    e2; // 'e'
+		int32_t    smoothed_distance_mm;                    //
+		char    e1;                                         // 'e'
+		char    e2;                                         // 'e'
 	} new_sonar_report ;
 
 	Stream *stream;
-
-	//Performs calculations to adjust measurement based on speed of
-	void calculate();
 };
 
 #endif

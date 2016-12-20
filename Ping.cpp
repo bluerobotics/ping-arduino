@@ -18,13 +18,7 @@ void Ping::init() {
 //////
 
 void Ping::request(){
-	stream->write("@D\n");
-}
-
-void Ping::update() {
-	//Request a new reading
-	request();
-	read();
+	this->sendRequest(0x01)
 }
 
 void Ping::read(){
@@ -58,59 +52,51 @@ void Ping::read(){
 //Accessor Methods
 /////////////////
 
-float Ping::getDistance(){
-	return (float)(new_sonar_report.smoothed_distance_mm);
+void Ping::update() {
+	//Request a new reading
+	request();
+	read();
 }
 
-float Ping::getConfidence(){
-	return (float)(new_sonar_report.smoothed_distance_confidence_percent);
+uint32_t Ping::getDistance(){
+	return (uint32_t)(new_sonar_report.smoothed_distance_mm);
+}
+
+uint8_t Ping::getConfidence(){
+	return (uint8_t)(new_sonar_report.smoothed_distance_confidence_percent);
 }
 
 //Control Methods
 /////////////////
 
-void setSpeedOfSound(float speed){
-		//TODO implement
-		//stream->write();
+void sendConfig(uint8_t rate, uint16_t cWater){
+	//TODO implement
 }
 
-void setRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
+void sendRequest(uint16_t messageID){
+	//TODO implement
+}
+
+void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 	//TODO implement
 	if (auto == 0){
-		//Set Manual mode
-		stream->write(AUTO_DISABLE);
-
+		//Set Auto mode
+		stream->write(AUTO_ENABLE);
 		//Set distance range
 	}
 	else {
-		//Set Auto Mode
-		stream->write(AUTO_ENABLE);
+		//Set Manual Mode
+		stream->write(AUTO_DISABLE);
 	}
 }
 
-void Ping::setSpeedOfSound(float speed) {
-	c = speed;
-}
-
+//Internal
 /////////////////
 
-void Ping::calculate() {
-	//TODO implement
+void sendMessage(){
+
 }
 
-bool validateCRC(){
-	//Initialize
-	uint16_t crc = 0xFFFF;
-
-	//Fake message
-	byte message[] = "0123456789"
-
-  for ( unsigned int i = 0 ; i < strlen(message) ; i++ ) {
-		//Get next byte of message
-		//msgBuffer[i] = Serial->read();
-
-		//Adjust CRC based on that byte
-    crc = _crc_ccitt_update(crc,msgBuffer[i]);
-  }
-  crc = ~crc;
+bool validateChecksum(){
+	//TODO implement
 }

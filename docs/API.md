@@ -24,12 +24,6 @@ Returns the confidence in the distance measurement, as a percentage
 <br/>
 <br/>
 
-* `uint32_t getInstantDistance()`
-
-Returns the best guess for this individual ping in mm. It is recommended to use getDistance() instead
-<br/>
-<br/>
-
 ##Control Methods
 
 These methods are to control the device. Leave any argument as 0 to ignore.
