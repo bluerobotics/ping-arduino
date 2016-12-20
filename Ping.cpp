@@ -7,7 +7,9 @@ Ping::Ping(Stream *_stream) {
 
 void Ping::init() {
 	//Set quiet mode
-	stream->write("@Q1\n");
+	// stream->write("@Q1\n");
+	//Enter request mode
+	this->sendConfig(1,0)
 
 	//Wait to be sure that quiet mode is enabled
 	//Not sure if necessary
@@ -15,7 +17,7 @@ void Ping::init() {
 }
 
 // I/O
-//////
+
 
 void Ping::request(){
 	this->sendRequest(0x01)
@@ -49,7 +51,7 @@ void Ping::read(){
 	}
 }
 
-void sendMessage(){
+void sendCommand(uint8_t commandID, String messageBody){
 	//TODO implement
 }
 
@@ -80,6 +82,7 @@ void sendConfig(uint8_t rate, uint16_t cWater){
 
 void sendRequest(uint16_t messageID){
 	//TODO implement
+	sendMessage(0xC1, messageString);
 }
 
 void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){

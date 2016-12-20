@@ -59,6 +59,8 @@ public:
 	//Read in a new packet
 	void read();
 
+	void sendCommand(uint8_t commandID, String messageBody);
+
 	//Accessor Methods
 	//////////////////
 
@@ -96,7 +98,17 @@ private:
 	char validation_1 = 66;
 	char validation_2 = 82;
 
-	//V1 Sonar Struct
+	// //V1 Sonar Struct
+	// struct sonar_report_minimal {
+	// 	char    s1;                                         // 'D'
+	// 	char    s2;                                         // 'C'
+	// 	int16_t    smoothed_distance_confidence_percent;    // 1..100
+	// 	int32_t    smoothed_distance_mm;                    //
+	// 	char    e1;                                         // 'e'
+	// 	char    e2;                                         // 'e'
+	// } new_sonar_report ;
+
+	//V2 Sonar Struct
 	struct sonar_report_minimal {
 		char    s1;                                         // 'D'
 		char    s2;                                         // 'C'
