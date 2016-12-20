@@ -93,8 +93,8 @@ private:
 	char test_2 = 0;
 
 	//Characters to validate start sequences
-	char validation_1 = 68;
-	char validation_2 = 67;
+	char validation_1 = 66;
+	char validation_2 = 82;
 
 	//V1 Sonar Struct
 	struct sonar_report_minimal {

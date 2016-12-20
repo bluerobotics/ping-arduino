@@ -49,6 +49,11 @@ void Ping::read(){
 	}
 }
 
+void sendMessage(){
+	//TODO implement
+}
+
+
 //Accessor Methods
 /////////////////
 
@@ -81,22 +86,24 @@ void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 	//TODO implement
 	if (auto == 0){
 		//Set Auto mode
-		stream->write(AUTO_ENABLE);
-		//Set distance range
 	}
 	else {
 		//Set Manual Mode
-		stream->write(AUTO_DISABLE);
+		//Set distance range
 	}
 }
 
 //Internal
 /////////////////
 
-void sendMessage(){
-
-}
-
 bool validateChecksum(){
-	//TODO implement
+	//TODO replace the sonar report with the one that we're currently reading in. This won't work.
+	uint32_t messageSize = sizeof(this->sonar_report_minimal);
+	uint32_t checksum = 0;
+
+	for (int i = 0; i < messageSize; i++) {
+		checksum += this->sonar_report_minimal[i];
+	}
+	checksum = checksum % (2^16);
+	return checksum
 }
