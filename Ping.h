@@ -101,7 +101,7 @@ private:
 	//Meta structures
 	/////////////////
 
-	struct header_message {
+	struct template_message_header {
 		uint8_t  start_byte1; //B
 		uint8_t  start_byte2; //R
 		uint16_t length;      //Payload length
@@ -114,12 +114,12 @@ private:
 	//Message Definitions
 	/////////////////////
 
-	struct distance_message {
+	struct template_message_distance {
 		uint8_t  confidence; //Percent confidence
 		uint32_t distance;   //Distance to target, mm
 	} message_distance ;
 
-	struct status_message {
+	struct template_message_status {
 		uint16_t fw_version_major;
 		uint16_t fw_version_minor;
 		uint16_t voltage;
