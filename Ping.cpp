@@ -24,29 +24,34 @@ void Ping::request(){
 }
 
 void Ping::read(){
-	while (stream->available() >= 8){
+	while (stream->available() >= 10){
 		test_2 = stream->read();
 
 		if ((test_1 == validation_1) && (test_2 == validation_2))
 		{
 			//Set up input buffer
-			byte input_buffer[12] = {};
-			input_buffer[0] = 66;
-			input_buffer[1] = 82;
+			byte header_buffer[8] = {};
+			header_buffer[0] = 66;
+			header_buffer[1] = 82;
 
 			//Read in header information
 			for (int i = 2; i < 8; i++) {
-				input_buffer[i] = byte(stream->read());
+				header_buffer[i] = byte(stream->read());
 			}
+			//Store header information
+			memcpy(&message_header, &header_buffer, sizeof(message_header));
 
-			//TODO Determine message ID
+			//Determine message ID
+			uint16_t messageID = message_header.messageID;
+			//Determine message body size
+			uint16_t messageBodySize =  message_header.length;
 
-			//TODO Determine message body size
-			uint16_t messageBodySize = 0;
+			//Store message body
+			byte message_buffer[200] = {};
 
-			//TODO Read in message body
+			// Read in message body
 			for (int i = 0; i < messageBodySize; i++){
-				input_buffer[i] = byte(stream->read());
+				header_buffer[i] = byte(stream->read());
 			}
 
 			//Read in checksum
@@ -54,13 +59,8 @@ void Ping::read(){
 				input_buffer[i] = byte(stream->read());
 			}
 
-			// //Start counting at 2 to account for the start bytes
-			// for (int i = 2; i < 10; i++){
-			// 	input_buffer[i] = byte(stream->read());
-			// }
-
 			//Take recorded data and save it
-			memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
+			//memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
 		}
 		else
 		{

@@ -101,15 +101,15 @@ private:
 	//Meta structures
 	/////////////////
 
-	struct ping_header {
+	struct header_message {
 		uint8_t  start_byte1; //B
 		uint8_t  start_byte2; //R
 		uint16_t length;      //Payload length
 		uint16_t messageID;   //ID of message being sent
 		uint16_t reserved;    //Will possibly be used in the future
-	} report_header ;
+	} message_header ;
 
-	uint16_t report_checksum;
+	uint16_t message_checksum;
 
 	//Message Definitions
 	/////////////////////
