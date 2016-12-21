@@ -31,13 +31,33 @@ void Ping::read(){
 		{
 			//Set up input buffer
 			byte input_buffer[12] = {};
-			input_buffer[0] = 68;
-			input_buffer[1] = 67;
+			input_buffer[0] = 66;
+			input_buffer[1] = 82;
 
-			//Start counting at 2 to account for the start bytes
-			for (int i = 2; i < 10; i++){
+			//Read in header information
+			for (int i = 2; i < 8; i++) {
 				input_buffer[i] = byte(stream->read());
 			}
+
+			//TODO Determine message ID
+
+			//TODO Determine message body size
+			uint16_t messageBodySize = 0;
+
+			//TODO Read in message body
+			for (int i = 0; i < messageBodySize; i++){
+				input_buffer[i] = byte(stream->read());
+			}
+
+			//Read in checksum
+			for (int i = 0; i < 2; i++){
+				input_buffer[i] = byte(stream->read());
+			}
+
+			// //Start counting at 2 to account for the start bytes
+			// for (int i = 2; i < 10; i++){
+			// 	input_buffer[i] = byte(stream->read());
+			// }
 
 			//Take recorded data and save it
 			memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
@@ -53,6 +73,16 @@ void Ping::read(){
 
 void sendCommand(uint8_t commandID, String messageBody){
 	//TODO implement
+
+	//Construct header
+	//Construct command body
+	//Determine checksum
+
+	//Assemble
+
+	//Send
+
+	//Wait for ACK / NACK
 }
 
 
@@ -101,11 +131,11 @@ void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 
 bool validateChecksum(){
 	//TODO replace the sonar report with the one that we're currently reading in. This won't work.
-	uint32_t messageSize = sizeof(this->sonar_report_minimal);
+	uint32_t messageSize = sizeof(this->sonar_report_distance);
 	uint32_t checksum = 0;
 
 	for (int i = 0; i < messageSize; i++) {
-		checksum += this->sonar_report_minimal[i];
+		checksum += this->sonar_report_distance[i];
 	}
 	checksum = checksum % (2^16);
 	return checksum

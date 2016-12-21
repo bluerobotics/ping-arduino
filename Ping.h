@@ -109,14 +109,54 @@ private:
 	// } new_sonar_report ;
 
 	//V2 Sonar Struct
-	struct sonar_report_minimal {
-		char    s1;                                         // 'D'
-		char    s2;                                         // 'C'
-		int16_t    smoothed_distance_confidence_percent;    // 1..100
-		int32_t    smoothed_distance_mm;                    //
-		char    e1;                                         // 'e'
-		char    e2;                                         // 'e'
-	} new_sonar_report ;
+	// struct sonar_report_distance {
+	// 	char    s1;                                         // 'D'
+	// 	char    s2;                                         // 'C'
+	// 	int16_t    smoothed_distance_confidence_percent;    // 1..100
+	// 	int32_t    smoothed_distance_mm;                    //
+	// 	char    e1;                                         // 'e'
+	// 	char    e2;                                         // 'e'
+	// } new_sonar_report ;
+
+	//Meta structures
+	/////////////////
+
+	struct ping_header {
+		uint8_t  start_byte1; //B
+		uint8_t  start_byte2; //R
+		uint16_t length;      //Payload length
+		uint16_t messageID;   //ID of message being sent
+		uint16_t reserved;    //Will possibly be used in the future
+	} report_header ;
+
+	uint16_t report_checksum;
+
+	//Message Definitions
+	/////////////////////
+
+	struct distance_message {
+		uint8_t  confidence; //Percent confidence
+		uint32_t distance;   //Distance to target, mm
+	} message_distance ;
+
+	//TODO not sure how to represent variable lenght data packet
+	// struct profile_message {
+	// 	uint8_t confidence;
+	// 	uint32_t distance;
+	// 	uint32_t start_distance;
+	// 	uint32_t end_distance;
+	// 	uint16_t gain;
+	// 	uint8_t pulse;
+	// 	uint16_t num_points;
+	// 	uint8_t data
+	// } message_profile ;
+
+	struct status_message {
+		uint16_t fw_version_major;
+		uint16_t fw_version_minor;
+		uint16_t voltage;
+		uint8_t  error;
+	} message_status ;
 
 	Stream *stream;
 };
