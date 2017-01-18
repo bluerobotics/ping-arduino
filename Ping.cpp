@@ -24,6 +24,7 @@ void Ping::request(){
 }
 
 void Ping::read(){
+	//Smallest possible message is 10 bytes
 	while (stream->available() >= 10){
 		test_2 = stream->read();
 
@@ -47,17 +48,21 @@ void Ping::read(){
 			uint16_t messageBodySize =  message_header.length;
 
 			//Store message body
-			byte message_buffer[200] = {};
+			byte message_buffer[messageBodySize] = {};
 
 			// Read in message body
 			for (int i = 0; i < messageBodySize; i++){
-				header_buffer[i] = byte(stream->read());
+				message_buffer[i] = byte(stream->read());
 			}
+
+			byte checksum_buffer[2] = {};
 
 			//Read in checksum
 			for (int i = 0; i < 2; i++){
-				input_buffer[i] = byte(stream->read());
+				checksum_buffer[i] = byte(stream->read());
 			}
+			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
+
 
 			//Take recorded data and save it
 			//memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
@@ -139,4 +144,8 @@ bool validateChecksum(){
 	}
 	checksum = checksum % (2^16);
 	return checksum
+}
+
+bool buildChecksum (){
+	//TODO implement as a mirror of the python library
 }
