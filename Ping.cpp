@@ -8,8 +8,10 @@ Ping::Ping(Stream *_stream) {
 void Ping::init() {
 	//Set quiet mode
 	// stream->write("@Q1\n");
+
+	//TODO Update this to match new protocol
 	//Enter request mode
-	this->sendConfig(1,0);
+	//this->sendConfig(1,0);
 
 	//Wait to be sure that quiet mode is enabled
 	//Not sure if necessary
@@ -18,10 +20,6 @@ void Ping::init() {
 
 // I/O
 //////
-
-void Ping::request(){
-	this->sendRequest(0x01);
-}
 
 void Ping::read(){
 	//Smallest possible message is 10 bytes
@@ -97,8 +95,9 @@ void sendMessage(uint8_t commandID, String messageBody){
 
 void Ping::update() {
 	//Request a new reading
-	request();
+	request(0x3, 1);
 	read();
+	//TODO If something was read, update local vars
 }
 
 uint32_t Ping::getDistance(){
