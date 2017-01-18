@@ -39,7 +39,7 @@ void setup() {
   pingSerial.begin(9600);
 
   sonar.init();
-  sonar.setSpeedOfSound(1400); // m/s
+  //sonar.setSpeedOfSound(1400); // m/s
 }
 
 void loop() {
