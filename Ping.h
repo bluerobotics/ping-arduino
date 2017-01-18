@@ -32,7 +32,6 @@ THE SOFTWARE.
 #define PING_H_BLUEROBOTICS
 
 #include "Arduino.h"
-#include <util/crc16.h>
 #include <Stream.h>
 
 //TODO update this for new protocol
@@ -59,7 +58,7 @@ public:
 	//Read in a new packet
 	void read();
 
-	void sendCommand(uint8_t commandID, String messageBody);
+	void sendMessage(uint8_t commandID, String messageBody);
 
 	//Accessor Methods
 	//////////////////
@@ -89,6 +88,7 @@ private:
 	float c;
 
 	bool validateChecksum();
+	bool buildChecksum();
 
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
@@ -98,7 +98,7 @@ private:
 	char validation_1 = 66;
 	char validation_2 = 82;
 
-	//Meta structures
+	//Metadata Structures
 	/////////////////
 
 	struct template_message_header {
@@ -111,20 +111,32 @@ private:
 
 	uint16_t message_checksum;
 
-	//Message Definitions
+	//Message Structures
 	/////////////////////
 
+	struct template_nack {
+		uint16_t id;                      //ID of message being nacked
+		char error[256];                         //Error Message
+	};
+
 	struct template_message_distance {
-		uint8_t  confidence; //Percent confidence
-		uint32_t distance;   //Distance to target, mm
+		uint32_t raw_distance;             //Last ping range mm
+		uint32_t smoothed_distance;        //Distance to item, mm
+		uint8_t  confidence;               //Confidence percentage
 	} message_distance ;
 
-	struct template_message_status {
+	//Profile Message not currently supported on Arduino due to memory constraints
+
+	struct template_message_general_info {
 		uint16_t fw_version_major;
 		uint16_t fw_version_minor;
 		uint16_t voltage;
-		uint8_t  error;
+		uint16_t  error;
 	} message_status ;
+
+	struct template_ascii_text {
+		char ascii_string[256];             //Null Terminated
+	};
 
 	Stream *stream;
 };

@@ -9,7 +9,7 @@ void Ping::init() {
 	//Set quiet mode
 	// stream->write("@Q1\n");
 	//Enter request mode
-	this->sendConfig(1,0)
+	this->sendConfig(1,0);
 
 	//Wait to be sure that quiet mode is enabled
 	//Not sure if necessary
@@ -17,10 +17,10 @@ void Ping::init() {
 }
 
 // I/O
-
+//////
 
 void Ping::request(){
-	this->sendRequest(0x01)
+	this->sendRequest(0x01);
 }
 
 void Ping::read(){
@@ -48,12 +48,13 @@ void Ping::read(){
 			uint16_t messageBodySize =  message_header.length;
 
 			//Store message body
-			byte message_buffer[messageBodySize] = {};
-
-			// Read in message body
-			for (int i = 0; i < messageBodySize; i++){
-				message_buffer[i] = byte(stream->read());
-			}
+			//TODO this can't be variable length. Find another data structure
+			// byte message_buffer[messageBodySize] = {};
+			//
+			// // Read in message body
+			// for (int i = 0; i < messageBodySize; i++){
+			// 	message_buffer[i] = byte(stream->read());
+			// }
 
 			byte checksum_buffer[2] = {};
 
@@ -76,7 +77,7 @@ void Ping::read(){
 	}
 }
 
-void sendCommand(uint8_t commandID, String messageBody){
+void sendMessage(uint8_t commandID, String messageBody){
 	//TODO implement
 
 	//Construct header
@@ -136,13 +137,13 @@ void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 
 bool validateChecksum(){
 	//TODO replace the sonar report with the one that we're currently reading in. This won't work.
-	uint32_t messageSize = sizeof(this->sonar_report_distance);
-	uint32_t checksum = 0;
-
-	for (int i = 0; i < messageSize; i++) {
-		checksum += this->sonar_report_distance[i];
-	}
-	checksum = checksum % (2^16);
+	// uint32_t messageSize = sizeof(this->sonar_report_distance);
+	// uint32_t checksum = 0;
+	//
+	// for (int i = 0; i < messageSize; i++) {
+	// 	checksum += this->sonar_report_distance[i];
+	// }
+	//checksum = checksum % (2^16);
 	return checksum
 }
 
