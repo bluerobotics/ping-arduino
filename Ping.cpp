@@ -77,11 +77,20 @@ void Ping::read(){
 	}
 }
 
-void sendMessage(uint8_t commandID, String messageBody){
+void Ping::sendMessage(){
 	//TODO implement
 
-	//Construct header
+	//Determine length of payload
+	uint16_t payloadLength = 0;
+	uint16_t messageID = 0;
 
+	//Construct header
+	template_message_header* new_message_header;
+	buildHeader(new_message_header, payloadLength, messageID);
+
+	printHeader(new_message_header);
+
+	Serial.print("\n");
 	//Construct command body
 	//Determine checksum
 
@@ -99,7 +108,10 @@ void sendMessage(uint8_t commandID, String messageBody){
 void Ping::update() {
 	//Request a new reading
 	//request(0x3, 1);
-	read();
+	//read();
+
+	sendMessage();
+
 	//TODO If something was read, update local vars
 }
 
@@ -153,11 +165,18 @@ bool validateChecksum(){
 	return false;
 }
 
-void Ping::buildHeader(template_message_header *message_header) {
-
+void Ping::buildHeader(template_message_header* message_header, uint16_t payloadLength, uint16_t messageID) {
+	message_header->start_byte1 = 'B';
+	message_header->start_byte2 = 'R';
+	message_header->length = payloadLength;
+	message_header->messageID = messageID;
 }
 
-bool buildChecksum (){
+void Ping::printHeader(template_message_header* message_header){
+	Serial.print(message_header->start_byte1);
+}
+
+bool Ping::buildChecksum (){
 	//TODO implement as a mirror of the python library
 	return false;
 }

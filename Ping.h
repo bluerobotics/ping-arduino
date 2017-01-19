@@ -58,7 +58,7 @@ public:
 	//Read in a new packet
 	void read();
 
-	void sendMessage(uint8_t commandID, String messageBody);
+	void sendMessage();
 
 	//Accessor Methods
 	//////////////////
@@ -104,7 +104,7 @@ private:
 		uint16_t length;      //Payload length
 		uint16_t messageID;   //ID of message being sent
 		uint16_t reserved;    //Will possibly be used in the future
-	} message_header ;
+	} message_header;
 
 	uint16_t message_checksum;
 
@@ -127,7 +127,9 @@ private:
 		uint16_t fw_version_minor;
 		uint16_t voltage;
 		uint16_t  error;
-	} message_status ;
+	} message_general_info ;
+
+
 
 	struct template_ascii_text {
 		char ascii_string[256];             //Null Terminated
@@ -138,8 +140,8 @@ private:
 	bool validateChecksum();
 	bool buildChecksum();
 
-	void buildHeader(template_message_header* message_header);
-
+	void buildHeader(template_message_header* message_header, uint16_t payloadLength, uint16_t messageID);
+	void printHeader(template_message_header* message_header);
 };
 
 #endif

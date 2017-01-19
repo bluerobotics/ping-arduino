@@ -47,7 +47,7 @@ void loop() {
   sonar.update();
 
   //Print the latest distance reading
-  Serial.print(sonar.getDistance());
+  //Serial.print(sonar.getDistance());
 
   //Delay for readability in the terminal
   //This number can be any value.
