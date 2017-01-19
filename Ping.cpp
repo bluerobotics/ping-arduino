@@ -62,6 +62,7 @@ void Ping::read(){
 			for (int i = 0; i < 2; i++){
 				checksum_buffer[i] = byte(stream->read());
 			}
+
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
 
@@ -80,15 +81,20 @@ void Ping::read(){
 void Ping::sendMessage(){
 	//TODO implement
 
+
+	//Temp build message here
+	uint16_t tempID = 0x101;
+	uint16_t tempLength = sizeof(message_request);
+	message_request.requestID = 0x3;
+	message_request.rate = 1;
+
 	//Determine length of payload
-	uint16_t payloadLength = 0;
-	uint16_t messageID = 0;
+	uint16_t payloadLength = tempLength;
+	uint16_t messageID = tempID;
 
 	//Construct header
-	template_message_header* new_message_header;
-	buildHeader(new_message_header, payloadLength, messageID);
-
-	printHeader(new_message_header);
+	buildHeader(payloadLength, messageID);
+	printHeader();
 
 	Serial.print("\n");
 	//Construct command body
@@ -98,7 +104,6 @@ void Ping::sendMessage(){
 
 	//Send
 
-	//Wait for ACK / NACK
 }
 
 
@@ -117,13 +122,11 @@ void Ping::update() {
 
 uint32_t Ping::getDistance(){
 	//TODO re implement
-	//return (uint32_t)(new_sonar_report.smoothed_distance_mm);
 	return 0;
 }
 
 uint8_t Ping::getConfidence(){
 	//TODO re implement
-	//return (uint8_t)(new_sonar_report.smoothed_distance_confidence_percent);
 	return 0;
 }
 
@@ -136,44 +139,37 @@ void sendConfig(uint8_t rate, uint16_t cWater){
 
 void sendRequest(uint16_t messageID){
 	//TODO re implement
-	//sendMessage(0xC1, messageString);
 }
 
 void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 	//TODO re implement
-	// if (auto == 0){
-	// 	//Set Auto mode
-	// }
-	// else {
-	// 	//Set Manual Mode
-	// 	//Set distance range
-	// }
 }
 
 //Internal
 /////////////////
 
 bool validateChecksum(){
-	//TODO replace the sonar report with the one that we're currently reading in. This won't work.
-	// uint32_t messageSize = sizeof(this->sonar_report_distance);
-	// uint32_t checksum = 0;
-	//
-	// for (int i = 0; i < messageSize; i++) {
-	// 	checksum += this->sonar_report_distance[i];
-	// }
-	//checksum = checksum % (2^16);
+	//TODO Compare calculated checksum with the read checksum
 	return false;
 }
 
-void Ping::buildHeader(template_message_header* message_header, uint16_t payloadLength, uint16_t messageID) {
-	message_header->start_byte1 = 'B';
-	message_header->start_byte2 = 'R';
-	message_header->length = payloadLength;
-	message_header->messageID = messageID;
+void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
+	message_header.start_byte1 = 'B';
+	message_header.start_byte2 = 'R';
+	message_header.length = payloadLength;
+	message_header.messageID = messageID;
 }
 
-void Ping::printHeader(template_message_header* message_header){
-	Serial.print(message_header->start_byte1);
+void Ping::printHeader(){
+	Serial.print(message_header.start_byte1);
+	Serial.print("|");
+	Serial.print(message_header.start_byte2);
+	Serial.print("|");
+	Serial.print(message_header.length);
+	Serial.print("|");
+	Serial.print(message_header.messageID);
+	Serial.print("|");
+	Serial.print(0);
 }
 
 bool Ping::buildChecksum (){

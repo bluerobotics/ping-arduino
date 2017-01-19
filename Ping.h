@@ -98,7 +98,7 @@ private:
 	//Metadata Structures
 	/////////////////////
 
-	struct template_message_header {
+	struct template_header {
 		uint8_t  start_byte1; //B
 		uint8_t  start_byte2; //R
 		uint16_t length;      //Payload length
@@ -113,35 +113,38 @@ private:
 
 	struct template_nack {
 		uint16_t id;                      //ID of message being nacked
-		char error[256];                         //Error Message
-	};
+		char error[256];                  //Error Message
+	} message_nack;
 
-	struct template_message_distance {
+	struct template_distance {
 		uint32_t raw_distance;             //Last ping range mm
 		uint32_t smoothed_distance;        //Distance to item, mm
 		uint8_t  confidence;               //Confidence percentage
 	} message_distance ;
 
-	struct template_message_general_info {
+	struct template_general_info {
 		uint16_t fw_version_major;
 		uint16_t fw_version_minor;
 		uint16_t voltage;
 		uint16_t  error;
 	} message_general_info ;
 
-
-
 	struct template_ascii_text {
 		char ascii_string[256];             //Null Terminated
-	};
+	} message_ascii_text ;
+
+	struct template_request {
+		uint16_t requestID;
+		uint16_t rate;
+	} message_request ;
 
 	Stream *stream;
 
 	bool validateChecksum();
 	bool buildChecksum();
 
-	void buildHeader(template_message_header* message_header, uint16_t payloadLength, uint16_t messageID);
-	void printHeader(template_message_header* message_header);
+	void buildHeader(uint16_t payloadLength, uint16_t messageID);
+	void printHeader();
 };
 
 #endif
