@@ -70,7 +70,7 @@ public:
 	uint32_t getDistance();
 
 	//Confidence in distance measurement, as a percentage
-	uint32_t getConfidence();
+	uint8_t getConfidence();
 
 	//Control Methods
 	/////////////////
@@ -87,9 +87,6 @@ public:
 private:
 	float c;
 
-	bool validateChecksum();
-	bool buildChecksum();
-
 	//Characters pulled from serial buffer to check for start sequence
 	char test_1 = 0;
 	char test_2 = 0;
@@ -99,7 +96,7 @@ private:
 	char validation_2 = 82;
 
 	//Metadata Structures
-	/////////////////
+	/////////////////////
 
 	struct template_message_header {
 		uint8_t  start_byte1; //B
@@ -125,8 +122,6 @@ private:
 		uint8_t  confidence;               //Confidence percentage
 	} message_distance ;
 
-	//Profile Message not currently supported on Arduino due to memory constraints
-
 	struct template_message_general_info {
 		uint16_t fw_version_major;
 		uint16_t fw_version_minor;
@@ -139,6 +134,12 @@ private:
 	};
 
 	Stream *stream;
+
+	bool validateChecksum();
+	bool buildChecksum();
+
+	void buildHeader(template_message_header* message_header);
+
 };
 
 #endif

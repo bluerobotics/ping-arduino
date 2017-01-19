@@ -13,6 +13,8 @@ void Ping::init() {
 	//Enter request mode
 	//this->sendConfig(1,0);
 
+	//TODO update status and stuff on initialization
+
 	//Wait to be sure that quiet mode is enabled
 	//Not sure if necessary
 	delay(100);
@@ -79,6 +81,7 @@ void sendMessage(uint8_t commandID, String messageBody){
 	//TODO implement
 
 	//Construct header
+
 	//Construct command body
 	//Determine checksum
 
@@ -95,17 +98,21 @@ void sendMessage(uint8_t commandID, String messageBody){
 
 void Ping::update() {
 	//Request a new reading
-	request(0x3, 1);
+	//request(0x3, 1);
 	read();
 	//TODO If something was read, update local vars
 }
 
 uint32_t Ping::getDistance(){
-	return (uint32_t)(new_sonar_report.smoothed_distance_mm);
+	//TODO re implement
+	//return (uint32_t)(new_sonar_report.smoothed_distance_mm);
+	return 0;
 }
 
 uint8_t Ping::getConfidence(){
-	return (uint8_t)(new_sonar_report.smoothed_distance_confidence_percent);
+	//TODO re implement
+	//return (uint8_t)(new_sonar_report.smoothed_distance_confidence_percent);
+	return 0;
 }
 
 //Control Methods
@@ -116,19 +123,19 @@ void sendConfig(uint8_t rate, uint16_t cWater){
 }
 
 void sendRequest(uint16_t messageID){
-	//TODO implement
-	sendMessage(0xC1, messageString);
+	//TODO re implement
+	//sendMessage(0xC1, messageString);
 }
 
 void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
-	//TODO implement
-	if (auto == 0){
-		//Set Auto mode
-	}
-	else {
-		//Set Manual Mode
-		//Set distance range
-	}
+	//TODO re implement
+	// if (auto == 0){
+	// 	//Set Auto mode
+	// }
+	// else {
+	// 	//Set Manual Mode
+	// 	//Set distance range
+	// }
 }
 
 //Internal
@@ -143,9 +150,14 @@ bool validateChecksum(){
 	// 	checksum += this->sonar_report_distance[i];
 	// }
 	//checksum = checksum % (2^16);
-	return checksum
+	return false;
+}
+
+void Ping::buildHeader(template_message_header *message_header) {
+
 }
 
 bool buildChecksum (){
 	//TODO implement as a mirror of the python library
+	return false;
 }
