@@ -49,12 +49,12 @@ void Ping::read(){
 
 			//Store message body
 			//TODO this can't be variable length. Find another data structure
-			// byte message_buffer[messageBodySize] = {};
-			//
-			// // Read in message body
-			// for (int i = 0; i < messageBodySize; i++){
-			// 	message_buffer[i] = byte(stream->read());
-			// }
+			byte message_buffer[200] = {};
+
+			// Read in message body
+			for (int i = 0; i < messageBodySize; i++){
+				message_buffer[i] = byte(stream->read());
+			}
 
 			byte checksum_buffer[2] = {};
 
@@ -92,9 +92,13 @@ void Ping::sendMessage(){
 	uint16_t payloadLength = tempLength;
 	uint16_t messageID = tempID;
 
+	template_header* newHeader;
 	//Construct header
-	buildHeader(payloadLength, messageID);
-	printHeader();
+	buildHeader(newHeader, payloadLength, messageID);
+
+	Serial.print(newHeader->length);
+
+	//printHeader();
 
 	Serial.print("\n");
 	//Construct command body
@@ -153,12 +157,20 @@ bool validateChecksum(){
 	return false;
 }
 
-void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
-	message_header.start_byte1 = 'B';
-	message_header.start_byte2 = 'R';
-	message_header.length = payloadLength;
-	message_header.messageID = messageID;
+// void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
+// 	message_header.start_byte1 = 'B';
+// 	message_header.start_byte2 = 'R';
+// 	message_header.length = payloadLength;
+// 	message_header.messageID = messageID;
+// }
+
+void Ping::buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID) {
+	headerPtr->start_byte1 = 'B';
+	headerPtr->start_byte2 = 'R';
+	headerPtr->length = payloadLength;
+	headerPtr->messageID = messageID;
 }
+
 
 void Ping::printHeader(){
 	Serial.print(message_header.start_byte1);

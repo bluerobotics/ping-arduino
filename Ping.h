@@ -143,7 +143,8 @@ private:
 	bool validateChecksum();
 	bool buildChecksum();
 
-	void buildHeader(uint16_t payloadLength, uint16_t messageID);
+	//void buildHeader(uint16_t payloadLength, uint16_t messageID);
+	void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
 	void printHeader();
 };
 
