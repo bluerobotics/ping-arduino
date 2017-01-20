@@ -91,20 +91,14 @@ void Ping::read(){
 }
 
 void Ping::sendMessage(uint16_t m_id){
-	//Determine length of payload
-	uint16_t payloadLength = payload_size;
-	uint16_t messageID = m_id;
-
 	//Construct header
-	buildHeader(payloadLength, messageID);
+	buildHeader(payload_size, m_id);
 	memcpy(&header_buffer, &message_header, sizeof(message_header));
 
 	//Determine checksum
 	buildChecksum();
 
 	//Send
-	//////
-
 	//Write Header
 	for (int i = 0; i < sizeof(header_buffer); i++)
 		stream->write(header_buffer[i]);
@@ -116,6 +110,24 @@ void Ping::sendMessage(uint16_t m_id){
 	//Write Checksum
 	for (int i = 0; i < sizeof(checksum_buffer); i++)
 		stream->write(checksum_buffer[i]);
+
+	//Write Header for viewing
+	// for (int i = 0; i < sizeof(header_buffer); i++) {
+	// 	Serial.print(header_buffer[i]);
+	// 	Serial.print("|");
+	// }
+	// //Write Payload [keep in mind, it is variable in length]
+	// for (int i = 0; i < payload_size; i++) {
+	// 	Serial.print(payload_buffer[i]);
+	// 	Serial.print("|");
+	// }
+	// //Write Checksum
+	// for (int i = 0; i < sizeof(checksum_buffer); i++) {
+	// 	Serial.print(checksum_buffer[i]);
+	// 	Serial.print("|");
+	// }
+	// Serial.print("\n");
+
 }
 
 //Accessor Methods
@@ -124,8 +136,8 @@ void Ping::sendMessage(uint16_t m_id){
 void Ping::update() {
 	//Request a new reading
 	//TODO this is hard coded for now
-	sendRequest(0x3, 1);
 
+	sendRequest(0x3, 1);
 	read();
 
 	//TODO If something was read, update local vars

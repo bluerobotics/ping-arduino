@@ -36,7 +36,7 @@ Ping sonar(&pingSerial);
 
 void setup() {
   Serial.begin(9600);
-  pingSerial.begin(115200);
+  pingSerial.begin(9600);
 
   sonar.init();
 }
