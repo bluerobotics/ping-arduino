@@ -78,27 +78,15 @@ void Ping::read(){
 	}
 }
 
-void Ping::sendMessage(){
-	//TODO implement
-
-
-	//Temp build message here
-	uint16_t tempID = 0x101;
-	uint16_t tempLength = sizeof(message_request);
-	message_request.requestID = 0x3;
-	message_request.rate = 1;
-
+void Ping::sendMessage(uint16_t m_id){
 	//Determine length of payload
-	uint16_t payloadLength = tempLength;
-	uint16_t messageID = tempID;
+	uint16_t payloadLength = payload_size;
+	uint16_t messageID = m_id;
 
-	template_header* newHeader;
 	//Construct header
-	buildHeader(newHeader, payloadLength, messageID);
+	buildHeader(payloadLength, messageID);
 
-	Serial.print(newHeader->length);
-
-	//printHeader();
+	Serial.print(message_header.length);
 
 	Serial.print("\n");
 	//Construct command body
@@ -116,10 +104,10 @@ void Ping::sendMessage(){
 
 void Ping::update() {
 	//Request a new reading
-	//request(0x3, 1);
+	sendRequest(0x3, 1);
 	//read();
 
-	sendMessage();
+	//sendMessage();
 
 	//TODO If something was read, update local vars
 }
@@ -137,15 +125,24 @@ uint8_t Ping::getConfidence(){
 //Control Methods
 /////////////////
 
-void sendConfig(uint8_t rate, uint16_t cWater){
+void Ping::sendConfig(uint8_t rate, uint16_t cWater){
 	//TODO implement
 }
 
-void sendRequest(uint16_t messageID){
+void Ping::sendRequest(uint16_t m_id, uint16_t m_rate){
 	//TODO re implement
+	message_request.requestID = m_id;
+	message_request.rate = m_rate;
+
+	//Copy the message into the payload buffer
+	memcpy(&payload_buffer, &message_request, sizeof(message_request));
+	payload_size = sizeof(message_request);
+
+	sendMessage(0x101);
+
 }
 
-void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
+void Ping::sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 	//TODO re implement
 }
 
@@ -157,19 +154,19 @@ bool validateChecksum(){
 	return false;
 }
 
-// void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
-// 	message_header.start_byte1 = 'B';
-// 	message_header.start_byte2 = 'R';
-// 	message_header.length = payloadLength;
-// 	message_header.messageID = messageID;
-// }
-
-void Ping::buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID) {
-	headerPtr->start_byte1 = 'B';
-	headerPtr->start_byte2 = 'R';
-	headerPtr->length = payloadLength;
-	headerPtr->messageID = messageID;
+void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
+	message_header.start_byte1 = 'B';
+	message_header.start_byte2 = 'R';
+	message_header.length = payloadLength;
+	message_header.messageID = messageID;
 }
+
+// void Ping::buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID) {
+// 	headerPtr->start_byte1 = 'B';
+// 	headerPtr->start_byte2 = 'R';
+// 	headerPtr->length = payloadLength;
+// 	headerPtr->messageID = messageID;
+// }
 
 
 void Ping::printHeader(){

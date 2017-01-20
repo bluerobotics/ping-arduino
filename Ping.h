@@ -58,7 +58,7 @@ public:
 	//Read in a new packet
 	void read();
 
-	void sendMessage();
+	void sendMessage(uint16_t m_id);
 
 	//Accessor Methods
 	//////////////////
@@ -79,7 +79,7 @@ public:
 	void sendConfig(uint8_t rate, uint16_t cWater);
 
 	//Set initial configuration options
-	void sendRequest(uint16_t messageID);
+	void sendRequest(uint16_t m_id, uint16_t m_rate);
 
 	//Set the range that Ping will scan in
 	void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm);
@@ -138,13 +138,16 @@ private:
 		uint16_t rate;
 	} message_request ;
 
+	byte payload_buffer[32];
+	uint16_t payload_size = 0;
+
 	Stream *stream;
 
 	bool validateChecksum();
 	bool buildChecksum();
 
-	//void buildHeader(uint16_t payloadLength, uint16_t messageID);
-	void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
+	void buildHeader(uint16_t payloadLength, uint16_t messageID);
+	//void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
 	void printHeader();
 };
 
