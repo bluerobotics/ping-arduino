@@ -141,10 +141,14 @@ private:
 	byte payload_buffer[32];
 	uint16_t payload_size = 0;
 
+	byte header_buffer[8];
+
+	byte checksum_buffer[2];
+
 	Stream *stream;
 
 	bool validateChecksum();
-	bool buildChecksum();
+	void buildChecksum();
 
 	void buildHeader(uint16_t payloadLength, uint16_t messageID);
 	//void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);

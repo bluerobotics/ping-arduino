@@ -56,15 +56,14 @@ void Ping::read(){
 				message_buffer[i] = byte(stream->read());
 			}
 
-			byte checksum_buffer[2] = {};
+			byte ck_buffer[2] = {};
 
 			//Read in checksum
 			for (int i = 0; i < 2; i++){
-				checksum_buffer[i] = byte(stream->read());
+				ck_buffer[i] = byte(stream->read());
 			}
 
-			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
-
+			memcpy(&message_checksum, &ck_buffer, sizeof(message_checksum));
 
 			//Take recorded data and save it
 			//memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
@@ -85,19 +84,32 @@ void Ping::sendMessage(uint16_t m_id){
 
 	//Construct header
 	buildHeader(payloadLength, messageID);
+	memcpy(&header_buffer, &message_header, sizeof(message_header));
 
-	Serial.print(message_header.length);
-
-	Serial.print("\n");
 	//Construct command body
 	//Determine checksum
+	buildChecksum();
 
 	//Assemble
 
 	//Send
+	// stream->write(header_buffer);
+	// for (int i = 0; i < payload_size; i++) {
+	// 	stream->write(payload_buffer[i]);
+	// }
+	// stream->write(checksum_buffer);
 
+	//Write Header
+	for (int i = 0; i < payload_size; i++) {
+		Serial.write(payload_buffer[i]);
+	}
+	//Write Payload
+	for (int i = 0; i < payload_size; i++) {
+		Serial.write(payload_buffer[i]);
+	}
+	//Write Checksum
+	Serial.write(checksum_buffer);
 }
-
 
 //Accessor Methods
 /////////////////
@@ -106,8 +118,6 @@ void Ping::update() {
 	//Request a new reading
 	sendRequest(0x3, 1);
 	//read();
-
-	//sendMessage();
 
 	//TODO If something was read, update local vars
 }
@@ -140,6 +150,7 @@ void Ping::sendRequest(uint16_t m_id, uint16_t m_rate){
 
 	sendMessage(0x101);
 
+	//TODO Cleanup
 }
 
 void Ping::sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
@@ -181,7 +192,19 @@ void Ping::printHeader(){
 	Serial.print(0);
 }
 
-bool Ping::buildChecksum (){
-	//TODO implement as a mirror of the python library
-	return false;
+void Ping::buildChecksum (){
+	uint16_t m_checksum = 0;
+
+	//Header
+	for (int i = 0; i < 8; i++)
+		m_checksum += header_buffer[i];
+
+	//Payload
+	for (int i = 0; i < payload_size; i++)
+		m_checksum += payload_buffer[i];
+
+	//Calculate
+ 	m_checksum = m_checksum & 0xffff;
+	memcpy(&checksum_buffer, &m_checksum, sizeof(m_checksum));
+
 }
