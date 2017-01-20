@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include <Stream.h>
 
 //TODO update this for new protocol
-#define MIN_PACKET_LENGTH 16
+#define MIN_PACKET_LENGTH 10
 
 //Messages
 //////////
@@ -153,6 +153,8 @@ private:
 	void buildHeader(uint16_t payloadLength, uint16_t messageID);
 	//void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
 	void printHeader();
+
+	void cleanup();
 };
 
 #endif

@@ -36,10 +36,9 @@ Ping sonar(&pingSerial);
 
 void setup() {
   Serial.begin(9600);
-  pingSerial.begin(9600);
+  pingSerial.begin(115200);
 
   sonar.init();
-  //sonar.setSpeedOfSound(1400); // m/s
 }
 
 void loop() {

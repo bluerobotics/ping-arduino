@@ -24,49 +24,62 @@ void Ping::init() {
 //////
 
 void Ping::read(){
-	//Smallest possible message is 10 bytes
-	while (stream->available() >= 10){
+	Serial.print("\nAvailable: ");
+	Serial.print(stream->available());
+
+	while (stream->available() >= MIN_PACKET_LENGTH){
 		test_2 = stream->read();
+		Serial.print("\nTest2: ");
+		Serial.print(test_2);
 
 		if ((test_1 == validation_1) && (test_2 == validation_2))
 		{
+			Serial.print("Found start signal");
+
 			//Set up input buffer
-			byte header_buffer[8] = {};
 			header_buffer[0] = 66;
 			header_buffer[1] = 82;
 
-			//Read in header information
+			//Read header information
 			for (int i = 2; i < 8; i++) {
 				header_buffer[i] = byte(stream->read());
 			}
-			//Store header information
 			memcpy(&message_header, &header_buffer, sizeof(message_header));
-
 			//Determine message ID
 			uint16_t messageID = message_header.messageID;
 			//Determine message body size
-			uint16_t messageBodySize =  message_header.length;
+			payload_size = message_header.length;
 
-			//Store message body
-			//TODO this can't be variable length. Find another data structure
-			byte message_buffer[200] = {};
 
-			// Read in message body
-			for (int i = 0; i < messageBodySize; i++){
-				message_buffer[i] = byte(stream->read());
+			//Read Payload
+			for (int i = 0; i < payload_size; i++){
+				payload_buffer[i] = byte(stream->read());
 			}
 
-			byte ck_buffer[2] = {};
-
-			//Read in checksum
+			//Read checksum
 			for (int i = 0; i < 2; i++){
-				ck_buffer[i] = byte(stream->read());
+				checksum_buffer[i] = byte(stream->read());
 			}
+			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
-			memcpy(&message_checksum, &ck_buffer, sizeof(message_checksum));
+			//Write Header
+			for (int i = 0; i < sizeof(header_buffer); i++) {
+				Serial.print(header_buffer[i]);
+				Serial.print("|");
+			}
+			//Write Payload [keep in mind, it is variable in length]
+			for (int i = 0; i < payload_size; i++) {
+				Serial.print(payload_buffer[i]);
+				Serial.print("|");
+			}
+			//Write Checksum
+			for (int i = 0; i < sizeof(checksum_buffer); i++) {
+				Serial.print(checksum_buffer[i]);
+				Serial.print("|");
+			}
+			Serial.print("\n");
 
-			//Take recorded data and save it
-			//memcpy(&new_sonar_report, &input_buffer, sizeof(new_sonar_report));
+			cleanup();
 		}
 		else
 		{
@@ -86,29 +99,23 @@ void Ping::sendMessage(uint16_t m_id){
 	buildHeader(payloadLength, messageID);
 	memcpy(&header_buffer, &message_header, sizeof(message_header));
 
-	//Construct command body
 	//Determine checksum
 	buildChecksum();
 
-	//Assemble
-
 	//Send
-	// stream->write(header_buffer);
-	// for (int i = 0; i < payload_size; i++) {
-	// 	stream->write(payload_buffer[i]);
-	// }
-	// stream->write(checksum_buffer);
+	//////
 
 	//Write Header
-	for (int i = 0; i < payload_size; i++) {
-		Serial.write(payload_buffer[i]);
-	}
-	//Write Payload
-	for (int i = 0; i < payload_size; i++) {
-		Serial.write(payload_buffer[i]);
-	}
+	for (int i = 0; i < sizeof(header_buffer); i++)
+		stream->write(header_buffer[i]);
+
+	//Write Payload [keep in mind, it is variable in length]
+	for (int i = 0; i < payload_size; i++)
+		stream->write(payload_buffer[i]);
+
 	//Write Checksum
-	Serial.write(checksum_buffer);
+	for (int i = 0; i < sizeof(checksum_buffer); i++)
+		stream->write(checksum_buffer[i]);
 }
 
 //Accessor Methods
@@ -116,8 +123,10 @@ void Ping::sendMessage(uint16_t m_id){
 
 void Ping::update() {
 	//Request a new reading
+	//TODO this is hard coded for now
 	sendRequest(0x3, 1);
-	//read();
+
+	read();
 
 	//TODO If something was read, update local vars
 }
@@ -140,7 +149,6 @@ void Ping::sendConfig(uint8_t rate, uint16_t cWater){
 }
 
 void Ping::sendRequest(uint16_t m_id, uint16_t m_rate){
-	//TODO re implement
 	message_request.requestID = m_id;
 	message_request.rate = m_rate;
 
@@ -150,7 +158,7 @@ void Ping::sendRequest(uint16_t m_id, uint16_t m_rate){
 
 	sendMessage(0x101);
 
-	//TODO Cleanup
+	cleanup();
 }
 
 void Ping::sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
@@ -172,26 +180,6 @@ void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
 	message_header.messageID = messageID;
 }
 
-// void Ping::buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID) {
-// 	headerPtr->start_byte1 = 'B';
-// 	headerPtr->start_byte2 = 'R';
-// 	headerPtr->length = payloadLength;
-// 	headerPtr->messageID = messageID;
-// }
-
-
-void Ping::printHeader(){
-	Serial.print(message_header.start_byte1);
-	Serial.print("|");
-	Serial.print(message_header.start_byte2);
-	Serial.print("|");
-	Serial.print(message_header.length);
-	Serial.print("|");
-	Serial.print(message_header.messageID);
-	Serial.print("|");
-	Serial.print(0);
-}
-
 void Ping::buildChecksum (){
 	uint16_t m_checksum = 0;
 
@@ -206,5 +194,34 @@ void Ping::buildChecksum (){
 	//Calculate
  	m_checksum = m_checksum & 0xffff;
 	memcpy(&checksum_buffer, &m_checksum, sizeof(m_checksum));
-
 }
+
+void Ping::cleanup(){
+	for (int i = 0; i < sizeof(header_buffer); i++) {
+		header_buffer[i] = 0;
+	}
+	for (int i = 0; i < sizeof(payload_buffer); i++) {
+		payload_buffer[i] = 0;
+	}
+	payload_size = 0;
+	for (int i = 0; i < sizeof(checksum_buffer); i++) {
+		checksum_buffer[i] = 0;
+	}
+}
+
+// //Write Header
+// for (int i = 0; i < sizeof(header_buffer); i++) {
+// 	Serial.print(header_buffer[i]);
+// 	Serial.print("|");
+// }
+// //Write Payload [keep in mind, it is variable in length]
+// for (int i = 0; i < payload_size; i++) {
+// 	Serial.print(payload_buffer[i]);
+// 	Serial.print("|");
+// }
+// //Write Checksum
+// for (int i = 0; i < sizeof(checksum_buffer); i++) {
+// 	Serial.print(checksum_buffer[i]);
+// 	Serial.print("|");
+// }
+// Serial.print("\n");
