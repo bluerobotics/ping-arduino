@@ -25,10 +25,10 @@ void Ping::init() {
 
 void Ping::read(){
 	Serial.print("\nAvailable: ");
-	Serial.print(stream->available());
+	Serial.print(Serial1.available());
 
-	while (stream->available() >= MIN_PACKET_LENGTH){
-		test_2 = stream->read();
+	while (Serial1.available() >= MIN_PACKET_LENGTH){
+		test_2 = Serial1.read();
 		Serial.print("\nTest2: ");
 		Serial.print(test_2);
 
@@ -42,7 +42,7 @@ void Ping::read(){
 
 			//Read header information
 			for (int i = 2; i < 8; i++) {
-				header_buffer[i] = byte(stream->read());
+				header_buffer[i] = byte(Serial1.read());
 			}
 			memcpy(&message_header, &header_buffer, sizeof(message_header));
 			//Determine message ID
@@ -53,12 +53,12 @@ void Ping::read(){
 
 			//Read Payload
 			for (int i = 0; i < payload_size; i++){
-				payload_buffer[i] = byte(stream->read());
+				payload_buffer[i] = byte(Serial1.read());
 			}
 
 			//Read checksum
 			for (int i = 0; i < 2; i++){
-				checksum_buffer[i] = byte(stream->read());
+				checksum_buffer[i] = byte(Serial1.read());
 			}
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
@@ -101,15 +101,15 @@ void Ping::sendMessage(uint16_t m_id){
 	//Send
 	//Write Header
 	for (int i = 0; i < sizeof(header_buffer); i++)
-		stream->write(header_buffer[i]);
+		Serial1.write(header_buffer[i]);
 
 	//Write Payload [keep in mind, it is variable in length]
 	for (int i = 0; i < payload_size; i++)
-		stream->write(payload_buffer[i]);
+		Serial1.write(payload_buffer[i]);
 
 	//Write Checksum
 	for (int i = 0; i < sizeof(checksum_buffer); i++)
-		stream->write(checksum_buffer[i]);
+		Serial1.write(checksum_buffer[i]);
 
 	//Write Header for viewing
 	// for (int i = 0; i < sizeof(header_buffer); i++) {
