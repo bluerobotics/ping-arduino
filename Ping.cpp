@@ -24,16 +24,11 @@ void Ping::init() {
 //////
 
 void Ping::read(){
-	Serial.print("\nAvailable: ");
-	Serial.print(Serial1.available());
-
 	while (Serial1.available() >= MIN_PACKET_LENGTH){
 		test_2 = Serial1.read();
 
 		if ((test_1 == validation_1) && (test_2 == validation_2))
 		{
-			Serial.print("Found start signal");
-
 			//Set up input buffer
 			header_buffer[0] = 66;
 			header_buffer[1] = 82;
@@ -60,22 +55,28 @@ void Ping::read(){
 			}
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
+			bool checksum_match = validateChecksum();
+			if (!checksum_match) {
+				cleanup();
+				return;
+			}
+
 			//Write Header
-			for (int i = 0; i < sizeof(header_buffer); i++) {
-				Serial.print(header_buffer[i]);
-				Serial.print("|");
-			}
-			//Write Payload [keep in mind, it is variable in length]
-			for (int i = 0; i < payload_size; i++) {
-				Serial.print(payload_buffer[i]);
-				Serial.print("|");
-			}
-			//Write Checksum
-			for (int i = 0; i < sizeof(checksum_buffer); i++) {
-				Serial.print(checksum_buffer[i]);
-				Serial.print("|");
-			}
-			Serial.print("\n");
+			// for (int i = 0; i < sizeof(header_buffer); i++) {
+			// 	Serial.print(header_buffer[i]);
+			// 	Serial.print("|");
+			// }
+			// //Write Payload [keep in mind, it is variable in length]
+			// for (int i = 0; i < payload_size; i++) {
+			// 	Serial.print(payload_buffer[i]);
+			// 	Serial.print("|");
+			// }
+			// //Write Checksum
+			// for (int i = 0; i < sizeof(checksum_buffer); i++) {
+			// 	Serial.print(checksum_buffer[i]);
+			// 	Serial.print("|");
+			// }
+			// Serial.print("\n");
 
 			cleanup();
 		}
@@ -178,9 +179,31 @@ void Ping::sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm){
 //Internal
 /////////////////
 
-bool validateChecksum(){
-	//TODO Compare calculated checksum with the read checksum
-	return false;
+bool Ping::validateChecksum(){
+	uint16_t calculated_checksum = 0;
+	uint16_t message_checksum = 0;
+	memcpy(&message_checksum, &checksum_buffer, sizeof(checksum_buffer));
+
+	//Header
+	for (int i = 0; i < 8; i++)
+		calculated_checksum += header_buffer[i];
+
+	//Payload
+	for (int i = 0; i < payload_size; i++)
+		calculated_checksum += payload_buffer[i];
+
+	//Calculate
+ 	calculated_checksum = calculated_checksum & 0xffff;
+
+	bool match = (calculated_checksum == message_checksum);
+	if (!match) {
+		Serial.print("Checksum Mismatch! Actual: ");
+		Serial.print(calculated_checksum);
+		Serial.print(" Claimed: ");
+		Serial.print(message_checksum);
+		Serial.println("");
+	}
+	return match;
 }
 
 void Ping::buildHeader(uint16_t payloadLength, uint16_t messageID) {
