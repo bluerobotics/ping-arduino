@@ -29,8 +29,6 @@ void Ping::read(){
 
 	while (Serial1.available() >= MIN_PACKET_LENGTH){
 		test_2 = Serial1.read();
-		Serial.print("\nTest2: ");
-		Serial.print(test_2);
 
 		if ((test_1 == validation_1) && (test_2 == validation_2))
 		{
