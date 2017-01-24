@@ -24,6 +24,7 @@ void Ping::init() {
 //////
 
 void Ping::read(){
+	//TODO we need a timeout here
 	while (Serial1.available() >= MIN_PACKET_LENGTH){
 		test_2 = Serial1.read();
 
@@ -43,6 +44,11 @@ void Ping::read(){
 			//Determine message body size
 			payload_size = message_header.length;
 
+			//Now that we know the message size, wait for the entire message to hit the buffer
+			//TODO we need a timeout here
+			while (Serial1.available() <= (payload_size + sizeof(checksum_buffer))) {
+				delay(1);
+			}
 
 			//Read Payload
 			for (int i = 0; i < payload_size; i++){
@@ -57,26 +63,28 @@ void Ping::read(){
 
 			bool checksum_match = validateChecksum();
 			if (!checksum_match) {
+				//Write Header
+				for (int i = 0; i < sizeof(header_buffer); i++) {
+					Serial.print(header_buffer[i]);
+					Serial.print("|");
+				}
+				//Write Payload [keep in mind, it is variable in length]
+				for (int i = 0; i < payload_size; i++) {
+					Serial.print(payload_buffer[i]);
+					Serial.print("|");
+				}
+				//Write Checksum
+				for (int i = 0; i < sizeof(checksum_buffer); i++) {
+					Serial.print(checksum_buffer[i]);
+					Serial.print("|");
+				}
+				Serial.print("\n\n");
+
 				cleanup();
 				return;
 			}
 
-			//Write Header
-			// for (int i = 0; i < sizeof(header_buffer); i++) {
-			// 	Serial.print(header_buffer[i]);
-			// 	Serial.print("|");
-			// }
-			// //Write Payload [keep in mind, it is variable in length]
-			// for (int i = 0; i < payload_size; i++) {
-			// 	Serial.print(payload_buffer[i]);
-			// 	Serial.print("|");
-			// }
-			// //Write Checksum
-			// for (int i = 0; i < sizeof(checksum_buffer); i++) {
-			// 	Serial.print(checksum_buffer[i]);
-			// 	Serial.print("|");
-			// }
-			// Serial.print("\n");
+
 
 			cleanup();
 		}
@@ -230,6 +238,8 @@ void Ping::buildChecksum (){
 }
 
 void Ping::cleanup(){
+	test_1 = 0;
+	test_2 = 0;
 	for (int i = 0; i < sizeof(header_buffer); i++) {
 		header_buffer[i] = 0;
 	}
