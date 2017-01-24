@@ -35,9 +35,10 @@ void Ping::read(){
 			header_buffer[1] = 82;
 
 			//Read header information
-			for (int i = 2; i < 8; i++) {
+			for (int i = 2; i < 8; i++)
 				header_buffer[i] = byte(Serial1.read());
-			}
+
+
 			memcpy(&message_header, &header_buffer, sizeof(message_header));
 			//Determine message ID
 			uint16_t messageID = message_header.messageID;
@@ -52,14 +53,14 @@ void Ping::read(){
 			}
 
 			//Read Payload
-			for (int i = 0; i < payload_size; i++){
+			for (int i = 0; i < payload_size; i++)
 				payload_buffer[i] = byte(Serial1.read());
-			}
+
 
 			//Read checksum
-			for (int i = 0; i < 2; i++){
+			for (int i = 0; i < 2; i++)
 				checksum_buffer[i] = byte(Serial1.read());
-			}
+
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
 			bool checksum_match = validateChecksum();
