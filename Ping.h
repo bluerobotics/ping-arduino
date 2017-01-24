@@ -36,12 +36,14 @@ THE SOFTWARE.
 
 //TODO update this for new protocol
 #define MIN_PACKET_LENGTH 10
-
+#define SERIAL_READ_TIMEOUT 1024
+#define WAIT_FOR_RX_TIMEOUT 1024
 //Messages
 //////////
 #define REQUEST_MINIMAL "@D\n"
 #define AUTO_ENABLE
 #define AUTO_DISABLE
+
 
 class Ping {
 public:

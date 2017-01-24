@@ -24,8 +24,8 @@ void Ping::init() {
 //////
 
 void Ping::read(){
-	//TODO we need a timeout here
-	while (Serial1.available() >= MIN_PACKET_LENGTH){
+	uint16_t read_attempt_count = 0;
+	while ((Serial1.available() >= MIN_PACKET_LENGTH) && (read_attempt_count <= SERIAL_READ_TIMEOUT)){
 		test_2 = Serial1.read();
 
 		if ((test_1 == validation_1) && (test_2 == validation_2))
@@ -45,8 +45,9 @@ void Ping::read(){
 			payload_size = message_header.length;
 
 			//Now that we know the message size, wait for the entire message to hit the buffer
-			//TODO we need a timeout here
-			while (Serial1.available() <= (payload_size + sizeof(checksum_buffer))) {
+			uint16_t rx_count = 0;
+			while ((Serial1.available() <= (payload_size + sizeof(checksum_buffer))) && (rx_count <= WAIT_FOR_RX_TIMEOUT)) {
+				rx_count++;
 				delay(1);
 			}
 
@@ -92,6 +93,7 @@ void Ping::read(){
 		{
 			//Invalid start sequence
 			//Move byte to the first index
+			read_attempt_count++;
 			test_1 = test_2;
 		}
 	}
