@@ -100,8 +100,8 @@ private:
 	//Data
 	//////
 
-	uint16_t ping_smoothed_distance = 0;
-	uint16_t ping_raw_distance      = 0;
+	uint32_t ping_smoothed_distance = 0;
+	uint32_t ping_raw_distance      = 0;
 	uint8_t  ping_confidence        = 0;
 
 	uint16_t ping_fw_version_major = 0;

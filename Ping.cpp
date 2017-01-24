@@ -119,13 +119,13 @@ void Ping::update()
 
 uint32_t Ping::getDistance()
 {
-	//TODO re implement
+	return ping_smoothed_distance;
 	return 0;
 }
 
 uint8_t Ping::getConfidence()
 {
-	//TODO re implement
+	return ping_confidence;
 	return 0;
 }
 
