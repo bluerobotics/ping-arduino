@@ -58,7 +58,7 @@ public:
 	void request();
 
 	//Read in a new packet
-	void read();
+	uint16_t read();
 
 	void sendMessage(uint16_t m_id);
 
@@ -96,6 +96,21 @@ private:
 	//Characters to validate start sequences
 	char validation_1 = 66;
 	char validation_2 = 82;
+
+	//Data
+	//////
+
+	uint16_t ping_smoothed_distance = 0;
+	uint16_t ping_raw_distance      = 0;
+	uint8_t  ping_confidence        = 0;
+
+	uint16_t ping_fw_version_major = 0;
+	uint16_t ping_fw_version_minor = 0;
+	uint16_t ping_voltage          = 0;
+	uint16_t ping_msec_per_ping    = 0;
+	uint8_t  ping_gain_index       = 0;
+	uint8_t  ping_is_auto          = 0;
+
 
 	//Metadata Structures
 	/////////////////////
@@ -149,6 +164,9 @@ private:
 
 	Stream *stream;
 
+	//TODO organize all these
+	///////////////////////////
+
 	bool validateChecksum();
 	void buildChecksum();
 
@@ -156,6 +174,8 @@ private:
 	//void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
 	void printHeader();
 
+
+	void handleMessage(uint16_t m_id);
 	void cleanup();
 };
 
