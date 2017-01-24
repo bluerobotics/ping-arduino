@@ -6,17 +6,13 @@ Ping::Ping(Stream *_stream) {
 }
 
 void Ping::init() {
-	//Set quiet mode
-	// stream->write("@Q1\n");
-
 	//TODO Update this to match new protocol
 	//Enter request mode
 	//this->sendConfig(1,0);
 
 	//TODO update status and stuff on initialization
 
-	//Wait to be sure that quiet mode is enabled
-	//Not sure if necessary
+	//Wait for boot
 	delay(100);
 }
 
@@ -61,32 +57,15 @@ void Ping::read(){
 			for (int i = 0; i < 2; i++)
 				checksum_buffer[i] = byte(Serial1.read());
 
+			//Validate Checksum
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 
 			bool checksum_match = validateChecksum();
-			if (!checksum_match) {
-				//Write Header
-				for (int i = 0; i < sizeof(header_buffer); i++) {
-					Serial.print(header_buffer[i]);
-					Serial.print("|");
-				}
-				//Write Payload [keep in mind, it is variable in length]
-				for (int i = 0; i < payload_size; i++) {
-					Serial.print(payload_buffer[i]);
-					Serial.print("|");
-				}
-				//Write Checksum
-				for (int i = 0; i < sizeof(checksum_buffer); i++) {
-					Serial.print(checksum_buffer[i]);
-					Serial.print("|");
-				}
-				Serial.print("\n\n");
 
+			if (!checksum_match) {
 				cleanup();
 				return;
 			}
-
-
 
 			cleanup();
 		}
@@ -120,24 +99,6 @@ void Ping::sendMessage(uint16_t m_id){
 	//Write Checksum
 	for (int i = 0; i < sizeof(checksum_buffer); i++)
 		Serial1.write(checksum_buffer[i]);
-
-	//Write Header for viewing
-	// for (int i = 0; i < sizeof(header_buffer); i++) {
-	// 	Serial.print(header_buffer[i]);
-	// 	Serial.print("|");
-	// }
-	// //Write Payload [keep in mind, it is variable in length]
-	// for (int i = 0; i < payload_size; i++) {
-	// 	Serial.print(payload_buffer[i]);
-	// 	Serial.print("|");
-	// }
-	// //Write Checksum
-	// for (int i = 0; i < sizeof(checksum_buffer); i++) {
-	// 	Serial.print(checksum_buffer[i]);
-	// 	Serial.print("|");
-	// }
-	// Serial.print("\n");
-
 }
 
 //Accessor Methods
@@ -254,20 +215,3 @@ void Ping::cleanup(){
 		checksum_buffer[i] = 0;
 	}
 }
-
-// //Write Header
-// for (int i = 0; i < sizeof(header_buffer); i++) {
-// 	Serial.print(header_buffer[i]);
-// 	Serial.print("|");
-// }
-// //Write Payload [keep in mind, it is variable in length]
-// for (int i = 0; i < payload_size; i++) {
-// 	Serial.print(payload_buffer[i]);
-// 	Serial.print("|");
-// }
-// //Write Checksum
-// for (int i = 0; i < sizeof(checksum_buffer); i++) {
-// 	Serial.print(checksum_buffer[i]);
-// 	Serial.print("|");
-// }
-// Serial.print("\n");
