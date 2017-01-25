@@ -81,6 +81,9 @@ public:
 	//Set the range that Ping will scan in
 	void sendRange(uint16_t start_mm, uint16_t range_mm);
 
+	void getInfo();
+
+
 private:
 	float c;
 
@@ -179,6 +182,9 @@ private:
 
 	void handleMessage(uint16_t m_id);
 	void cleanup();
+
+	void printMessage();
+
 };
 
 #endif

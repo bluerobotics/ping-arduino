@@ -8,9 +8,10 @@ Ping::Ping(Stream *_stream)
 
 void Ping::init()
 {
+	delay(100);
+
 	//TODO update status and stuff on initialization
 	//Wait for boot
-	delay(100);
 }
 
 // I/O
@@ -19,6 +20,7 @@ void Ping::init()
 //Reads and returns the read message ID
 uint16_t Ping::read()
 {
+
 	uint16_t read_attempt_count = 0;
 	while ((Serial1.available() >= MIN_PACKET_LENGTH) && (read_attempt_count <= SERIAL_READ_TIMEOUT))
 	{
@@ -47,7 +49,14 @@ uint16_t Ping::read()
 				rx_count++;
 				delay(1);
 			}
-
+			if (rx_count >= WAIT_FOR_RX_TIMEOUT)
+			{
+				if (DEBUG)
+				{
+					Serial.print("Serial Receive Timeout");
+				}
+				return 0;
+			}
 			//Read Payload
 			for (int i = 0; i < payload_size; i++)
 				payload_buffer[i] = byte(Serial1.read());
@@ -60,7 +69,10 @@ uint16_t Ping::read()
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 			bool checksum_match = validateChecksum();
 
-			if (!checksum_match) {
+
+
+			if (!checksum_match)
+			{
 				cleanup();
 				return 0;
 			}
@@ -75,6 +87,8 @@ uint16_t Ping::read()
 			test_1 = test_2;
 		}
 	}
+	if (read_attempt_count >= SERIAL_READ_TIMEOUT)
+		return 0;
 }
 
 void Ping::sendMessage(uint16_t m_id)
@@ -105,8 +119,9 @@ void Ping::sendMessage(uint16_t m_id)
 
 void Ping::update()
 {
+
 	//Request a new reading
-	sendRequest(0x3, 1);
+	sendRequest(0x6, 1);
 
 	//Read
 	uint16_t receivedID = read();
@@ -238,6 +253,7 @@ void Ping::handleMessage(uint16_t m_id)
 		}
 
 		case 0x6:
+		{
 			template_general_info m_message;
 			memcpy(&m_message, &payload_buffer, sizeof(m_message));
 			ping_fw_version_major = m_message.fw_version_major;
@@ -246,14 +262,49 @@ void Ping::handleMessage(uint16_t m_id)
 			ping_msec_per_ping = m_message.msec_per_ping;
 			ping_is_auto = m_message.is_auto;
 			break;
+		}
 
 		case 0x7:
-			//TODO Handle ASCII Text
+		{
+			template_ascii_text m_message;
+			memcpy(&m_message, &payload_buffer, sizeof(payload_size));
+			if (DEBUG)
+			{
+				Serial.print(m_message.ascii_string);
+			}
+			break;
+		}
 
 		default:
 			return;
 	}
 	cleanup();
+}
+
+//Useful for debugging
+void Ping::printMessage(){
+	//Print Message
+	for (int i = 0; i < sizeof(header_buffer); i++) {
+		Serial.print(header_buffer[i]);
+		Serial.print("|");
+	}
+	//Write Payload [keep in mind, it is variable in length]
+	for (int i = 0; i < payload_size; i++) {
+		Serial.print(payload_buffer[i]);
+		Serial.print("|");
+	}
+	//Write Checksum
+	for (int i = 0; i < sizeof(checksum_buffer); i++) {
+		Serial.print(checksum_buffer[i]);
+		Serial.print("|");
+	}
+	Serial.println("");
+}
+
+void Ping::getInfo()
+{
+	Serial.println(ping_fw_version_major);
+	Serial.println(ping_voltage);
 }
 
 void Ping::cleanup()
