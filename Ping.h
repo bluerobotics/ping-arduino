@@ -84,7 +84,7 @@ public:
 	void sendRequest(uint16_t m_id, uint16_t m_rate);
 
 	//Set the range that Ping will scan in
-	void sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm);
+	void sendRange(uint16_t start_mm, uint16_t range_mm);
 
 private:
 	float c;
@@ -131,13 +131,13 @@ private:
 	struct template_nack {
 		uint16_t id;                      //ID of message being nacked
 		char error[256];                  //Error Message
-	} message_nack;
+	};
 
 	struct template_distance {
 		uint32_t raw_distance;             //Last ping range mm
 		uint32_t smoothed_distance;        //Distance to item, mm
 		uint8_t  confidence;               //Confidence percentage
-	} message_distance ;
+	};
 
 	struct template_general_info {
 		uint16_t fw_version_major;
@@ -146,16 +146,21 @@ private:
 		uint16_t msec_per_ping;
 		uint8_t  gain_index;
 		uint8_t  is_auto;
-	} message_general_info ;
+	};
+
+	struct template_range {
+		uint32_t start_mm;
+		uint32_t length_mm;
+	};
 
 	struct template_ascii_text {
 		char ascii_string[256];             //Null Terminated
-	} message_ascii_text ;
+	};
 
 	struct template_request {
 		uint16_t requestID;
 		uint16_t rate;
-	} message_request ;
+	};
 
 	byte payload_buffer[32];
 	uint16_t payload_size = 0;

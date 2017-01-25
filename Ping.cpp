@@ -135,20 +135,28 @@ void Ping::sendConfig(uint8_t rate, uint16_t cWater)
 
 void Ping::sendRequest(uint16_t m_id, uint16_t m_rate)
 {
-	message_request.requestID = m_id;
-	message_request.rate = m_rate;
+	template_request m_message;
+	m_message.requestID = m_id;
+	m_message.rate = m_rate;
 
-	//Copy the message into the payload buffer
-	memcpy(&payload_buffer, &message_request, sizeof(message_request));
-	payload_size = sizeof(message_request);
+	memcpy(&payload_buffer, &m_message, sizeof(m_message));
+	payload_size = sizeof(m_message);
 
 	sendMessage(0x101);
 	cleanup();
 }
 
-void Ping::sendRange(uint8_t auto, uint16_t start_mm, uint16_t range_mm)
+void Ping::sendRange(uint16_t m_start_mm, uint16_t m_range_mm)
 {
-	//TODO re implement
+	template_range m_message;
+	m_message.start_mm = m_start_mm;
+	m_message.length_mm = m_range_mm;
+
+	memcpy(&payload_buffer, &m_message, sizeof(m_message));
+	payload_size = sizeof(m_message);
+
+	sendMessage(0x102);
+	cleanup();
 }
 
 //Internal
@@ -262,5 +270,4 @@ void Ping::cleanup()
 	payload_size = 0;
 	for (int i = 0; i < sizeof(checksum_buffer); i++)
 		checksum_buffer[i] = 0;
-
 }
