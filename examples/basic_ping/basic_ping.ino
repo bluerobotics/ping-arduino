@@ -35,6 +35,8 @@ SoftwareSerial pingSerial(10, 11); // RX, TX
 Ping sonar(&pingSerial);
 
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+
   Serial.begin(9600);
   Serial1.begin(9600);
   pingSerial.begin(9600);
@@ -43,15 +45,18 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+
   //Get a new reading and save it
   sonar.update();
 
   //Print the latest distance reading
   Serial.print("Current Distance: ");
   Serial.print(sonar.getDistance());
-  Serial.println("mm");
+  Serial.println(" mm");
 
   //Delay for readability in the terminal
   //This number can be any value.
+  digitalWrite(LED_BUILTIN, LOW);
   delay(100);
 }
