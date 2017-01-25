@@ -69,6 +69,9 @@ public:
 	//Confidence in distance measurement, as a percentage
 	uint8_t getConfidence();
 
+	void updateInfo();
+
+
 	//Control Methods
 	/////////////////
 
@@ -81,7 +84,6 @@ public:
 	//Set the range that Ping will scan in
 	void sendRange(uint16_t start_mm, uint16_t range_mm);
 
-	void getInfo();
 
 
 private:

@@ -8,10 +8,10 @@ Ping::Ping(Stream *_stream)
 
 void Ping::init()
 {
+	//Wait for boot
 	delay(100);
 
-	//TODO update status and stuff on initialization
-	//Wait for boot
+	updateInfo();
 }
 
 // I/O
@@ -20,7 +20,6 @@ void Ping::init()
 //Reads and returns the read message ID
 uint16_t Ping::read()
 {
-
 	uint16_t read_attempt_count = 0;
 	while ((Serial1.available() >= MIN_PACKET_LENGTH) && (read_attempt_count <= SERIAL_READ_TIMEOUT))
 	{
@@ -68,8 +67,6 @@ uint16_t Ping::read()
 			//Validate Checksum
 			memcpy(&message_checksum, &checksum_buffer, sizeof(message_checksum));
 			bool checksum_match = validateChecksum();
-
-
 
 			if (!checksum_match)
 			{
@@ -119,9 +116,8 @@ void Ping::sendMessage(uint16_t m_id)
 
 void Ping::update()
 {
-
 	//Request a new reading
-	sendRequest(0x6, 1);
+	sendRequest(0x3, 1);
 
 	//Read
 	uint16_t receivedID = read();
@@ -139,6 +135,19 @@ uint8_t Ping::getConfidence()
 {
 	return ping_confidence;
 }
+
+void Ping::updateInfo()
+{
+	//Request a new reading
+	sendRequest(0x6, 1);
+
+	//Read
+	uint16_t receivedID = read();
+
+	//Deal with it
+	handleMessage(receivedID);
+}
+
 
 //Control Methods
 /////////////////
@@ -268,7 +277,7 @@ void Ping::handleMessage(uint16_t m_id)
 		{
 			template_ascii_text m_message;
 			memcpy(&m_message, &payload_buffer, sizeof(payload_size));
-			if (DEBUG)
+			if(DEBUG)
 			{
 				Serial.print(m_message.ascii_string);
 			}
@@ -276,7 +285,7 @@ void Ping::handleMessage(uint16_t m_id)
 		}
 
 		default:
-			return;
+			break;
 	}
 	cleanup();
 }
@@ -299,12 +308,6 @@ void Ping::printMessage(){
 		Serial.print("|");
 	}
 	Serial.println("");
-}
-
-void Ping::getInfo()
-{
-	Serial.println(ping_fw_version_major);
-	Serial.println(ping_voltage);
 }
 
 void Ping::cleanup()
