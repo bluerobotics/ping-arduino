@@ -85,7 +85,6 @@ public:
 	void sendRange(uint16_t start_mm, uint16_t range_mm);
 
 
-
 private:
 	float c;
 
@@ -111,7 +110,6 @@ private:
 	uint8_t  ping_gain_index       = 0;
 	uint8_t  ping_is_auto          = 0;
 
-
 	//Metadata Structures
 	/////////////////////
 
@@ -122,10 +120,12 @@ private:
 		uint16_t messageID;   //ID of message being sent
 		uint16_t reserved;    //Will possibly be used in the future
 	} message_header;
+	byte header_buffer[8];
 
 	uint16_t message_checksum;
+	byte checksum_buffer[2];
 
-	//Message Structures
+	//Payload Structures
 	/////////////////////
 
 	struct template_nack {
@@ -154,7 +154,7 @@ private:
 	};
 
 	struct template_ascii_text {
-		char ascii_string[256];             //Null Terminated
+		char ascii_string[32];             //Null terminated string
 	};
 
 	struct template_request {
@@ -162,25 +162,20 @@ private:
 		uint16_t rate;
 	};
 
+	//Used for incoming and outgoing messages
 	byte payload_buffer[32];
 	uint16_t payload_size = 0;
 
-	byte header_buffer[8];
-
-	byte checksum_buffer[2];
-
-	Stream *stream;
-
 	//TODO organize all these
 	///////////////////////////
+	Stream *stream;
 
 	bool validateChecksum();
 	void buildChecksum();
 
 	void buildHeader(uint16_t payloadLength, uint16_t messageID);
-	//void buildHeader(template_header* headerPtr, uint16_t payloadLength, uint16_t messageID);
-	void printHeader();
 
+	void printHeader();
 
 	void handleMessage(uint16_t m_id);
 	void cleanup();
