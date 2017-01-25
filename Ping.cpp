@@ -33,8 +33,8 @@ uint16_t Ping::read()
 			//Read header information
 			for (int i = 2; i < 8; i++)
 				header_buffer[i] = byte(Serial1.read());
-
 			memcpy(&message_header, &header_buffer, sizeof(message_header));
+
 			//Determine message ID
 			uint16_t messageID = message_header.messageID;
 			//Determine message body size
@@ -180,7 +180,7 @@ bool Ping::validateChecksum()
  	calculated_checksum = calculated_checksum & 0xffff;
 
 	bool match = (calculated_checksum == message_checksum);
-	if (!match)
+	if (DEBUG && !match)
 	{
 		Serial.print("Checksum Mismatch! Actual: ");
 		Serial.print(calculated_checksum);
@@ -238,7 +238,6 @@ void Ping::handleMessage(uint16_t m_id)
 		}
 
 		case 0x6:
-			//TODO Handle General Info
 			template_general_info m_message;
 			memcpy(&m_message, &payload_buffer, sizeof(m_message));
 			ping_fw_version_major = m_message.fw_version_major;
