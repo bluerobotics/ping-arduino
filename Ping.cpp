@@ -9,7 +9,6 @@ Ping::Ping(Stream *_stream)
 void Ping::init()
 {
 	//TODO update status and stuff on initialization
-
 	//Wait for boot
 	delay(100);
 }
@@ -107,7 +106,6 @@ void Ping::sendMessage(uint16_t m_id)
 void Ping::update()
 {
 	//Request a new reading
-	//TODO this is hard coded for now
 	sendRequest(0x3, 1);
 
 	//Read
@@ -120,13 +118,11 @@ void Ping::update()
 uint32_t Ping::getDistance()
 {
 	return ping_smoothed_distance;
-	return 0;
 }
 
 uint8_t Ping::getConfidence()
 {
 	return ping_confidence;
-	return 0;
 }
 
 //Control Methods
@@ -147,7 +143,6 @@ void Ping::sendRequest(uint16_t m_id, uint16_t m_rate)
 	payload_size = sizeof(message_request);
 
 	sendMessage(0x101);
-
 	cleanup();
 }
 
@@ -235,15 +230,23 @@ void Ping::handleMessage(uint16_t m_id)
 		}
 
 		case 0x6:
-			//Handle General Info
+			//TODO Handle General Info
+			template_general_info m_message;
+			memcpy(&m_message, &payload_buffer, sizeof(m_message));
+			ping_fw_version_major = m_message.fw_version_major;
+			ping_fw_version_minor = m_message.fw_version_minor;
+			ping_voltage = m_message.voltage;
+			ping_msec_per_ping = m_message.msec_per_ping;
+			ping_is_auto = m_message.is_auto;
 			break;
 
 		case 0x7:
-			//Handle ASCII Text
+			//TODO Handle ASCII Text
 
 		default:
 			return;
 	}
+	cleanup();
 }
 
 void Ping::cleanup()

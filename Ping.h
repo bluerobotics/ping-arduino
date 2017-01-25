@@ -143,7 +143,9 @@ private:
 		uint16_t fw_version_major;
 		uint16_t fw_version_minor;
 		uint16_t voltage;
-		uint16_t  error;
+		uint16_t msec_per_ping;
+		uint8_t  gain_index;
+		uint8_t  is_auto;
 	} message_general_info ;
 
 	struct template_ascii_text {
