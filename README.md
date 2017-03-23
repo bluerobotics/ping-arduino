@@ -22,12 +22,12 @@ This library exposes simple functionality for the device. Such as switching mode
 * [Support](http://docs.bluerobotics.com)
 * [License](http://github.com/bluerobotics/ping_arduino/blob/master/LICENSE)
 
-##Installing
+## Installing
 * `mkdir -p ~/sketchbook/libraries/`
 * `cd ~/sketchbook/libraries/`
 * `git clone --recursive http://github.com/bluerobotics/ping_arduino.git`
 * `cd ping_arduino`
 
-##Quick Start
+## Quick Start
 
 You can run a simple example that prints the distance reading repeatedly by flashing the basic_ping sketch.
