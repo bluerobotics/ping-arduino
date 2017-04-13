@@ -18,7 +18,7 @@ This library exposes simple functionality for the device. Such as switching mode
 
 * [API Reference](http://github.com/bluerobotics/ping_arduino/blob/master/docs/API.md)
 * [Device Specifications](http://www.bluerobotics.com/)
-* [Packet Format](http://github.com/bluerobotics/ping-python/blob/master/docs/Format.md)
+* [Serial Protocol](http://github.com/bluerobotics/ping-protocol)
 * [Support](http://docs.bluerobotics.com)
 * [License](http://github.com/bluerobotics/ping_arduino/blob/master/LICENSE)
 
