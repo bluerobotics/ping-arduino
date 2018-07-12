@@ -85,17 +85,26 @@ public:
         case WAIT_CHECKSUM_H:
             rxBuf[rxHead++] = byte;
         	  rxMsg = PingMessage(rxBuf, rxHead);
-
-            if (!rxMsg.verifyChecksum()) {
-                errors++;
-            } else {
-                parsed++;
+            for(uint8_t i = 0; i < rxMsg.msgDataLength(); i++) {
+              Serial3.print("MsgNow1: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxMsg.msgData[i]); Serial3.print('\t'); Serial3.println((uint16_t)&rxMsg.msgData[i]);
             }
-
             payload_length = 0;
             state = WAIT_START;
-
-            return NEW_MESSAGE;
+            Serial3.println("msgrx");
+            for(uint8_t i = 0; i < rxHead; i++) {
+              Serial3.print("RxBuf: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxBuf[i]); Serial3.println('\t');
+            }
+            uint16_t cs = rxMsg.calculateChecksum();
+            Serial3.print("check: "); Serial3.print(rxMsg.msgDataLength()); Serial3.print(' '); Serial3.print(rxMsg.checksum()); Serial3.print(' '); Serial3.println(cs);
+            for(uint8_t i = 0; i < rxMsg.msgDataLength(); i++) {
+              Serial3.print("MsgNow2: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxMsg.msgData[i]); Serial3.println('\t');
+            }
+//            if (!rxMsg.verifyChecksum()) {
+//                errors++;
+//            } else {
+//                parsed++;
+//                return NEW_MESSAGE;
+//            }
         }
 
         return state;
