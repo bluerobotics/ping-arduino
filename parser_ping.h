@@ -32,23 +32,25 @@ public:
         }
     }
 
-    uint8_t parseByte(uint8_t byte) override
+    // byte is reserved word in arduino :(
+    uint8_t parseByte(uint8_t bite) override
     {
         static volatile uint16_t payload_length = 0;
         static volatile uint8_t state = WAIT_START;
+        //debug("rxHead: %d\t byte: %d \t state: %d", rxHead, bite, state);
         switch(state) {
         case WAIT_START:
             rxHead = 0;
-            if (byte == 'B') {
-                rxBuf[rxHead++] = byte;
+            if (bite == 'B') {
+                rxBuf[rxHead++] = bite;
                 state++;
             } else {
                 errors++;
             }
             break;
         case WAIT_HEADER:
-            if (byte == 'R') {
-                rxBuf[rxHead++] = byte;
+            if (bite == 'R') {
+                rxBuf[rxHead++] = bite;
                 state++;
             } else {
                 errors++;
@@ -56,57 +58,50 @@ public:
             }
             break;
         case WAIT_LENGTH_L:
-            rxBuf[rxHead++] = byte;
-            payload_length = (uint8_t)byte;
+            rxBuf[rxHead++] = bite;
+            payload_length = (uint8_t)bite;
             state++;
             break;
         case WAIT_LENGTH_H:
-            rxBuf[rxHead++] = byte;
-            payload_length = (byte << 8) | payload_length;
+            rxBuf[rxHead++] = bite;
+            payload_length = (bite << 8) | payload_length;
             state++;
             break;
         case WAIT_MSG_ID_L:
         case WAIT_MSG_ID_H:
         case WAIT_SRC_ID:
         case WAIT_DST_ID:
-            rxBuf[rxHead++] = byte;
+            rxBuf[rxHead++] = bite;
             state++;
             break;
         case WAIT_PAYLOAD:
-            rxBuf[rxHead++] = byte;
-            if (--payload_length == 0) {
+            rxBuf[rxHead++] = bite;
+            payload_length--;
+
+            if(payload_length == 0) {
                 state++;
             }
             break;
         case WAIT_CHECKSUM_L:
-            rxBuf[rxHead++] = byte;
+            rxBuf[rxHead++] = bite;
             state++;
             break;
         case WAIT_CHECKSUM_H:
-            rxBuf[rxHead++] = byte;
-        	  rxMsg = PingMessage(rxBuf, rxHead);
+            rxBuf[rxHead++] = bite;
+            rxMsg = PingMessage(rxBuf, rxHead);
             for(uint8_t i = 0; i < rxMsg.msgDataLength(); i++) {
               Serial3.print("MsgNow1: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxMsg.msgData[i]); Serial3.print('\t'); Serial3.println((uint16_t)&rxMsg.msgData[i]);
             }
             payload_length = 0;
             state = WAIT_START;
-            Serial3.println("msgrx");
-            for(uint8_t i = 0; i < rxHead; i++) {
-              Serial3.print("RxBuf: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxBuf[i]); Serial3.println('\t');
-            }
-            uint16_t cs = rxMsg.calculateChecksum();
-            Serial3.print("check: "); Serial3.print(rxMsg.msgDataLength()); Serial3.print(' '); Serial3.print(rxMsg.checksum()); Serial3.print(' '); Serial3.println(cs);
-            for(uint8_t i = 0; i < rxMsg.msgDataLength(); i++) {
-              Serial3.print("MsgNow2: "); Serial3.print(i); Serial3.print('\t'); Serial3.print(rxMsg.msgData[i]); Serial3.println('\t');
-            }
-//            if (!rxMsg.verifyChecksum()) {
-//                errors++;
-//            } else {
-//                parsed++;
-//                return NEW_MESSAGE;
-//            }
-        }
 
+            if (!rxMsg.verifyChecksum()) {
+                errors++;
+            } else {
+                parsed++;
+                return NEW_MESSAGE;
+            }
+        }
         return state;
     }
 
