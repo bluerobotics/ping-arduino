@@ -1,12 +1,12 @@
 static char _debug_buffer[100];
 
-#include <pingmessage_all.h>
-#include "parser_ping.h"
-
 HardwareSerial& pingSerial = Serial;
 HardwareSerial& debugSerial = Serial3;
 
 #define debug(fmt, args ...)  do {sprintf(_debug_buffer, "[%s:%d]: " fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
+
+#include <pingmessage_all.h>
+#include "parser_ping.h"
 
 void setup() {
   pingSerial.begin(115200);
@@ -16,27 +16,29 @@ void setup() {
 }
 
 void loop() {
-    debugSerial.println("sup1");
 
   static PingParser p;
   static uint8_t counter = 0;
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
+    Ping1DNamespace::Profile,
+
     Ping1DNamespace::Voltage_5,
     Ping1DNamespace::Processor_temperature,
     Ping1DNamespace::Fw_version,
-    Ping1DNamespace::Profile,
   };
   static int requestIdsSize = sizeof(requestIds)/sizeof(requestIds[0]);
   counter++;
   counter = counter%requestIdsSize;
 
   ping_msg_ping1D_empty m;
-  m.set_id(requestIds[counter]);
+  m.set_id(Ping1DNamespace::Profile);
   m.updateChecksum();
   pingSerial.write(m.msgData, m.msgDataLength());
+ // while(!pingSerial.available());
   delay(300);
+  debug("\navail: %d", pingSerial.available());
+  while(pingSerial.available()) { 
 
-  while(pingSerial.available()) {
     if(p.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
       switch(p.rxMsg.message_id()) {
 //
@@ -98,5 +100,4 @@ void loop() {
     }
   }
   while(1);
-  //delay(1000);
 }
