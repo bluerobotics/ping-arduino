@@ -1,4 +1,4 @@
-static char _debug_buffer[100];
+static char _debug_buffer[200];
 
 HardwareSerial& pingSerial = Serial;
 HardwareSerial& debugSerial = Serial3;
@@ -7,6 +7,7 @@ HardwareSerial& debugSerial = Serial3;
 
 #include <pingmessage_all.h>
 #include "parser_ping.h"
+  static PingParser p;
 
 void setup() {
   pingSerial.begin(115200);
@@ -15,9 +16,26 @@ void setup() {
   debugSerial.println("sup");
 }
 
+bool waitResponse(uint16_t timeout_ms = 300)
+{
+  uint32_t tstart = millis();
+  while (millis() < tstart + timeout_ms) {
+
+      while(pingSerial.available()) { 
+
+        if (p.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
+          debug("got response in %dms", millis() - tstart);
+          return true;
+        }
+      }
+  }
+        debugSerial.println("timeout");
+  //p.reset();
+  return false;
+}
+
 void loop() {
 
-  static PingParser p;
   static uint8_t counter = 0;
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
     Ping1DNamespace::Profile,
@@ -31,22 +49,18 @@ void loop() {
   counter = counter%requestIdsSize;
 
   ping_msg_ping1D_empty m;
-  m.set_id(Ping1DNamespace::Profile);
+  m.set_id(requestIds[counter]);
   m.updateChecksum();
   pingSerial.write(m.msgData, m.msgDataLength());
- // while(!pingSerial.available());
-  delay(300);
-  debug("\navail: %d", pingSerial.available());
-  while(pingSerial.available()) { 
-
-    if(p.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
+  
+    if(waitResponse()) {
       switch(p.rxMsg.message_id()) {
-//
-//        case Ping1DNamespace::Voltage_5: {
-//          ping_msg_ping1D_pcb_temperature m(p.rxMsg);
-//          debug("> Pcb voltage: %d",m.temp());
-//          break;
-//        }
+
+        case Ping1DNamespace::Voltage_5: {
+          ping_msg_ping1D_pcb_temperature m(p.rxMsg);
+          debug("> Pcb voltage: %d",m.temp());
+          break;
+        }
 //
 //        case Ping1DNamespace::Nack: {
 //          ping_msg_ping1D_nack m(p.rxMsg);
@@ -92,12 +106,15 @@ void loop() {
 //        }
 
         default:
-          debug("> id: %d\t Length: %d\t parsed: %d\t errors: %u", p.rxMsg.message_id(), p.rxMsg.payload_length(), p.parsed, p.errors);
+          debug("> id: %d\t Length: %d\t parsed: %d\t errors: %d", p.rxMsg.message_id(), p.rxMsg.payload_length(), p.errors, p.parsed);
+                    debug("parsed %d",p.parsed);
+                    debug("errors %d",p.errors);
+
+
           break;
       }
 
       digitalWrite(13, !digitalRead(13));
     }
-  }
-  while(1);
+  
 }
