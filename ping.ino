@@ -39,7 +39,6 @@ void loop() {
   static uint8_t counter = 0;
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
     Ping1DNamespace::Profile,
-
     Ping1DNamespace::Voltage_5,
     Ping1DNamespace::Processor_temperature,
     Ping1DNamespace::Fw_version,
@@ -56,7 +55,7 @@ void loop() {
     if(waitResponse()) {
       switch(p.rxMsg.message_id()) {
 
-        case Ping1DNamespace::Voltage_5: {
+        case Ping1DNamespace::Processor_temperature: {
           ping_msg_ping1D_pcb_temperature m(p.rxMsg);
           debug("> Pcb voltage: %d",m.temp());
           break;
@@ -109,8 +108,6 @@ void loop() {
           debug("> id: %d\t Length: %d\t parsed: %d\t errors: %d", p.rxMsg.message_id(), p.rxMsg.payload_length(), p.errors, p.parsed);
                     debug("parsed %d",p.parsed);
                     debug("errors %d",p.errors);
-
-
           break;
       }
 
