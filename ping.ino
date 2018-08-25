@@ -1,12 +1,12 @@
 static char _debug_buffer[200];
 
 HardwareSerial& pingSerial = Serial;
-HardwareSerial& debugSerial = Serial3;
+HardwareSerial& debugSerial = Serial;
 
 #define debug(fmt, args ...)  do {sprintf(_debug_buffer, "[%s:%d]: " fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
 
 #include <pingmessage_all.h>
-#include "parser_ping.h"
+#include "ping_parser.h"
   static PingParser p;
 
 void setup() {
@@ -16,7 +16,7 @@ void setup() {
   debugSerial.println("sup");
 }
 
-bool waitResponse(uint16_t timeout_ms = 300)
+bool waitResponse(uint16_t timeout_ms = 350)
 {
   uint32_t tstart = millis();
   while (millis() < tstart + timeout_ms) {
@@ -35,7 +35,24 @@ bool waitResponse(uint16_t timeout_ms = 300)
 }
 
 void loop() {
-
+	while(millis() < 3000) {
+	  ping_msg_ping1D_distance mmm;
+	  mmm.updateChecksum();
+	  pingSerial.write(mmm.msgData, mmm.msgDataLength());
+	  delay(20);
+	}
+  while(1) {
+	  ping_msg_ping1D_ack m;
+	  m.updateChecksum();
+	  pingSerial.write(m.msgData, m.msgDataLength());
+//	  ping_msg_ping1D_distance m2;
+//	  m2.updateChecksum();
+//	  pingSerial.write(m2.msgData, m2.msgDataLength());
+//	  ping_msg_ping1D_distance m3;
+//	  pingSerial.write(m3.msgData, m3.msgDataLength());
+  	delay(20);
+  }
+  
   static uint8_t counter = 0;
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
     Ping1DNamespace::Profile,

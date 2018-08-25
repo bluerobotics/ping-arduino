@@ -1,19 +1,21 @@
 #pragma once
 
-#include "parser.h"
 #include "pingmessage.h"
 
-class PingParser : public Parser
+class PingParser
 {
 public:
-    PingParser()   : rxMsg(bufSize), rxBuf(rxMsg.msgData)   {}
+    PingParser() : rxMsg(bufSize), rxBuf(rxMsg.msgData) {}
+    ~PingParser() {};
 
+    uint32_t parsed = 0; // number of messages/packets successfully parsed
+    uint32_t errors = 0; // number of parse errors
+    
     PingMessage rxMsg;
 
     static const uint16_t bufSize = 256;
-//    uint8_t rxBuf[256];
-    uint8_t* rxBuf;
-    uint8_t rxHead = 0;
+    uint8_t* rxBuf; // buffer for parsing. Use the internal buffer of rxMsg to save on mallocs (it needs only one!)
+    uint8_t rxHead = 0; // index of first empty data
     
     enum {
         NEW_MESSAGE,   // Just got a complete checksum-verified message
@@ -30,14 +32,7 @@ public:
         WAIT_CHECKSUM_H, // Waiting for the checksum high byte
     };
 
-    void parseBuffer(uint8_t* buf, uint16_t len) override
-    {
-        for(uint16_t i = 0; i < len; i++) {
-            parseByte(buf[i]);
-        }
-    }
-
-    uint8_t parseByte(uint8_t ibyte) override
+    uint8_t parseByte(uint8_t bite)
     {
         static volatile uint16_t payload_length = 0;
         static volatile uint8_t state = WAIT_START;
@@ -45,16 +40,16 @@ public:
         switch(state) {
         case WAIT_START:
             rxHead = 0;
-            if (ibyte == 'B') {
-                rxBuf[rxHead++] = ibyte;
+            if (bite == 'B') {
+                rxBuf[rxHead++] = bite;
                 state++;
             } else {
                 errors++;
             }
             break;
         case WAIT_HEADER:
-            if (ibyte == 'R') {
-                rxBuf[rxHead++] = ibyte;
+            if (bite == 'R') {
+                rxBuf[rxHead++] = bite;
                 state++;
             } else {
                 errors++;
@@ -62,13 +57,13 @@ public:
             }
             break;
         case WAIT_LENGTH_L:
-            rxBuf[rxHead++] = ibyte;
-            payload_length = (uint8_t)ibyte;
+            rxBuf[rxHead++] = bite;
+            payload_length = (uint8_t)bite;
             state++;
             break;
         case WAIT_LENGTH_H:
-            rxBuf[rxHead++] = ibyte;
-            payload_length = (ibyte << 8) | payload_length;
+            rxBuf[rxHead++] = bite;
+            payload_length = (bite << 8) | payload_length;
             if(payload_length < bufSize - 8 - 2) {
               state++;
             } else {
@@ -80,11 +75,11 @@ public:
         case WAIT_MSG_ID_H:
         case WAIT_SRC_ID:
         case WAIT_DST_ID:
-            rxBuf[rxHead++] = ibyte;
+            rxBuf[rxHead++] = bite;
             state++;
             break;
         case WAIT_PAYLOAD:
-            rxBuf[rxHead++] = ibyte;
+            rxBuf[rxHead++] = bite;
             payload_length--;
 
             if(payload_length == 0) {
@@ -92,11 +87,11 @@ public:
             }
             break;
         case WAIT_CHECKSUM_L:
-            rxBuf[rxHead++] = ibyte;
+            rxBuf[rxHead++] = bite;
             state++;
             break;
         case WAIT_CHECKSUM_H:
-            rxBuf[rxHead++] = ibyte;
+            rxBuf[rxHead++] = bite;
 
             payload_length = 0;
             state = WAIT_START;
