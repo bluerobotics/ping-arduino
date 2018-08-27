@@ -8,13 +8,18 @@ HardwareSerial& debugSerial = Serial;
 
 #include <pingmessage_all.h>
 #include "ping_parser.h"
-  static PingParser p;
+#include "ping1d.h"
+
+static PingParser p;
+
+static Ping1D pd { pingSerial, 115200 };
 
 void toggleLed() {
   digitalWrite(13, !digitalRead(13));
 }
+
 void setup() {
-  pingSerial.begin(19200);
+  //pingSerial.begin(19200);
   debugSerial.begin(115200);
   pinMode(13, OUTPUT);
   debugSerial.println("sup");
@@ -39,6 +44,10 @@ bool waitResponse(uint16_t timeout_ms = 350)
 }
 
 void loop() {
+  pd.request(Ping1DNamespace::Voltage_5);
+
+  while (1); // stop
+  
   static uint8_t counter = 0;
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
     Ping1DNamespace::Profile,
