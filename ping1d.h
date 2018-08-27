@@ -1,23 +1,19 @@
 #pragma once
-#include "SoftwareSerial.h"
-#include <pingmessage_all.h>
 
+#include "Stream.h"
+#include <pingmessage_all.h>
 
 class Ping1D
 {
 public:
-  Ping1D(SoftwareSerial& ser, uint32_t baudrate) : _serial ( ser )
+  Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser )
   {
-    _serial.begin(baudrate);
   }
   
   PingMessage* read()
   {
-      uint32_t tstart = millis();
-
-    while(_serial.available()) {
-        if (_parser.parseByte(_serial.read()) == PingParser::NEW_MESSAGE) {
-          debug("got response in %dms", millis() - tstart);
+    while(_stream.available()) {
+        if (_parser.parseByte(_stream.read()) == PingParser::NEW_MESSAGE) {
           handleMessage(&_parser.rxMsg);
           return &_parser.rxMsg;
         }
@@ -27,7 +23,7 @@ public:
   
   size_t write(uint8_t* data, uint16_t length)
   {
-    return _serial.write(data, length);
+    return _stream.write(data, length);
   }
   
   bool initialize()
@@ -81,7 +77,7 @@ public:
   
   
 private:
-  SoftwareSerial& _serial;
+  Stream& _stream;
   PingParser _parser;
 };
 

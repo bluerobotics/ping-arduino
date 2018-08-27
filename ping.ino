@@ -19,7 +19,7 @@ void toggleLed() {
 }
 
 void setup() {
-  //pingSerial.begin(19200);
+  pingSerial.begin(19200);
   debugSerial.begin(115200);
   pinMode(13, OUTPUT);
   debugSerial.println("sup");
@@ -44,7 +44,7 @@ bool waitResponse(uint16_t timeout_ms = 350)
 }
 
 void loop() {
-  pd.request(Ping1DNamespace::Voltage_5);
+  while(1) if (pd.request(Ping1DNamespace::Voltage_5)) toggleLed();
 
   while (1); // stop
   
