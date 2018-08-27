@@ -8,8 +8,8 @@ public:
     PingParser() : rxMsg(bufSize), rxBuf(rxMsg.msgData) {}
     ~PingParser() {};
 
-    uint32_t parsed = 0; // number of messages/packets successfully parsed
-    uint32_t errors = 0; // number of parse errors
+    uint16_t parsed = 0; // number of messages/packets successfully parsed
+    uint16_t errors = 0; // number of parse errors
     
     PingMessage rxMsg;
 
@@ -43,8 +43,6 @@ public:
             if (bite == 'B') {
                 rxBuf[rxHead++] = bite;
                 state++;
-            } else {
-                errors++;
             }
             break;
         case WAIT_HEADER:
@@ -52,7 +50,6 @@ public:
                 rxBuf[rxHead++] = bite;
                 state++;
             } else {
-                errors++;
                 state = WAIT_START;
             }
             break;
@@ -67,7 +64,6 @@ public:
             if(payload_length < bufSize - 8 - 2) {
               state++;
             } else {
-              errors++;
               state = WAIT_START;
             }
             break;
