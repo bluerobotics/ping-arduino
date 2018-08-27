@@ -12,7 +12,7 @@ HardwareSerial& debugSerial = Serial;
 
 static PingParser p;
 
-static Ping1D pd { pingSerial, 115200 };
+static Ping1D pd { pingSerial, 19200 };
 
 void toggleLed() {
   digitalWrite(13, !digitalRead(13));
