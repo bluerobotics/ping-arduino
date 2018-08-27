@@ -44,6 +44,9 @@ bool waitResponse(uint16_t timeout_ms = 350)
 }
 
 void loop() {
+  auto msg = pd.request<ping_msg_ping1D_voltage_5>();
+  debug("> Pcb voltage: %d", msg->mvolts());
+
   while(1) if (pd.request(Ping1DNamespace::Voltage_5)) toggleLed();
 
   while (1); // stop

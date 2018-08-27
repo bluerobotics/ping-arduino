@@ -72,9 +72,15 @@ public:
     }
   }
 
-
-
-  
+  template <typename T>
+  T* request() {
+    T resp; // todo there should be some other (static) way to get the message id?
+    static ping_msg_ping1D_empty req;
+    req.set_id(resp.message_id());
+    req.updateChecksum();
+    write(req.msgData, req.msgDataLength());
+    return (T*)waitReply(resp.message_id());
+  }
   
 private:
   Stream& _stream;
