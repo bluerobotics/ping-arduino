@@ -31,15 +31,6 @@ public:
     return true;
   }
   
-  PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id)
-  {
-    ping_msg_ping1D_empty msg;
-    msg.set_id(id);
-    msg.updateChecksum();
-    write(msg.msgData, msg.msgDataLength());
-    return waitReply(id);
-  }
-  
   PingMessage* waitReply(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms=400)
   {
       uint32_t tstart = millis();
@@ -72,6 +63,17 @@ public:
     }
   }
 
+  // ex ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
+  PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id)
+  {
+    ping_msg_ping1D_empty msg;
+    msg.set_id(id);
+    msg.updateChecksum();
+    write(msg.msgData, msg.msgDataLength());
+    return waitReply(id);
+  }
+  
+  // ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
   template <typename T>
   T* request() {
     T resp; // todo there should be some other (static) way to get the message id?

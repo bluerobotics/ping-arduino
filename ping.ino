@@ -6,6 +6,8 @@ HardwareSerial& debugSerial = Serial;
 
 #define debug(fmt, args ...)  do {sprintf(_debug_buffer, "[%s:%d]: " fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
 
+#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
+
 #include <pingmessage_all.h>
 #include "ping_parser.h"
 #include "ping1d.h"
@@ -44,9 +46,23 @@ bool waitResponse(uint16_t timeout_ms = 350)
 }
 
 void loop() {
-  auto msg = pd.request<ping_msg_ping1D_voltage_5>();
-  debug("> Pcb voltage: %d", msg->mvolts());
 
+  while (1) {
+    
+      ping_msg_ping1D_distance_simple* msg(pd.request(Ping1DNamespace::Distance_simple));
+      if (msg) {
+              printf("> Distance: %d\tConfidence: %d", msg->distance(), msg->confidence());
+
+      }
+      ping_msg_ping1D_voltage_5* msg(pd.request(Ping1DNamespace::Voltage_5));
+      if (msg) {
+              printf("> Distance: %d\tConfidence: %d", msg->distance(), msg->confidence());
+
+      }
+      delay(50);
+  }
+
+  
   while(1) if (pd.request(Ping1DNamespace::Voltage_5)) toggleLed();
 
   while (1); // stop
@@ -62,6 +78,7 @@ void loop() {
   counter++;
   counter = counter%requestIdsSize;
 
+  
   ping_msg_ping1D_empty m;
   m.set_id(requestIds[counter]);
   m.updateChecksum();
