@@ -97,6 +97,11 @@ public:
             } else {
                 debug("verified");
                 parsed++;
+                if (rxMsg.message_id() == Ping1DNamespace::Voltage_5) {
+                                  ping_msg_ping1D_voltage_5 m(rxMsg);
+                                  debug("got voltage %d:", m.mvolts());
+
+                }
                 return NEW_MESSAGE;
             }
         }

@@ -48,17 +48,22 @@ bool waitResponse(uint16_t timeout_ms = 350)
 void loop() {
 
   while (1) {
-    
-      ping_msg_ping1D_distance_simple* msg(pd.request(Ping1DNamespace::Distance_simple));
-      if (msg) {
-              printf("> Distance: %d\tConfidence: %d", msg->distance(), msg->confidence());
+      PingMessage* msg;
 
-      }
-      ping_msg_ping1D_voltage_5* msg(pd.request(Ping1DNamespace::Voltage_5));
+      msg = pd.request(Ping1DNamespace::Distance_simple);
+      
       if (msg) {
-              printf("> Distance: %d\tConfidence: %d", msg->distance(), msg->confidence());
-
+          ping_msg_ping1D_distance_simple m(*msg);
+          printf("> Distance: %d\tConfidence: %d", m.distance(), m.confidence());
       }
+      
+      msg = pd.request(Ping1DNamespace::Voltage_5);
+      
+      if (msg) {
+        ping_msg_ping1D_voltage_5 m = *msg;
+        printf("> Voltage: %d", m.mvolts());
+      }
+      
       delay(50);
   }
 

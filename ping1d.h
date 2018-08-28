@@ -36,6 +36,14 @@ public:
       uint32_t tstart = millis();
       while (millis() < tstart + timeout_ms) {
         PingMessage* pmsg = read();
+        if (!pmsg) {
+          return nullptr;
+        }
+        if (pmsg->message_id() == Ping1DNamespace::Voltage_5) {
+                  ping_msg_ping1D_voltage_5 m(*pmsg);
+                  debug("got voltage %d:", m.mvolts());
+        
+        }
         if (pmsg->message_id() == Ping1DNamespace::Nack) {
           ping_msg_ping1D_nack nack(*pmsg);
           debug("got NACK (%d) %s", nack.id_to_nack(), nack.err_msg());
@@ -58,6 +66,12 @@ public:
       case Ping1DNamespace::Nack:
 
       break;
+      case Ping1DNamespace::Voltage_5:
+      {
+          ping_msg_ping1D_voltage_5 m(*pmsg);
+          debug("got voltage %d:", m.mvolts());
+          break;
+      }
       default:
       break;
     }
@@ -70,7 +84,19 @@ public:
     msg.set_id(id);
     msg.updateChecksum();
     write(msg.msgData, msg.msgDataLength());
-    return waitReply(id);
+    PingMessage* pmsg = waitReply(id);
+
+    if (pmsg->message_id() == Ping1DNamespace::Distance_simple) {
+      ping_msg_ping1D_distance_simple m(*pmsg);
+      debug("got distance %d\tconfidence:", m.distance(), m.confidence());
+    }
+    
+    if (pmsg->message_id() == Ping1DNamespace::Voltage_5) {
+      ping_msg_ping1D_voltage_5 m(*pmsg);
+      debug("got voltage %d:", m.mvolts());
+    }
+    
+    return pmsg;
   }
   
   // ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
