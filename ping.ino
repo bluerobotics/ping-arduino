@@ -100,7 +100,7 @@ void loop() {
 
         case Ping1DNamespace::Nack: {
           ping_msg_ping1D_nack m(p.rxMsg);
-          debug("> Nack text: %s", m.err_msg());
+          debug("> Nack text: %s", m.nack_msg());
           break;
         }
 
@@ -130,8 +130,8 @@ void loop() {
           debug("> confidence: %d", m.confidence());
           debug("> pulse_usec: %d", m.pulse_usec());
           debug("> ping_number: %d", m.ping_number());
-          debug("> start_mm: %d", m.start_mm());
-          debug("> length_mm: %d", m.length_mm());
+          debug("> start_mm: %d", m.scan_start());
+          debug("> length_mm: %d", m.scan_length());
           debug("> gain_index: %d", m.gain_index());
           debug("> num_points: %d", m.num_points());
           debug("> gain_index: %d", m.gain_index());

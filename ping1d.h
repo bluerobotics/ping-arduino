@@ -46,8 +46,8 @@ public:
         }
         if (pmsg->message_id() == Ping1DNamespace::Nack) {
           ping_msg_ping1D_nack nack(*pmsg);
-          debug("got NACK (%d) %s", nack.id_to_nack(), nack.err_msg());
-          if (nack.id_to_nack() == id) {
+          debug("got NACK (%d) %s", nack.nacked_id(), nack.nack_msg());
+          if (nack.nacked_id() == id) {
             return nullptr;
           }
         }
