@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Stream.h"
-#include <pingmessage_all.h>
+#include "pingmessage_all.h"
 
 class Ping1D
 {

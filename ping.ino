@@ -8,7 +8,7 @@ HardwareSerial& debugSerial = Serial;
 
 #define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
 
-#include <pingmessage_all.h>
+#include "pingmessage_all.h"
 #include "ping_parser.h"
 #include "ping1d.h"
 
