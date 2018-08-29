@@ -60,7 +60,7 @@ void loop() {
       msg = pd.request(Ping1DNamespace::Voltage_5);
       
       if (msg) {
-        ping_msg_ping1D_voltage_5 m = *msg;
+        ping_msg_ping1D_voltage_5 m(*msg);
         printf("> Voltage: %d", m.mvolts());
       }
       
