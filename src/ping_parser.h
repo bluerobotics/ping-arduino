@@ -76,7 +76,9 @@ public:
             break;
         case WAIT_PAYLOAD:
             rxBuf[rxHead++] = bite;
-            payload_length--;
+            if(payload_length) {
+                payload_length--;
+            }
 
             if(payload_length == 0) {
                 state++;
