@@ -6,7 +6,7 @@ HardwareSerial& debugSerial = Serial;
 
 #define debug(fmt, args ...)  do {sprintf(_debug_buffer, "[%s:%d]: " fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
 
-#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
+#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); debugSerial.print(_debug_buffer);} while(0)
 
 #include "pingmessage_all.h"
 #include "ping_parser.h"
