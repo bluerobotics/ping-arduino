@@ -12,8 +12,8 @@
 class ping_msg_ping1D_profile : public PingMessage
 {
 public:
-    ping_msg_ping1D_profile(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_profile(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_profile(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_profile(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_profile()
         : PingMessage { 236 }
     {
@@ -25,31 +25,31 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t distance() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_distance(uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
-    uint16_t confidence() { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_confidence(uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_usec() { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_usec(uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
-    uint32_t ping_number() { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
-    void set_ping_number(uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
-    uint32_t scan_start() { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
-    void set_scan_start(uint32_t scan_start) { memcpy((payload_data(12)), &scan_start, 4);};
-    uint32_t scan_length() { uint32_t d; memcpy(&d, (payload_data(16)), 4); return d; };
-    void set_scan_length(uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
-    uint32_t gain_index() { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
-    void set_gain_index(uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
-    uint16_t num_points() { uint16_t d; memcpy(&d, (payload_data(24)), 2); return d; };
-    void set_num_points(uint16_t num_points) { memcpy((payload_data(24)), &num_points, 2);};
-    uint8_t* data() { return (payload_data(26)); }
-    void set_data_at(uint16_t i, uint8_t data) { memcpy((payload_data(26 + i)), &data, 1); }
+    uint32_t distance() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
+    uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
+    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
+    uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
+    void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
+    uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
+    void set_scan_start(const uint32_t scan_start) { memcpy((payload_data(12)), &scan_start, 4);};
+    uint32_t scan_length() const { uint32_t d; memcpy(&d, (payload_data(16)), 4); return d; };
+    void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
+    uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
+    void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
+    uint16_t num_points() const { uint16_t d; memcpy(&d, (payload_data(24)), 2); return d; };
+    void set_num_points(const uint16_t num_points) { memcpy((payload_data(24)), &num_points, 2);};
+    uint8_t* data() const { return (payload_data(26)); }
+    void set_data_at(const uint16_t i, const uint8_t data) { memcpy((payload_data(26 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_voltage_5 : public PingMessage
 {
 public:
-    ping_msg_ping1D_voltage_5(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_voltage_5(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_voltage_5(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_voltage_5(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_voltage_5()
         : PingMessage { 12 }
     {
@@ -61,15 +61,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t mvolts() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_mvolts(uint16_t mvolts) { memcpy((payload_data(0)), &mvolts, 2);};
+    uint16_t mvolts() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_mvolts(const uint16_t mvolts) { memcpy((payload_data(0)), &mvolts, 2);};
 };
 
 class ping_msg_ping1D_set_mode_auto : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_mode_auto(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_mode_auto(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_mode_auto(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_mode_auto(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_mode_auto()
         : PingMessage { 11 }
     {
@@ -81,15 +81,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t mode_auto() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_mode_auto(uint8_t mode_auto) { memcpy((payload_data(0)), &mode_auto, 1);};
+    uint8_t mode_auto() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_mode_auto(const uint8_t mode_auto) { memcpy((payload_data(0)), &mode_auto, 1);};
 };
 
 class ping_msg_ping1D_goto_bootloader : public PingMessage
 {
 public:
-    ping_msg_ping1D_goto_bootloader(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_goto_bootloader(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_goto_bootloader(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_goto_bootloader(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_goto_bootloader()
         : PingMessage { 10 }
     {
@@ -106,8 +106,8 @@ public:
 class ping_msg_ping1D_undefined : public PingMessage
 {
 public:
-    ping_msg_ping1D_undefined(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_undefined(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_undefined(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_undefined(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_undefined()
         : PingMessage { 10 }
     {
@@ -124,8 +124,8 @@ public:
 class ping_msg_ping1D_fw_version : public PingMessage
 {
 public:
-    ping_msg_ping1D_fw_version(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_fw_version(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_fw_version(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_fw_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_fw_version()
         : PingMessage { 16 }
     {
@@ -137,21 +137,21 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t device_type() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_device_type(uint8_t device_type) { memcpy((payload_data(0)), &device_type, 1);};
-    uint8_t device_model() { uint8_t d; memcpy(&d, (payload_data(1)), 1); return d; };
-    void set_device_model(uint8_t device_model) { memcpy((payload_data(1)), &device_model, 1);};
-    uint16_t fw_version_major() { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
-    void set_fw_version_major(uint16_t fw_version_major) { memcpy((payload_data(2)), &fw_version_major, 2);};
-    uint16_t fw_version_minor() { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_fw_version_minor(uint16_t fw_version_minor) { memcpy((payload_data(4)), &fw_version_minor, 2);};
+    uint8_t device_type() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_device_type(const uint8_t device_type) { memcpy((payload_data(0)), &device_type, 1);};
+    uint8_t device_model() const { uint8_t d; memcpy(&d, (payload_data(1)), 1); return d; };
+    void set_device_model(const uint8_t device_model) { memcpy((payload_data(1)), &device_model, 1);};
+    uint16_t fw_version_major() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
+    void set_fw_version_major(const uint16_t fw_version_major) { memcpy((payload_data(2)), &fw_version_major, 2);};
+    uint16_t fw_version_minor() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_fw_version_minor(const uint16_t fw_version_minor) { memcpy((payload_data(4)), &fw_version_minor, 2);};
 };
 
 class ping_msg_ping1D_pcb_temperature : public PingMessage
 {
 public:
-    ping_msg_ping1D_pcb_temperature(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_pcb_temperature(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_pcb_temperature(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_pcb_temperature(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_pcb_temperature()
         : PingMessage { 12 }
     {
@@ -163,15 +163,35 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t temp() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_temp(uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
+    uint16_t temp() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_temp(const uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
+};
+
+class ping_msg_ping1D_ping_enable : public PingMessage
+{
+public:
+    ping_msg_ping1D_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_ping_enable()
+        : PingMessage { 11 }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[4] = 1215; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint8_t enable() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_enable(const uint8_t enable) { memcpy((payload_data(0)), &enable, 1);};
 };
 
 class ping_msg_ping1D_ascii_text : public PingMessage
 {
 public:
-    ping_msg_ping1D_ascii_text(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_ascii_text(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_ascii_text(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_ascii_text(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ascii_text()
         : PingMessage { 10 }
     {
@@ -183,14 +203,14 @@ public:
         msgData[7] = 0;
     }
 
-    char* msg() { return (char*)(payload_data(0)); }
+    char* msg() const { return (char*)(payload_data(0)); }
 };
 
 class ping_msg_ping1D_ping_rate : public PingMessage
 {
 public:
-    ping_msg_ping1D_ping_rate(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_ping_rate(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_ping_rate(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_ping_rate(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ping_rate()
         : PingMessage { 12 }
     {
@@ -202,15 +222,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t ping_rate() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_ping_rate(uint16_t ping_rate) { memcpy((payload_data(0)), &ping_rate, 2);};
+    uint16_t ping_rate() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_ping_rate(const uint16_t ping_rate) { memcpy((payload_data(0)), &ping_rate, 2);};
 };
 
 class ping_msg_ping1D_set_speed_of_sound : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_speed_of_sound(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_speed_of_sound(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_speed_of_sound()
         : PingMessage { 14 }
     {
@@ -222,15 +242,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t speed_of_sound() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_speed_of_sound(uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
+    uint32_t speed_of_sound() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_speed_of_sound(const uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
 };
 
 class ping_msg_ping1D_set_device_id : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_device_id(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_device_id(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_device_id(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_device_id(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_device_id()
         : PingMessage { 11 }
     {
@@ -242,15 +262,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t device_id() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_device_id(uint8_t device_id) { memcpy((payload_data(0)), &device_id, 1);};
+    uint8_t device_id() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_device_id(const uint8_t device_id) { memcpy((payload_data(0)), &device_id, 1);};
 };
 
 class ping_msg_ping1D_continuous_start : public PingMessage
 {
 public:
-    ping_msg_ping1D_continuous_start(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_continuous_start(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_continuous_start(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_continuous_start(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_continuous_start()
         : PingMessage { 12 }
     {
@@ -262,15 +282,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t id() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_id(uint16_t id) { memcpy((payload_data(0)), &id, 2);};
+    uint16_t id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_id(const uint16_t id) { memcpy((payload_data(0)), &id, 2);};
 };
 
 class ping_msg_ping1D_gain_index : public PingMessage
 {
 public:
-    ping_msg_ping1D_gain_index(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_gain_index(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_gain_index(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_gain_index()
         : PingMessage { 14 }
     {
@@ -282,15 +302,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t gain_index() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_gain_index(uint32_t gain_index) { memcpy((payload_data(0)), &gain_index, 4);};
+    uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(0)), &gain_index, 4);};
 };
 
 class ping_msg_ping1D_general_info : public PingMessage
 {
 public:
-    ping_msg_ping1D_general_info(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_general_info(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_general_info(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_general_info(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_general_info()
         : PingMessage { 20 }
     {
@@ -302,25 +322,25 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t fw_version_major() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_fw_version_major(uint16_t fw_version_major) { memcpy((payload_data(0)), &fw_version_major, 2);};
-    uint16_t fw_version_minor() { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
-    void set_fw_version_minor(uint16_t fw_version_minor) { memcpy((payload_data(2)), &fw_version_minor, 2);};
-    uint16_t mvolts() { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_mvolts(uint16_t mvolts) { memcpy((payload_data(4)), &mvolts, 2);};
-    uint16_t ping_rate() { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_ping_rate(uint16_t ping_rate) { memcpy((payload_data(6)), &ping_rate, 2);};
-    uint8_t gain_index() { uint8_t d; memcpy(&d, (payload_data(8)), 1); return d; };
-    void set_gain_index(uint8_t gain_index) { memcpy((payload_data(8)), &gain_index, 1);};
-    uint8_t mode_auto() { uint8_t d; memcpy(&d, (payload_data(9)), 1); return d; };
-    void set_mode_auto(uint8_t mode_auto) { memcpy((payload_data(9)), &mode_auto, 1);};
+    uint16_t fw_version_major() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_fw_version_major(const uint16_t fw_version_major) { memcpy((payload_data(0)), &fw_version_major, 2);};
+    uint16_t fw_version_minor() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
+    void set_fw_version_minor(const uint16_t fw_version_minor) { memcpy((payload_data(2)), &fw_version_minor, 2);};
+    uint16_t mvolts() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_mvolts(const uint16_t mvolts) { memcpy((payload_data(4)), &mvolts, 2);};
+    uint16_t ping_rate() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_ping_rate(const uint16_t ping_rate) { memcpy((payload_data(6)), &ping_rate, 2);};
+    uint8_t gain_index() const { uint8_t d; memcpy(&d, (payload_data(8)), 1); return d; };
+    void set_gain_index(const uint8_t gain_index) { memcpy((payload_data(8)), &gain_index, 1);};
+    uint8_t mode_auto() const { uint8_t d; memcpy(&d, (payload_data(9)), 1); return d; };
+    void set_mode_auto(const uint8_t mode_auto) { memcpy((payload_data(9)), &mode_auto, 1);};
 };
 
 class ping_msg_ping1D_device_id : public PingMessage
 {
 public:
-    ping_msg_ping1D_device_id(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_device_id(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_device_id(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_device_id(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_device_id()
         : PingMessage { 11 }
     {
@@ -332,15 +352,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t device_id() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_device_id(uint8_t device_id) { memcpy((payload_data(0)), &device_id, 1);};
+    uint8_t device_id() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_device_id(const uint8_t device_id) { memcpy((payload_data(0)), &device_id, 1);};
 };
 
 class ping_msg_ping1D_distance : public PingMessage
 {
 public:
-    ping_msg_ping1D_distance(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_distance(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_distance(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_distance(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_distance()
         : PingMessage { 34 }
     {
@@ -352,27 +372,27 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t distance() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_distance(uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
-    uint16_t confidence() { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_confidence(uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_usec() { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_usec(uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
-    uint32_t ping_number() { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
-    void set_ping_number(uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
-    uint32_t scan_start() { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
-    void set_scan_start(uint32_t scan_start) { memcpy((payload_data(12)), &scan_start, 4);};
-    uint32_t scan_length() { uint32_t d; memcpy(&d, (payload_data(16)), 4); return d; };
-    void set_scan_length(uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
-    uint32_t gain_index() { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
-    void set_gain_index(uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
+    uint32_t distance() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
+    uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
+    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
+    uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
+    void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
+    uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
+    void set_scan_start(const uint32_t scan_start) { memcpy((payload_data(12)), &scan_start, 4);};
+    uint32_t scan_length() const { uint32_t d; memcpy(&d, (payload_data(16)), 4); return d; };
+    void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
+    uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
+    void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
 };
 
 class ping_msg_ping1D_distance_simple : public PingMessage
 {
 public:
-    ping_msg_ping1D_distance_simple(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_distance_simple(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_distance_simple(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_distance_simple(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_distance_simple()
         : PingMessage { 15 }
     {
@@ -384,17 +404,17 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t distance() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_distance(uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
-    uint8_t confidence() { uint8_t d; memcpy(&d, (payload_data(4)), 1); return d; };
-    void set_confidence(uint8_t confidence) { memcpy((payload_data(4)), &confidence, 1);};
+    uint32_t distance() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
+    uint8_t confidence() const { uint8_t d; memcpy(&d, (payload_data(4)), 1); return d; };
+    void set_confidence(const uint8_t confidence) { memcpy((payload_data(4)), &confidence, 1);};
 };
 
 class ping_msg_ping1D_set_range : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_range(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_range(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_range(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_range(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_range()
         : PingMessage { 18 }
     {
@@ -406,17 +426,17 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t scan_start() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_scan_start(uint32_t scan_start) { memcpy((payload_data(0)), &scan_start, 4);};
-    uint32_t scan_length() { uint32_t d; memcpy(&d, (payload_data(4)), 4); return d; };
-    void set_scan_length(uint32_t scan_length) { memcpy((payload_data(4)), &scan_length, 4);};
+    uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_scan_start(const uint32_t scan_start) { memcpy((payload_data(0)), &scan_start, 4);};
+    uint32_t scan_length() const { uint32_t d; memcpy(&d, (payload_data(4)), 4); return d; };
+    void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(4)), &scan_length, 4);};
 };
 
 class ping_msg_ping1D_mode_auto : public PingMessage
 {
 public:
-    ping_msg_ping1D_mode_auto(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_mode_auto(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_mode_auto(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_mode_auto(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_mode_auto()
         : PingMessage { 11 }
     {
@@ -428,15 +448,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t mode_auto() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_mode_auto(uint8_t mode_auto) { memcpy((payload_data(0)), &mode_auto, 1);};
+    uint8_t mode_auto() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_mode_auto(const uint8_t mode_auto) { memcpy((payload_data(0)), &mode_auto, 1);};
 };
 
 class ping_msg_ping1D_speed_of_sound : public PingMessage
 {
 public:
-    ping_msg_ping1D_speed_of_sound(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_speed_of_sound(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_speed_of_sound()
         : PingMessage { 14 }
     {
@@ -448,15 +468,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t speed_of_sound() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_speed_of_sound(uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
+    uint32_t speed_of_sound() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_speed_of_sound(const uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
 };
 
 class ping_msg_ping1D_nack : public PingMessage
 {
 public:
-    ping_msg_ping1D_nack(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_nack(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_nack(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_nack(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_nack()
         : PingMessage { 12 }
     {
@@ -468,16 +488,16 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t nacked_id() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_nacked_id(uint16_t nacked_id) { memcpy((payload_data(0)), &nacked_id, 2);};
-    char* nack_msg() { return (char*)(payload_data(2)); }
+    uint16_t nacked_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_nacked_id(const uint16_t nacked_id) { memcpy((payload_data(0)), &nacked_id, 2);};
+    char* nack_msg() const { return (char*)(payload_data(2)); }
 };
 
 class ping_msg_ping1D_ack : public PingMessage
 {
 public:
-    ping_msg_ping1D_ack(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_ack(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_ack(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_ack(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ack()
         : PingMessage { 12 }
     {
@@ -489,15 +509,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t acked_id() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_acked_id(uint16_t acked_id) { memcpy((payload_data(0)), &acked_id, 2);};
+    uint16_t acked_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_acked_id(const uint16_t acked_id) { memcpy((payload_data(0)), &acked_id, 2);};
 };
 
 class ping_msg_ping1D_pulse_usec : public PingMessage
 {
 public:
-    ping_msg_ping1D_pulse_usec(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_pulse_usec(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_pulse_usec(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_pulse_usec(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_pulse_usec()
         : PingMessage { 12 }
     {
@@ -509,15 +529,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t pulse_usec() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_pulse_usec(uint16_t pulse_usec) { memcpy((payload_data(0)), &pulse_usec, 2);};
+    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(0)), &pulse_usec, 2);};
 };
 
 class ping_msg_ping1D_range : public PingMessage
 {
 public:
-    ping_msg_ping1D_range(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_range(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_range(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_range(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_range()
         : PingMessage { 18 }
     {
@@ -529,17 +549,17 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t scan_start() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_scan_start(uint32_t scan_start) { memcpy((payload_data(0)), &scan_start, 4);};
-    uint32_t scan_length() { uint32_t d; memcpy(&d, (payload_data(4)), 4); return d; };
-    void set_scan_length(uint32_t scan_length) { memcpy((payload_data(4)), &scan_length, 4);};
+    uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_scan_start(const uint32_t scan_start) { memcpy((payload_data(0)), &scan_start, 4);};
+    uint32_t scan_length() const { uint32_t d; memcpy(&d, (payload_data(4)), 4); return d; };
+    void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(4)), &scan_length, 4);};
 };
 
 class ping_msg_ping1D_set_ping_rate : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_ping_rate(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_ping_rate(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_ping_rate(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_ping_rate(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_ping_rate()
         : PingMessage { 12 }
     {
@@ -551,15 +571,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t ping_rate() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_ping_rate(uint16_t ping_rate) { memcpy((payload_data(0)), &ping_rate, 2);};
+    uint16_t ping_rate() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_ping_rate(const uint16_t ping_rate) { memcpy((payload_data(0)), &ping_rate, 2);};
 };
 
 class ping_msg_ping1D_processor_temperature : public PingMessage
 {
 public:
-    ping_msg_ping1D_processor_temperature(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_processor_temperature(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_processor_temperature(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_processor_temperature(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_processor_temperature()
         : PingMessage { 12 }
     {
@@ -571,15 +591,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t temp() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_temp(uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
+    uint16_t temp() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_temp(const uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
 };
 
 class ping_msg_ping1D_set_gain_index : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_gain_index(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_gain_index(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_gain_index(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_gain_index()
         : PingMessage { 11 }
     {
@@ -591,15 +611,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t gain_index() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_gain_index(uint8_t gain_index) { memcpy((payload_data(0)), &gain_index, 1);};
+    uint8_t gain_index() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_gain_index(const uint8_t gain_index) { memcpy((payload_data(0)), &gain_index, 1);};
 };
 
 class ping_msg_ping1D_protocol_version : public PingMessage
 {
 public:
-    ping_msg_ping1D_protocol_version(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_protocol_version(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_protocol_version(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_protocol_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_protocol_version()
         : PingMessage { 14 }
     {
@@ -611,15 +631,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t protocol_version() { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_protocol_version(uint32_t protocol_version) { memcpy((payload_data(0)), &protocol_version, 4);};
+    uint32_t protocol_version() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_protocol_version(const uint32_t protocol_version) { memcpy((payload_data(0)), &protocol_version, 4);};
 };
 
 class ping_msg_ping1D_continuous_stop : public PingMessage
 {
 public:
-    ping_msg_ping1D_continuous_stop(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_continuous_stop(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_continuous_stop(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_continuous_stop(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_continuous_stop()
         : PingMessage { 12 }
     {
@@ -631,15 +651,15 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t id() { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_id(uint16_t id) { memcpy((payload_data(0)), &id, 2);};
+    uint16_t id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_id(const uint16_t id) { memcpy((payload_data(0)), &id, 2);};
 };
 
 class ping_msg_ping1D_set_ping_enable : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_ping_enable(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_ping_enable(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_ping_enable()
         : PingMessage { 11 }
     {
@@ -651,7 +671,7 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t enable() { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_enable(uint8_t enable) { memcpy((payload_data(0)), &enable, 1);};
+    uint8_t enable() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_enable(const uint8_t enable) { memcpy((payload_data(0)), &enable, 1);};
 };
 

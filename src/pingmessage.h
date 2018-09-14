@@ -29,6 +29,7 @@ namespace Ping1DNamespace {
         Undefined = 0,
         Fw_version = 1200,
         Pcb_temperature = 1214,
+        Ping_enable = 1215,
         Ascii_text = 3,
         Ping_rate = 1206,
         Set_speed_of_sound = 1002,
@@ -70,12 +71,12 @@ public:
         memcpy(msgData, msg.msgData, _bufferLength);
     }
 
-    PingMessage(uint16_t bufferLength)
+    PingMessage(const uint16_t bufferLength)
         : _bufferLength { bufferLength }
         , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
     {}
 
-    PingMessage(uint8_t* buf, uint16_t length)
+    PingMessage(const uint8_t* buf, const uint16_t length)
         : _bufferLength { length }
         , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
     {
@@ -110,7 +111,7 @@ public:
     static const uint8_t headerLength = 8;
     static const uint8_t checksumLength = 2;
 
-    bool verifyChecksum() {
+    bool verifyChecksum() const {
         if(msgDataLength() > bufferLength()) {
             return false;
         }
@@ -121,7 +122,7 @@ public:
         *(uint16_t*)(msgData + msgDataLength() - checksumLength) = calculateChecksum();
     }
 
-    uint16_t calculateChecksum() {
+    uint16_t calculateChecksum() const {
         uint16_t checksum = 0;
 
         if(msgDataLength() <= bufferLength()) {
@@ -137,8 +138,8 @@ public:
 class ping_msg_ping1D_empty : public PingMessage
 {
 public:
-    ping_msg_ping1D_empty(PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_empty(uint8_t* buf, uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_empty(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_empty(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_empty()
         : PingMessage { 8 + 2 }
     {
@@ -150,5 +151,5 @@ public:
         msgData[7] = 0;
     }
 
-    void set_id(uint16_t id) { memcpy((msgData + 4 + 0), &id, 2); }
+    void set_id(const uint16_t id) { memcpy((msgData + 4 + 0), &id, 2); }
 };
