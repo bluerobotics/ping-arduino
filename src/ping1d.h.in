@@ -147,7 +147,31 @@ public:
   uint16_t confidence() {
     return _confidence;
   }
-  
+
+{% for msg in messages["ping1D"]["set"] %}
+{% for field in messages["ping1D"]["set"][msg].payload %}
+    ## {{messages["ping1D"]["set"][msg].description}}
+    #  @param {{field.name}} - {% if field.units %}Units: {{field.units}}; {% endif %}{{field.description}}
+{% endfor %}
+    def {{msg}}(self{% for field in messages["ping1D"]["set"][msg].payload %}, {{field.name}}{% endfor %}, verify=True):
+        ping_msg_ping1D_{{msg|upper}} m;
+{% for field in messages["ping1D"]["set"][msg].payload %}
+        m.set_{{field.name}}({{field.name}});
+{% endfor %}
+        m.updateChecksum();
+        self.write(m.msgData);
+        if self.request(Ping1DNamespace::{{msg|replace("set_", "")|title}}) is None:
+            return false;
+        # Read back the data and check that changes have been applied
+        if (verify
+{% if messages["ping1D"]["set"][msg].payload %}
+              && {% for field in messages["ping1D"]["set"][msg].payload %}self.{{field.name}} != {{field.name}}
+              || {% endfor %}false) {
+{% endif %}
+            return false;
+        return true; # success
+
+{% endfor %}
 private:
   Stream& _stream;
   PingParser _parser;
@@ -155,4 +179,3 @@ private:
   uint16_t _distance;
   uint16_t _confidence;
 };
-

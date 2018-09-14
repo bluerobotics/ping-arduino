@@ -46,39 +46,15 @@ bool waitResponse(uint16_t timeout_ms = 350)
 }
 
 void loop() {
-
-  while (1) {
-      PingMessage* msg;
-
-      msg = pd.request(Ping1DNamespace::Distance_simple);
-      
-      if (msg) {
-          ping_msg_ping1D_distance_simple m(*msg);
-          printf("> Distance: %d\tConfidence: %d", m.distance(), m.confidence());
-      }
-      
-      msg = pd.request(Ping1DNamespace::Voltage_5);
-      
-      if (msg) {
-        ping_msg_ping1D_voltage_5 m(*msg);
-        printf("> Voltage: %d", m.mvolts());
-      }
-      
-      delay(50);
-  }
-
-  
-  while(1) if (pd.request(Ping1DNamespace::Voltage_5)) toggleLed();
-
-  while (1); // stop
   
   static uint8_t counter = 0;
+
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
-    Ping1DNamespace::Profile,
+    Ping1DNamespace::Distance,
     Ping1DNamespace::Voltage_5,
     Ping1DNamespace::Processor_temperature,
-    Ping1DNamespace::Fw_version,
   };
+
   static int requestIdsSize = sizeof(requestIds)/sizeof(requestIds[0]);
   counter++;
   counter = counter%requestIdsSize;
