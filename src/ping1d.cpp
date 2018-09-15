@@ -88,16 +88,73 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
   void Ping1D::handleMessage(PingMessage* pmsg)
   {
     switch (pmsg->message_id()) {
-      case Ping1DNamespace::Nack: {
-          ping_msg_ping1D_nack nack(*pmsg);
-          //debug("got NACK (%d) %s", nack.nacked_id(), nack.nack_msg());
+      case Ping1DNamespace::Fw_version:
+      {
+          ping_msg_ping1D_fw_version m(*pmsg);
+          _device_type = m.device_type();
+          _device_model = m.device_model();
+          _fw_version_major = m.fw_version_major();
+          _fw_version_minor = m.fw_version_minor();
       }
           break;
-      case Ping1DNamespace::Distance:
+      case Ping1DNamespace::Device_id:
       {
-          ping_msg_ping1D_distance m(*pmsg);
-          _distance = m.distance();
-          _confidence = m.confidence();
+          ping_msg_ping1D_device_id m(*pmsg);
+          _device_id = m.device_id();
+      }
+          break;
+      case Ping1DNamespace::Voltage_5:
+      {
+          ping_msg_ping1D_voltage_5 m(*pmsg);
+          _mvolts = m.mvolts();
+      }
+          break;
+      case Ping1DNamespace::Speed_of_sound:
+      {
+          ping_msg_ping1D_speed_of_sound m(*pmsg);
+          _speed_of_sound = m.speed_of_sound();
+      }
+          break;
+      case Ping1DNamespace::Range:
+      {
+          ping_msg_ping1D_range m(*pmsg);
+          _scan_start = m.scan_start();
+          _scan_length = m.scan_length();
+      }
+          break;
+      case Ping1DNamespace::Mode_auto:
+      {
+          ping_msg_ping1D_mode_auto m(*pmsg);
+          _mode_auto = m.mode_auto();
+      }
+          break;
+      case Ping1DNamespace::Ping_rate:
+      {
+          ping_msg_ping1D_ping_rate m(*pmsg);
+          _ping_rate = m.ping_rate();
+      }
+          break;
+      case Ping1DNamespace::Gain_index:
+      {
+          ping_msg_ping1D_gain_index m(*pmsg);
+          _gain_index = m.gain_index();
+      }
+          break;
+      case Ping1DNamespace::Pulse_usec:
+      {
+          ping_msg_ping1D_pulse_usec m(*pmsg);
+          _pulse_usec = m.pulse_usec();
+      }
+          break;
+      case Ping1DNamespace::General_info:
+      {
+          ping_msg_ping1D_general_info m(*pmsg);
+          _fw_version_major = m.fw_version_major();
+          _fw_version_minor = m.fw_version_minor();
+          _mvolts = m.mvolts();
+          _ping_rate = m.ping_rate();
+          _gain_index = m.gain_index();
+          _mode_auto = m.mode_auto();
       }
           break;
       case Ping1DNamespace::Distance_simple:
@@ -107,6 +164,57 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           _confidence = m.confidence();
       }
           break;
+      case Ping1DNamespace::Distance:
+      {
+          ping_msg_ping1D_distance m(*pmsg);
+          _distance = m.distance();
+          _confidence = m.confidence();
+          _pulse_usec = m.pulse_usec();
+          _ping_number = m.ping_number();
+          _scan_start = m.scan_start();
+          _scan_length = m.scan_length();
+          _gain_index = m.gain_index();
+      }
+          break;
+      case Ping1DNamespace::Processor_temperature:
+      {
+          ping_msg_ping1D_processor_temperature m(*pmsg);
+          _temp = m.temp();
+      }
+          break;
+      case Ping1DNamespace::Pcb_temperature:
+      {
+          ping_msg_ping1D_pcb_temperature m(*pmsg);
+          _temp = m.temp();
+      }
+          break;
+      case Ping1DNamespace::Ping_enable:
+      {
+          ping_msg_ping1D_ping_enable m(*pmsg);
+          _enable = m.enable();
+      }
+          break;
+      case Ping1DNamespace::Profile:
+      {
+          ping_msg_ping1D_profile m(*pmsg);
+          _distance = m.distance();
+          _confidence = m.confidence();
+          _pulse_usec = m.pulse_usec();
+          _ping_number = m.ping_number();
+          _scan_start = m.scan_start();
+          _scan_length = m.scan_length();
+          _gain_index = m.gain_index();
+          _num_points = m.num_points();
+          _data = m.data();
+      }
+          break;
+      case Ping1DNamespace::Protocol_version:
+      {
+          ping_msg_ping1D_protocol_version m(*pmsg);
+          _protocol_version = m.protocol_version();
+      }
+          break;
+
       default:
           break;
     }

@@ -37,9 +37,15 @@ public:
   PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
   
   // ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
+  /** request a message of type T
+   *
+   */
   template <typename T>
   T* request();
 
+  /** Helper to request distance and confidence
+   *  @return true if the distance and confidence have been updated successfully
+   */
   bool update() {
       return request(Ping1DNamespace::Distance_simple);
   }
