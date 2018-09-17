@@ -21,6 +21,7 @@ HardwareSerial& debugSerial = Serial;
 #include "ping1d.h"
 
 static Ping1D ping { pingSerial, 19200 };
+static PingParser parser { pingSerial, 19200 };
 
 static const uint8_t ledPin = 13;
 
@@ -32,7 +33,7 @@ void setup() {
   pingSerial.begin(19200);
   debugSerial.begin(115200);
   pinMode(ledPin, OUTPUT);
-  debugSerial.println("Blue Robotics ping1d-advanced.ino");
+  debugSerial.println("Blue Robotics pingmessage.ino");
   while (!ping.initialize()) {
     debugSerial.println("Ping device failed to initialize!");
     delay(2000);
@@ -40,61 +41,64 @@ void setup() {
 }
 
 void loop() {
-  while(1);
+
   static uint8_t counter = 0;
 
   static Ping1DNamespace::msg_ping1D_id requestIds[] = {
-    Ping1DNamespace::Pcb_temperature,
+    Ping1DNamespace::Firmware_version,
+    Ping1DNamespace::Voltage_5,
+    Ping1DNamespace::Processor_temperature,
     Ping1DNamespace::General_info,
     Ping1DNamespace::Profile
   };
 
   static int requestIdsSize = sizeof(requestIds)/sizeof(requestIds[0]);
   counter++;
-  counter = counter % requestIdsSize;
+  counter = counter % requestIdsSize; // move to the next request
 
 
-  
+  // An empty message is used for the request
   ping_msg_ping1D_empty m;
+
+  // Set the request id
   m.set_id(requestIds[counter]);
+
+  // Prepare the buffer and write to device
   m.updateChecksum();
   pingSerial.write(m.msgData, m.msgDataLength());
   
+    // Wait for the response from the device
     if(waitResponse()) {
-      switch(p.rxMsg.message_id()) {
+
+      // Handle the message
+      switch(parser.rxMsg.message_id()) {
+
+        case Ping1DNamespace::Firmware_version: {
+          ping_msg_ping1D_firmware_version m(p.rxMsg);
+          debug("> type: %d", m.device_type());
+          debug("> model: %d", m.device_model());
+          debug("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
+          break;
+        }
 
         case Ping1DNamespace::Voltage_5: {
           ping_msg_ping1D_voltage_5 m(p.rxMsg);
-          debug("> Pcb voltage: %d",m.mvolts());
-          break;
-        }
-
-        case Ping1DNamespace::Nack: {
-          ping_msg_ping1D_nack m(p.rxMsg);
-          debug("> Nack text: %s", m.nack_msg());
-          break;
-        }
-
-        case Ping1DNamespace::Ascii_text: {
-          ping_msg_ping1D_ascii_text m(p.rxMsg);
-          debug("> Ascii text: %s", m.msg());
+          debug("> Device voltage: %d", m.voltage_5());
           break;
         }
 
         case Ping1DNamespace::Processor_temperature: {
           ping_msg_ping1D_processor_temperature m(p.rxMsg);
-          debug("> Pcb temp: %d", m.temp());
+          debug("> Processor temperature: %d", m.processor_temperature());
           break;
         }
 
-        case Ping1DNamespace::Fw_version: {
-          ping_msg_ping1D_fw_version m(p.rxMsg);
-          debug("> type: %d", m.device_type());
-          debug("> model: %d", m.device_model());
-          debug("> fw version: %d.%d", m.fw_version_major(), m.fw_version_minor());
+        case Ping1DNamespace::General_info: {
+          ping_msg_ping1D_processor_temperature m(p.rxMsg);
+          debug("> Processor temp: %d", m.temp());
           break;
         }
-
+/* TODO
         case Ping1DNamespace::Profile: {
           ping_msg_ping1D_profile m(p.rxMsg);
           debug("> distance: %d", m.distance());
@@ -111,6 +115,7 @@ void loop() {
           }
           break;
         }
+*/
 
         default:
 
