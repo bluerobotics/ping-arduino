@@ -29,7 +29,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
     return _stream.write(data, length);
   }
 
-  bool Ping1D::initialize(uint16_t ping_interval_ms, uint32_t speed_of_sound)
+  bool Ping1D::initialize(uint16_t ping_interval_ms)
   {
       if(!request(Ping1DNamespace::Device_id)) {
         return false;
@@ -43,19 +43,19 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return false;
       }
 
-      if (!request(Ping1DNamespace::Pcb_temperature)) {
-        //return false;
+      if (!request(Ping1DNamespace::Processor_temperature)) {
+        return false;
       }
 
       // Configure ping interval
-      //if (!set_ping_interval(ping_interval_ms) {
-        //return false;
-      //}
+      if (!set_ping_interval(ping_interval_ms)) {
+        return false;
+      }
       
       return true;
   }
   
-  PingMessage* Ping1D::waitReply(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
+  PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
   {
       uint32_t tstart = millis();
       while (millis() < tstart + timeout_ms) {
@@ -128,10 +128,10 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           _mode_auto = m.mode_auto();
       }
           break;
-      case Ping1DNamespace::Ping_rate:
+      case Ping1DNamespace::Ping_interval:
       {
-          ping_msg_ping1D_ping_rate m(*pmsg);
-          _ping_rate = m.ping_rate();
+          ping_msg_ping1D_ping_interval m(*pmsg);
+          _ping_interval = m.ping_interval();
       }
           break;
       case Ping1DNamespace::Gain_index:
@@ -152,7 +152,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           _fw_version_major = m.fw_version_major();
           _fw_version_minor = m.fw_version_minor();
           _mvolts = m.mvolts();
-          _ping_rate = m.ping_rate();
+          _ping_interval = m.ping_interval();
           _gain_index = m.gain_index();
           _mode_auto = m.mode_auto();
       }
@@ -227,7 +227,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
     msg.set_id(id);
     msg.updateChecksum();
     write(msg.msgData, msg.msgDataLength());
-    return waitReply(id, timeout_ms);
+    return waitMessage(id, timeout_ms);
   }
   
   // ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
@@ -238,7 +238,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
     req.set_id(resp.message_id());
     req.updateChecksum();
     write(req.msgData, req.msgDataLength());
-    return (T*)waitReply(resp.message_id());
+    return (T*)waitMessage(resp.message_id());
   }
 
 
@@ -316,13 +316,13 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true;
     }
 
-    bool Ping1D::get_ping_rate(uint16_t* ping_rate) {
+    bool Ping1D::get_ping_interval(uint16_t* ping_interval) {
 
-        if (!request(Ping1DNamespace::Ping_rate)) {
+        if (!request(Ping1DNamespace::Ping_interval)) {
             return false;
         }
 
-        if (ping_rate) *ping_rate = _ping_rate;
+        if (ping_interval) *ping_interval = _ping_interval;
 
         return true;
     }
@@ -352,7 +352,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
     bool Ping1D::get_general_info(uint16_t* fw_version_major,
                       uint16_t* fw_version_minor,
                       uint16_t* mvolts,
-                      uint16_t* ping_rate,
+                      uint16_t* ping_interval,
                       uint8_t* gain_index,
                       uint8_t* mode_auto) {
 
@@ -363,7 +363,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         if (fw_version_major) *fw_version_major = _fw_version_major;
         if (fw_version_minor) *fw_version_minor = _fw_version_minor;
         if (mvolts) *mvolts = _mvolts;
-        if (ping_rate) *ping_rate = _ping_rate;
+        if (ping_interval) *ping_interval = _ping_interval;
         if (gain_index) *gain_index = _gain_index;
         if (mode_auto) *mode_auto = _mode_auto;
 
@@ -548,17 +548,17 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true; // success
      }
 
-    bool Ping1D::set_ping_rate(uint16_t ping_rate, bool verify) {
-        ping_msg_ping1D_set_ping_rate m;
-        m.set_ping_rate(ping_rate);
+    bool Ping1D::set_ping_interval(uint16_t ping_interval, bool verify) {
+        ping_msg_ping1D_set_ping_interval m;
+        m.set_ping_interval(ping_interval);
         m.updateChecksum();
         write(m.msgData, m.msgDataLength());
-        if (!request(Ping1DNamespace::Ping_rate)) {
+        if (!request(Ping1DNamespace::Ping_interval)) {
             return false;
         }
         // Read back the data and check that changes have been applied
         if (verify
-              && _ping_rate != ping_rate
+              && _ping_interval != ping_interval
               || false) {
             return false;
         }

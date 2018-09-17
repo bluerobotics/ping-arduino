@@ -14,29 +14,29 @@ HardwareSerial& debugSerial = Serial;
 
 static Ping1D ping { pingSerial, 19200 };
 
+static const uint8_t ledPin = 13;
+
 void toggleLed() {
-  digitalWrite(13, !digitalRead(13));
+  digitalWrite(ledPin, !digitalRead(ledPin));
 }
 
 void setup() {
   pingSerial.begin(19200);
   debugSerial.begin(115200);
-  pinMode(13, OUTPUT);
-  debugSerial.println("Blue Robotics Ping1D Example");
-  while (!pd.initialize()) {
+  pinMode(ledPin, OUTPUT);
+  debugSerial.println("Blue Robotics ping1d-simple.ino");
+  while (!ping.initialize()) {
     debugSerial.println("Ping device failed to initialize!");
     delay(2000);
   }
 }
 
 void loop() {
-  while (1) {
     if (ping.update()) {
       printf("Distance: %d\tConfidence: %d", ping.distance(), ping.confidence());
       toggleLed();
     } else {
       printf("No update received!");
     }
-  }
 }
 

@@ -24,6 +24,11 @@ void setup() {
   pingSerial.begin(19200);
   debugSerial.begin(115200);
   pinMode(ledPin, OUTPUT);
+  debugSerial.println("Blue Robotics ping1d-advanced.ino");
+  while (!ping.initialize()) {
+    debugSerial.println("Ping device failed to initialize!");
+    delay(2000);
+  }
 }
 
 void loop() {

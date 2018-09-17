@@ -19,26 +19,83 @@
 
 class Ping1D
 {
+
 public:
+
+  /** Constructor
+   *  @param ser: The device I/O
+   *  @param baudrate: The device I/O baudrate
+   */
   Ping1D(Stream& ser, uint32_t baudrate);
+
+  /** Destructor
+   *
+   */
   ~Ping1D() = default;
   
+  /** Read in data from device, return a PingMessage if available
+   *  Data will be read in from device until there is no data left in the RX buffer,
+   *  or a valid PingMessage is successfully decoded.
+   *  Note that there may still be data available in the RX buffer for decoding when
+   *  this function returns a PingMessage
+   *  @return: The next PingMessage from the device
+   *  @return: null if the RX buffer is empty and no PingMessage has been decoded
+   */
   PingMessage* read();
+
+  /** Write data to device
+   *  @param data: pointer to buffer to write
+   *  @param length: buffer length to write
+   *  @return: size of data buffer written to the device
+   */
   size_t write(uint8_t* data, uint16_t length);
 
-  bool initialize(uint16_t ping_interval_ms = 50, uint32_t speed_of_sound = 1500000);
+  /** Establish communications with the device, and initialize the update interval
+   *  @param ping_interval_ms: The interval (in milliseconds) between acoustic measurements
+   *  @return true if the device was initialized successfully
+   */
+  bool initialize(uint16_t ping_interval_ms = 50);
 
-  PingMessage* waitReply(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms);
 
-  
+  /** Wait for reciept of a message with a particular message id from device
+   *  @param id: The message id to wait for
+   *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
+   *  @return The PingMessage received with matching id
+   *  @return null if the timeout expires and no PingMessage was received with a matching id
+   */
+  PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms);
+
+  /** Wait for reciept of a message with a particular message id from device
+   *  @param id: The message ID to wait for
+   *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
+   *  @return The PingMessage received with matching id
+   *  @return null if the timeout expires and no PingMessage was received with a matching id
+   */
   void handleMessage(PingMessage* pmsg);
 
-  // ex ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
+  /** Request a PingMessage from the device
+   *  @param id: The message ID to request
+   *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
+   *  @return The PingMessage that was requested
+   *  @return null if the device did not reply with the requested message before the timeout period expired
+   *
+   *  @par ex.
+   *  @code
+   *  ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
+   *  @endcode 
+   */
   PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
   
-  // ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
-  /** request a message of type T
+
+  /** Request a PingMessage of type T from the device
+   *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
+   *  @return The PingMessage that was requested
+   *  @return null if the device did not reply with the requested message before the timeout period expired
    *
+   *  @par ex.
+   *  @code
+   *  auto msg = pd.request<ping_msg_ping1D_voltage_5>();
+   *  @endcode
    */
   template <typename T>
   T* request();
@@ -96,9 +153,9 @@ public:
 
     /** The interval between acoustic measurements.
     *   Returns a dictionary of the reply payload
-    *   @return ping_rate: Units: ms; The interval between acoustic measurements.
+    *   @return ping_interval: Units: ms; The interval between acoustic measurements.
     */
-    bool get_ping_rate(uint16_t* ping_rate = nullptr);
+    bool get_ping_interval(uint16_t* ping_interval = nullptr);
 
     /** The current gain setting.
     *   Returns a dictionary of the reply payload
@@ -117,14 +174,14 @@ public:
     *   @return fw_version_major: Firmware major version.
     *   @return fw_version_minor: Firmware minor version.
     *   @return mvolts: Units: mV; Device supply voltage.
-    *   @return ping_rate: Units: ms; The interval between acoustic measurements.
+    *   @return ping_interval: Units: ms; The interval between acoustic measurements.
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     *   @return mode_auto: The current operating mode of the device. 0: manual mode, 1: auto mode
     */
     bool get_general_info(uint16_t* fw_version_major = nullptr,
                       uint16_t* fw_version_minor = nullptr,
                       uint16_t* mvolts = nullptr,
-                      uint16_t* ping_rate = nullptr,
+                      uint16_t* ping_interval = nullptr,
                       uint8_t* gain_index = nullptr,
                       uint8_t* mode_auto = nullptr);
 
@@ -223,9 +280,9 @@ public:
     bool set_mode_auto(uint8_t mode_auto, bool verify = true);
 
     /** The interval between acoustic measurements.
-    *   @param ping_rate - Units: ms; The interval between acoustic measurements.
+    *   @param ping_interval - Units: ms; The interval between acoustic measurements.
     */
-    bool set_ping_rate(uint16_t ping_rate, bool verify = true);
+    bool set_ping_interval(uint16_t ping_interval, bool verify = true);
 
     /** Set the current gain selection.
     *   @param gain_index - 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
@@ -245,10 +302,6 @@ public:
     /** Return the latest value received
     */
     uint16_t pcb_temperature() { return _pcb_temperature; }
-
-    /** Return the latest value received
-    */
-    uint16_t ping_rate() { return _ping_rate; }
 
     /** Return the latest value received
     */
@@ -312,6 +365,10 @@ public:
 
     /** Return the latest value received
     */
+    uint16_t ping_interval() { return _ping_interval; }
+
+    /** Return the latest value received
+    */
     uint8_t device_model() { return _device_model; }
 
     /** Return the latest value received
@@ -328,7 +385,10 @@ public:
 
 
 private:
+  // Device I/O
   Stream& _stream;
+
+  // For decoding PingMessages from the device
   PingParser _parser;
 
     // The number of data points for the profile. (The length of the proceeding array)
@@ -336,9 +396,6 @@ private:
 
     // The temperature in centi-degrees Centigrade (100 * degrees C).
     uint16_t _pcb_temperature;
-
-    // The interval between acoustic measurements.
-    uint16_t _ping_rate;
 
     // Device type. 0: 1D Echosounder
     uint8_t _device_type;
@@ -384,6 +441,9 @@ private:
 
     // The current return distance determined for the most recent acoustic measurement.
     uint32_t _distance;
+
+    // The interval between acoustic measurements.
+    uint16_t _ping_interval;
 
     // Device model. 0: Ping1D
     uint8_t _device_model;
