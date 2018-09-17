@@ -29,6 +29,24 @@ void toggleLed() {
   digitalWrite(ledPin, !digitalRead(ledPin));
 }
 
+bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
+{
+  uint32_t tstart = millis();
+  while (millis() < tstart + timeout_ms) {
+
+      while(pingSerial.available()) { 
+
+        if (parser.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
+          if (parser.rxMsg.message_id() == id) {
+              return true;
+          }
+        }
+      }
+  }
+  debugSerial.println("timeout waiting for message id: %d", id);
+  return false;
+}
+
 void setup() {
   pingSerial.begin(19200);
   debugSerial.begin(115200);
@@ -52,6 +70,8 @@ void loop() {
     Ping1DNamespace::Profile
   };
 
+  static float gain_settings[] = { 0.6, 1.8, 5.5, 12.9, 30.2, 66.1, 144 };
+
   static int requestIdsSize = sizeof(requestIds)/sizeof(requestIds[0]);
   counter++;
   counter = counter % requestIdsSize; // move to the next request
@@ -68,7 +88,7 @@ void loop() {
   pingSerial.write(m.msgData, m.msgDataLength());
   
     // Wait for the response from the device
-    if(waitResponse()) {
+    if(waitMessage(requestIds[counter])) {
 
       // Handle the message
       switch(parser.rxMsg.message_id()) {
@@ -83,21 +103,26 @@ void loop() {
 
         case Ping1DNamespace::Voltage_5: {
           ping_msg_ping1D_voltage_5 m(p.rxMsg);
-          debug("> Device voltage: %d", m.voltage_5());
+          debug("> device voltage: %d", m.voltage_5());
           break;
         }
 
         case Ping1DNamespace::Processor_temperature: {
           ping_msg_ping1D_processor_temperature m(p.rxMsg);
-          debug("> Processor temperature: %d", m.processor_temperature());
+          debug("> processor temperature: %d", m.processor_temperature());
           break;
         }
 
         case Ping1DNamespace::General_info: {
           ping_msg_ping1D_processor_temperature m(p.rxMsg);
-          debug("> Processor temp: %d", m.temp());
+          debug("> firmware version: %d.%d", m.firmware_version_major().m.firmware_version_minor(),
+          debug("> device voltage: %dV", m.voltage_5());
+          debug("> ping_interval: %dms", m.ping_interval());
+          debug("> gain setting: %.1f", gain_settings[m.gain_index()]);
+          debug("> Mode: %s", m.mode_auto() ? "Auto" : "Manual");
           break;
         }
+
 /* TODO
         case Ping1DNamespace::Profile: {
           ping_msg_ping1D_profile m(p.rxMsg);
