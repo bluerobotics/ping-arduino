@@ -21,7 +21,7 @@ HardwareSerial& debugSerial = Serial;
 #include "ping1d.h"
 
 static Ping1D ping { pingSerial, 19200 };
-static PingParser parser { pingSerial, 19200 };
+static PingParser parser;
 
 static const uint8_t ledPin = 13;
 
@@ -43,7 +43,7 @@ bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 4
         }
       }
   }
-  debugSerial.println("timeout waiting for message id: %d", id);
+  debug("timeout waiting for message id: %d", id);
   return false;
 }
 
@@ -94,7 +94,7 @@ void loop() {
       switch(parser.rxMsg.message_id()) {
 
         case Ping1DNamespace::Firmware_version: {
-          ping_msg_ping1D_firmware_version m(p.rxMsg);
+          ping_msg_ping1D_firmware_version m(parser.rxMsg);
           debug("> type: %d", m.device_type());
           debug("> model: %d", m.device_model());
           debug("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
@@ -102,20 +102,20 @@ void loop() {
         }
 
         case Ping1DNamespace::Voltage_5: {
-          ping_msg_ping1D_voltage_5 m(p.rxMsg);
+          ping_msg_ping1D_voltage_5 m(parser.rxMsg);
           debug("> device voltage: %d", m.voltage_5());
           break;
         }
 
         case Ping1DNamespace::Processor_temperature: {
-          ping_msg_ping1D_processor_temperature m(p.rxMsg);
+          ping_msg_ping1D_processor_temperature m(parser.rxMsg);
           debug("> processor temperature: %d", m.processor_temperature());
           break;
         }
 
         case Ping1DNamespace::General_info: {
-          ping_msg_ping1D_processor_temperature m(p.rxMsg);
-          debug("> firmware version: %d.%d", m.firmware_version_major().m.firmware_version_minor(),
+          ping_msg_ping1D_general_info m(parser.rxMsg);
+          debug("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
           debug("> device voltage: %dV", m.voltage_5());
           debug("> ping_interval: %dms", m.ping_interval());
           debug("> gain setting: %.1f", gain_settings[m.gain_index()]);
@@ -148,5 +148,7 @@ void loop() {
       }
 
           toggleLed();
-          debug("> id: %d\t Length: %d\t parsed: %d\t errors: %d", p.rxMsg.message_id(), p.rxMsg.payload_length(), p.parsed, p.errors);
+          debug("> id: %d\t Length: %d\t parsed: %d\t errors: %d", parser.rxMsg.message_id(), parser.rxMsg.payload_length(), parser.parsed, parser.errors);
     }
+}
+

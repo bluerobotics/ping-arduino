@@ -35,7 +35,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return false;
       }
 
-      if (!request(Ping1DNamespace::Fw_version)) {
+      if (!request(Ping1DNamespace::Firmware_version)) {
         return false;
       }
 
@@ -88,13 +88,13 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
   void Ping1D::handleMessage(PingMessage* pmsg)
   {
     switch (pmsg->message_id()) {
-      case Ping1DNamespace::Fw_version:
+      case Ping1DNamespace::Firmware_version:
       {
-          ping_msg_ping1D_fw_version m(*pmsg);
+          ping_msg_ping1D_firmware_version m(*pmsg);
           _device_type = m.device_type();
           _device_model = m.device_model();
-          _fw_version_major = m.fw_version_major();
-          _fw_version_minor = m.fw_version_minor();
+          _firmware_version_major = m.firmware_version_major();
+          _firmware_version_minor = m.firmware_version_minor();
       }
           break;
       case Ping1DNamespace::Device_id:
@@ -106,7 +106,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
       case Ping1DNamespace::Voltage_5:
       {
           ping_msg_ping1D_voltage_5 m(*pmsg);
-          _mvolts = m.mvolts();
+          _voltage_5 = m.voltage_5();
       }
           break;
       case Ping1DNamespace::Speed_of_sound:
@@ -140,18 +140,18 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           _gain_index = m.gain_index();
       }
           break;
-      case Ping1DNamespace::Pulse_usec:
+      case Ping1DNamespace::Pulse_length:
       {
-          ping_msg_ping1D_pulse_usec m(*pmsg);
-          _pulse_usec = m.pulse_usec();
+          ping_msg_ping1D_pulse_length m(*pmsg);
+          _pulse_length = m.pulse_length();
       }
           break;
       case Ping1DNamespace::General_info:
       {
           ping_msg_ping1D_general_info m(*pmsg);
-          _fw_version_major = m.fw_version_major();
-          _fw_version_minor = m.fw_version_minor();
-          _mvolts = m.mvolts();
+          _firmware_version_major = m.firmware_version_major();
+          _firmware_version_minor = m.firmware_version_minor();
+          _voltage_5 = m.voltage_5();
           _ping_interval = m.ping_interval();
           _gain_index = m.gain_index();
           _mode_auto = m.mode_auto();
@@ -169,7 +169,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           ping_msg_ping1D_distance m(*pmsg);
           _distance = m.distance();
           _confidence = m.confidence();
-          _pulse_usec = m.pulse_usec();
+          _pulse_length = m.pulse_length();
           _ping_number = m.ping_number();
           _scan_start = m.scan_start();
           _scan_length = m.scan_length();
@@ -199,7 +199,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           ping_msg_ping1D_profile m(*pmsg);
           _distance = m.distance();
           _confidence = m.confidence();
-          _pulse_usec = m.pulse_usec();
+          _pulse_length = m.pulse_length();
           _ping_number = m.ping_number();
           _scan_start = m.scan_start();
           _scan_length = m.scan_length();
@@ -242,19 +242,19 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
   }
 
 
-    bool Ping1D::get_fw_version(uint8_t* device_type,
+    bool Ping1D::get_firmware_version(uint8_t* device_type,
                       uint8_t* device_model,
-                      uint16_t* fw_version_major,
-                      uint16_t* fw_version_minor) {
+                      uint16_t* firmware_version_major,
+                      uint16_t* firmware_version_minor) {
 
-        if (!request(Ping1DNamespace::Fw_version)) {
+        if (!request(Ping1DNamespace::Firmware_version)) {
             return false;
         }
 
         if (device_type) *device_type = _device_type;
         if (device_model) *device_model = _device_model;
-        if (fw_version_major) *fw_version_major = _fw_version_major;
-        if (fw_version_minor) *fw_version_minor = _fw_version_minor;
+        if (firmware_version_major) *firmware_version_major = _firmware_version_major;
+        if (firmware_version_minor) *firmware_version_minor = _firmware_version_minor;
 
         return true;
     }
@@ -270,13 +270,13 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true;
     }
 
-    bool Ping1D::get_voltage_5(uint16_t* mvolts) {
+    bool Ping1D::get_voltage_5(uint16_t* voltage_5) {
 
         if (!request(Ping1DNamespace::Voltage_5)) {
             return false;
         }
 
-        if (mvolts) *mvolts = _mvolts;
+        if (voltage_5) *voltage_5 = _voltage_5;
 
         return true;
     }
@@ -338,20 +338,20 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true;
     }
 
-    bool Ping1D::get_pulse_usec(uint16_t* pulse_usec) {
+    bool Ping1D::get_pulse_length(uint16_t* pulse_length) {
 
-        if (!request(Ping1DNamespace::Pulse_usec)) {
+        if (!request(Ping1DNamespace::Pulse_length)) {
             return false;
         }
 
-        if (pulse_usec) *pulse_usec = _pulse_usec;
+        if (pulse_length) *pulse_length = _pulse_length;
 
         return true;
     }
 
-    bool Ping1D::get_general_info(uint16_t* fw_version_major,
-                      uint16_t* fw_version_minor,
-                      uint16_t* mvolts,
+    bool Ping1D::get_general_info(uint16_t* firmware_version_major,
+                      uint16_t* firmware_version_minor,
+                      uint16_t* voltage_5,
                       uint16_t* ping_interval,
                       uint8_t* gain_index,
                       uint8_t* mode_auto) {
@@ -360,9 +360,9 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
             return false;
         }
 
-        if (fw_version_major) *fw_version_major = _fw_version_major;
-        if (fw_version_minor) *fw_version_minor = _fw_version_minor;
-        if (mvolts) *mvolts = _mvolts;
+        if (firmware_version_major) *firmware_version_major = _firmware_version_major;
+        if (firmware_version_minor) *firmware_version_minor = _firmware_version_minor;
+        if (voltage_5) *voltage_5 = _voltage_5;
         if (ping_interval) *ping_interval = _ping_interval;
         if (gain_index) *gain_index = _gain_index;
         if (mode_auto) *mode_auto = _mode_auto;
@@ -385,7 +385,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
 
     bool Ping1D::get_distance(uint32_t* distance,
                       uint16_t* confidence,
-                      uint16_t* pulse_usec,
+                      uint16_t* pulse_length,
                       uint32_t* ping_number,
                       uint32_t* scan_start,
                       uint32_t* scan_length,
@@ -397,7 +397,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
 
         if (distance) *distance = _distance;
         if (confidence) *confidence = _confidence;
-        if (pulse_usec) *pulse_usec = _pulse_usec;
+        if (pulse_length) *pulse_length = _pulse_length;
         if (ping_number) *ping_number = _ping_number;
         if (scan_start) *scan_start = _scan_start;
         if (scan_length) *scan_length = _scan_length;
@@ -441,7 +441,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
 
     bool Ping1D::get_profile(uint32_t* distance,
                       uint16_t* confidence,
-                      uint16_t* pulse_usec,
+                      uint16_t* pulse_length,
                       uint32_t* ping_number,
                       uint32_t* scan_start,
                       uint32_t* scan_length,
@@ -455,7 +455,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
 
         if (distance) *distance = _distance;
         if (confidence) *confidence = _confidence;
-        if (pulse_usec) *pulse_usec = _pulse_usec;
+        if (pulse_length) *pulse_length = _pulse_length;
         if (ping_number) *ping_number = _ping_number;
         if (scan_start) *scan_start = _scan_start;
         if (scan_length) *scan_length = _scan_length;

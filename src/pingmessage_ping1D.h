@@ -29,8 +29,8 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
     void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
+    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(6)), &pulse_length, 2);};
     uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
     void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
     uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
@@ -61,8 +61,8 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t mvolts() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_mvolts(const uint16_t mvolts) { memcpy((payload_data(0)), &mvolts, 2);};
+    uint16_t voltage_5() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_voltage_5(const uint16_t voltage_5) { memcpy((payload_data(0)), &voltage_5, 2);};
 };
 
 class ping_msg_ping1D_set_mode_auto : public PingMessage
@@ -121,30 +121,24 @@ public:
 
 };
 
-class ping_msg_ping1D_fw_version : public PingMessage
+class ping_msg_ping1D_set_speed_of_sound : public PingMessage
 {
 public:
-    ping_msg_ping1D_fw_version(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_fw_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_fw_version()
-        : PingMessage { 16 }
+    ping_msg_ping1D_set_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_speed_of_sound()
+        : PingMessage { 14 }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 6; // payload size
-        (uint16_t&)msgData[4] = 1200; // ID
+        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[4] = 1002; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t device_type() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_device_type(const uint8_t device_type) { memcpy((payload_data(0)), &device_type, 1);};
-    uint8_t device_model() const { uint8_t d; memcpy(&d, (payload_data(1)), 1); return d; };
-    void set_device_model(const uint8_t device_model) { memcpy((payload_data(1)), &device_model, 1);};
-    uint16_t fw_version_major() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
-    void set_fw_version_major(const uint16_t fw_version_major) { memcpy((payload_data(2)), &fw_version_major, 2);};
-    uint16_t fw_version_minor() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_fw_version_minor(const uint16_t fw_version_minor) { memcpy((payload_data(4)), &fw_version_minor, 2);};
+    uint32_t speed_of_sound() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_speed_of_sound(const uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
 };
 
 class ping_msg_ping1D_pcb_temperature : public PingMessage
@@ -206,46 +200,6 @@ public:
     char* msg() const { return (char*)(payload_data(0)); }
 };
 
-class ping_msg_ping1D_pulse_usec : public PingMessage
-{
-public:
-    ping_msg_ping1D_pulse_usec(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_pulse_usec(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_pulse_usec()
-        : PingMessage { 12 }
-    {
-        msgData[0] = 'B';
-        msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
-        (uint16_t&)msgData[4] = 1208; // ID
-        msgData[6] = 0;
-        msgData[7] = 0;
-    }
-
-    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(0)), &pulse_usec, 2);};
-};
-
-class ping_msg_ping1D_set_speed_of_sound : public PingMessage
-{
-public:
-    ping_msg_ping1D_set_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_set_speed_of_sound()
-        : PingMessage { 14 }
-    {
-        msgData[0] = 'B';
-        msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
-        (uint16_t&)msgData[4] = 1002; // ID
-        msgData[6] = 0;
-        msgData[7] = 0;
-    }
-
-    uint32_t speed_of_sound() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_speed_of_sound(const uint32_t speed_of_sound) { memcpy((payload_data(0)), &speed_of_sound, 4);};
-};
-
 class ping_msg_ping1D_set_device_id : public PingMessage
 {
 public:
@@ -286,24 +240,30 @@ public:
     void set_id(const uint16_t id) { memcpy((payload_data(0)), &id, 2);};
 };
 
-class ping_msg_ping1D_gain_index : public PingMessage
+class ping_msg_ping1D_firmware_version : public PingMessage
 {
 public:
-    ping_msg_ping1D_gain_index(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_gain_index()
-        : PingMessage { 14 }
+    ping_msg_ping1D_firmware_version(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_firmware_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_firmware_version()
+        : PingMessage { 16 }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
-        (uint16_t&)msgData[4] = 1207; // ID
+        (uint16_t&)msgData[2] = 6; // payload size
+        (uint16_t&)msgData[4] = 1200; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
-    void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(0)), &gain_index, 4);};
+    uint8_t device_type() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_device_type(const uint8_t device_type) { memcpy((payload_data(0)), &device_type, 1);};
+    uint8_t device_model() const { uint8_t d; memcpy(&d, (payload_data(1)), 1); return d; };
+    void set_device_model(const uint8_t device_model) { memcpy((payload_data(1)), &device_model, 1);};
+    uint16_t firmware_version_major() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
+    void set_firmware_version_major(const uint16_t firmware_version_major) { memcpy((payload_data(2)), &firmware_version_major, 2);};
+    uint16_t firmware_version_minor() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_firmware_version_minor(const uint16_t firmware_version_minor) { memcpy((payload_data(4)), &firmware_version_minor, 2);};
 };
 
 class ping_msg_ping1D_general_info : public PingMessage
@@ -322,18 +282,38 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t fw_version_major() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_fw_version_major(const uint16_t fw_version_major) { memcpy((payload_data(0)), &fw_version_major, 2);};
-    uint16_t fw_version_minor() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
-    void set_fw_version_minor(const uint16_t fw_version_minor) { memcpy((payload_data(2)), &fw_version_minor, 2);};
-    uint16_t mvolts() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
-    void set_mvolts(const uint16_t mvolts) { memcpy((payload_data(4)), &mvolts, 2);};
+    uint16_t firmware_version_major() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_firmware_version_major(const uint16_t firmware_version_major) { memcpy((payload_data(0)), &firmware_version_major, 2);};
+    uint16_t firmware_version_minor() const { uint16_t d; memcpy(&d, (payload_data(2)), 2); return d; };
+    void set_firmware_version_minor(const uint16_t firmware_version_minor) { memcpy((payload_data(2)), &firmware_version_minor, 2);};
+    uint16_t voltage_5() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
+    void set_voltage_5(const uint16_t voltage_5) { memcpy((payload_data(4)), &voltage_5, 2);};
     uint16_t ping_interval() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
     void set_ping_interval(const uint16_t ping_interval) { memcpy((payload_data(6)), &ping_interval, 2);};
     uint8_t gain_index() const { uint8_t d; memcpy(&d, (payload_data(8)), 1); return d; };
     void set_gain_index(const uint8_t gain_index) { memcpy((payload_data(8)), &gain_index, 1);};
     uint8_t mode_auto() const { uint8_t d; memcpy(&d, (payload_data(9)), 1); return d; };
     void set_mode_auto(const uint8_t mode_auto) { memcpy((payload_data(9)), &mode_auto, 1);};
+};
+
+class ping_msg_ping1D_gain_index : public PingMessage
+{
+public:
+    ping_msg_ping1D_gain_index(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_gain_index()
+        : PingMessage { 14 }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[4] = 1207; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(0)), 4); return d; };
+    void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(0)), &gain_index, 4);};
 };
 
 class ping_msg_ping1D_ping_interval : public PingMessage
@@ -376,8 +356,8 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
     void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_usec() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_usec(const uint16_t pulse_usec) { memcpy((payload_data(6)), &pulse_usec, 2);};
+    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(6)), &pulse_length, 2);};
     uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
     void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
     uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
@@ -448,6 +428,26 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint8_t confidence() const { uint8_t d; memcpy(&d, (payload_data(4)), 1); return d; };
     void set_confidence(const uint8_t confidence) { memcpy((payload_data(4)), &confidence, 1);};
+};
+
+class ping_msg_ping1D_pulse_length : public PingMessage
+{
+public:
+    ping_msg_ping1D_pulse_length(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_pulse_length(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_pulse_length()
+        : PingMessage { 12 }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[4] = 1208; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(0)), &pulse_length, 2);};
 };
 
 class ping_msg_ping1D_set_range : public PingMessage
