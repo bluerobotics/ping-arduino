@@ -1,3 +1,15 @@
+/**
+ *  This example is targeted toward the arduino platform
+ *
+ *  This example demonstrates the most simple usage of the Blue Robotics
+ *  Ping1D c++ API in order to obtain distance and confidence reports from
+ *  the device.
+ *
+ *  This API exposes the full functionality of the Ping1D Echosounder
+ *
+ *  Communication is performed with a Blue Robotics Ping1D Echosounder
+ */
+
 #include "SoftwareSerial.h"
 static char _debug_buffer[200];
 

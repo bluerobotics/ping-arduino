@@ -1,4 +1,45 @@
+/**
+ *  This example is targeted toward the arduino platform
+ *
+ *  This example demonstrates usage of the Blue Robotics PingMessage c++ API
+ *
+ *  Communication is performed with a Blue Robotics Ping1D Echosounder
+ */
 
+#include "SoftwareSerial.h"
+static char _debug_buffer[200];
+
+SoftwareSerial pingSerial = SoftwareSerial(9, 10);
+HardwareSerial& debugSerial = Serial;
+
+#define debug(fmt, args ...)  do {sprintf(_debug_buffer, "[%s:%d]: " fmt "\n\r", __FUNCTION__, __LINE__, ## args); debugSerial.print(_debug_buffer);} while(0)
+
+#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); debugSerial.print(_debug_buffer);} while(0)
+
+#include "pingmessage_all.h"
+#include "ping_parser.h"
+#include "ping1d.h"
+
+static Ping1D ping { pingSerial, 19200 };
+
+static const uint8_t ledPin = 13;
+
+void toggleLed() {
+  digitalWrite(ledPin, !digitalRead(ledPin));
+}
+
+void setup() {
+  pingSerial.begin(19200);
+  debugSerial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+  debugSerial.println("Blue Robotics ping1d-advanced.ino");
+  while (!ping.initialize()) {
+    debugSerial.println("Ping device failed to initialize!");
+    delay(2000);
+  }
+}
+
+void loop() {
   while(1);
   static uint8_t counter = 0;
 
