@@ -179,19 +179,19 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
       case Ping1DNamespace::Processor_temperature:
       {
           ping_msg_ping1D_processor_temperature m(*pmsg);
-          _temp = m.temp();
+          _processor_temperature = m.processor_temperature();
       }
           break;
       case Ping1DNamespace::Pcb_temperature:
       {
           ping_msg_ping1D_pcb_temperature m(*pmsg);
-          _temp = m.temp();
+          _pcb_temperature = m.pcb_temperature();
       }
           break;
       case Ping1DNamespace::Ping_enable:
       {
           ping_msg_ping1D_ping_enable m(*pmsg);
-          _enable = m.enable();
+          _ping_enabled = m.ping_enabled();
       }
           break;
       case Ping1DNamespace::Profile:
@@ -406,35 +406,35 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true;
     }
 
-    bool Ping1D::get_processor_temperature(uint16_t* temp) {
+    bool Ping1D::get_processor_temperature(uint16_t* processor_temperature) {
 
         if (!request(Ping1DNamespace::Processor_temperature)) {
             return false;
         }
 
-        if (temp) *temp = _temp;
+        if (processor_temperature) *processor_temperature = _processor_temperature;
 
         return true;
     }
 
-    bool Ping1D::get_pcb_temperature(uint16_t* temp) {
+    bool Ping1D::get_pcb_temperature(uint16_t* pcb_temperature) {
 
         if (!request(Ping1DNamespace::Pcb_temperature)) {
             return false;
         }
 
-        if (temp) *temp = _temp;
+        if (pcb_temperature) *pcb_temperature = _pcb_temperature;
 
         return true;
     }
 
-    bool Ping1D::get_ping_enable(uint8_t* enable) {
+    bool Ping1D::get_ping_enable(uint8_t* ping_enabled) {
 
         if (!request(Ping1DNamespace::Ping_enable)) {
             return false;
         }
 
-        if (enable) *enable = _enable;
+        if (ping_enabled) *ping_enabled = _ping_enabled;
 
         return true;
     }
@@ -582,9 +582,9 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         return true; // success
      }
 
-    bool Ping1D::set_ping_enable(uint8_t enable, bool verify) {
+    bool Ping1D::set_ping_enable(uint8_t ping_enabled, bool verify) {
         ping_msg_ping1D_set_ping_enable m;
-        m.set_enable(enable);
+        m.set_ping_enabled(ping_enabled);
         m.updateChecksum();
         write(m.msgData, m.msgDataLength());
         if (!request(Ping1DNamespace::Ping_enable)) {
@@ -592,7 +592,7 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
         }
         // Read back the data and check that changes have been applied
         if (verify
-              && _enable != enable
+              && _ping_enabled != ping_enabled
               || false) {
             return false;
         }

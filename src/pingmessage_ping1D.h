@@ -163,8 +163,8 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t temp() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_temp(const uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
+    uint16_t pcb_temperature() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_pcb_temperature(const uint16_t pcb_temperature) { memcpy((payload_data(0)), &pcb_temperature, 2);};
 };
 
 class ping_msg_ping1D_ping_enable : public PingMessage
@@ -183,8 +183,8 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t enable() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_enable(const uint8_t enable) { memcpy((payload_data(0)), &enable, 1);};
+    uint8_t ping_enabled() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_ping_enabled(const uint8_t ping_enabled) { memcpy((payload_data(0)), &ping_enabled, 1);};
 };
 
 class ping_msg_ping1D_ascii_text : public PingMessage
@@ -591,8 +591,8 @@ public:
         msgData[7] = 0;
     }
 
-    uint16_t temp() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_temp(const uint16_t temp) { memcpy((payload_data(0)), &temp, 2);};
+    uint16_t processor_temperature() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_processor_temperature(const uint16_t processor_temperature) { memcpy((payload_data(0)), &processor_temperature, 2);};
 };
 
 class ping_msg_ping1D_set_gain_index : public PingMessage
@@ -671,7 +671,7 @@ public:
         msgData[7] = 0;
     }
 
-    uint8_t enable() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_enable(const uint8_t enable) { memcpy((payload_data(0)), &enable, 1);};
+    uint8_t ping_enabled() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_ping_enabled(const uint8_t ping_enabled) { memcpy((payload_data(0)), &ping_enabled, 1);};
 };
 

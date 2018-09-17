@@ -12,9 +12,7 @@ HardwareSerial& debugSerial = Serial;
 #include "ping_parser.h"
 #include "ping1d.h"
 
-static PingParser p;
-
-static Ping1D pd { pingSerial, 19200 };
+static Ping1D ping { pingSerial, 19200 };
 
 void toggleLed() {
   digitalWrite(13, !digitalRead(13));
@@ -33,8 +31,8 @@ void setup() {
 
 void loop() {
   while (1) {
-    if (pd.update()) {
-      printf("Distance: %d\tConfidence: %d", pd.distance(), pd.confidence());
+    if (ping.update()) {
+      printf("Distance: %d\tConfidence: %d", ping.distance(), ping.confidence());
       toggleLed();
     } else {
       printf("No update received!");

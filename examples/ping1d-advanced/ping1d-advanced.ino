@@ -12,117 +12,61 @@ HardwareSerial& debugSerial = Serial;
 #include "ping_parser.h"
 #include "ping1d.h"
 
-static PingParser p;
+static Ping1D ping { pingSerial, 19200 };
 
-static Ping1D pd { pingSerial, 19200 };
+static const uint8_t ledPin = 13;
 
 void toggleLed() {
-  digitalWrite(13, !digitalRead(13));
+  digitalWrite(ledPin, !digitalRead(ledPin));
 }
 
 void setup() {
   pingSerial.begin(19200);
   debugSerial.begin(115200);
-  pinMode(13, OUTPUT);
-  debugSerial.println("sup");
-}
-
-bool waitResponse(uint16_t timeout_ms = 350)
-{
-  uint32_t tstart = millis();
-  while (millis() < tstart + timeout_ms) {
-
-      while(pingSerial.available()) { 
-
-        if (p.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
-          debug("got response in %dms", millis() - tstart);
-          return true;
-        }
-      }
-  }
-        debugSerial.println("timeout");
-  //p.reset();
-  return false;
+  pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  
-  static uint8_t counter = 0;
+  // Get processor temperature
 
-  static Ping1DNamespace::msg_ping1D_id requestIds[] = {
-    Ping1DNamespace::Distance,
-    Ping1DNamespace::Voltage_5,
-    Ping1DNamespace::Processor_temperature,
-  };
+  // If the result is true, we have received an update from the device
+  // If the result is true, the accessors processor_temperature() etc.
+  // will return the updated value
+  if (ping.get_processor_temperature()) {
+      printf("got processor temperature");
+      printf("> %d", ping.processor_temperature());
+  } else {
+      printf("attempt to get processor temperature failed");
+  }
 
-  static int requestIdsSize = sizeof(requestIds)/sizeof(requestIds[0]);
-  counter++;
-  counter = counter%requestIdsSize;
+  // Get general info
 
-  
-  ping_msg_ping1D_empty m;
-  m.set_id(requestIds[counter]);
-  m.updateChecksum();
-  pingSerial.write(m.msgData, m.msgDataLength());
-  
-    if(waitResponse()) {
-      switch(p.rxMsg.message_id()) {
+  // If you want to hold on to results of each request locally, you may pass
+  // pointer references cooresponding to the payload fields.
+  // If we receive an update from the device, non-null arguments will be
+  // populated with the updated values
+  uint16_t version_major, version_minor, mvolts, msec_per_ping;
+  uint8_t gain_index, is_auto;
 
-        case Ping1DNamespace::Voltage_5: {
-          ping_msg_ping1D_voltage_5 m(p.rxMsg);
-          debug("> Pcb voltage: %d",m.mvolts());
-          break;
-        }
+  if (ping.get_general_info(
+            &version_major,
+            &version_minor,
+            &mvolts,
+            &msec_per_ping,
+            &gain_index,
+            &is_auto))
+  {
+      printf("got general info");
+      printf("> version_major: %d", version_major);
+      printf("> version_minor: %d", version_minor);
+      printf("> mvolts: %d", mvolts);
+      printf("> msec_per_ping: %d", msec_per_ping);
+      printf("> gain_index: %d", gain_index);
+      printf("> is_auto: %d", is_auto);
+  } else {
+      printf("attempt to get general info failed");
+  }
 
-        case Ping1DNamespace::Nack: {
-          ping_msg_ping1D_nack m(p.rxMsg);
-          debug("> Nack text: %s", m.nack_msg());
-          break;
-        }
-
-        case Ping1DNamespace::Ascii_text: {
-          ping_msg_ping1D_ascii_text m(p.rxMsg);
-          debug("> Ascii text: %s", m.msg());
-          break;
-        }
-
-        case Ping1DNamespace::Processor_temperature: {
-          ping_msg_ping1D_processor_temperature m(p.rxMsg);
-          debug("> Pcb temp: %d", m.temp());
-          break;
-        }
-
-        case Ping1DNamespace::Fw_version: {
-          ping_msg_ping1D_fw_version m(p.rxMsg);
-          debug("> type: %d", m.device_type());
-          debug("> model: %d", m.device_model());
-          debug("> fw version: %d.%d", m.fw_version_major(), m.fw_version_minor());
-          break;
-        }
-
-        case Ping1DNamespace::Profile: {
-          ping_msg_ping1D_profile m(p.rxMsg);
-          debug("> distance: %d", m.distance());
-          debug("> confidence: %d", m.confidence());
-          debug("> pulse_usec: %d", m.pulse_usec());
-          debug("> ping_number: %d", m.ping_number());
-          debug("> start_mm: %d", m.scan_start());
-          debug("> length_mm: %d", m.scan_length());
-          debug("> gain_index: %d", m.gain_index());
-          debug("> num_points: %d", m.num_points());
-          debug("> gain_index: %d", m.gain_index());
-          for(int i =0; i < m.num_points(); i++) {
-            debug("> data: %d", m.data()[i]);
-          }
-          break;
-        }
-
-        default:
-
-          break;
-      }
-
-          toggleLed();
-          debug("> id: %d\t Length: %d\t parsed: %d\t errors: %d", p.rxMsg.message_id(), p.rxMsg.payload_length(), p.parsed, p.errors);
-    }
+  //TODO get profile
 }
+
