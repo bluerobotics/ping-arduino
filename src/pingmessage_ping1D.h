@@ -39,7 +39,7 @@ public:
     void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
     uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
     void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
-    uint16_t profile_data_length() const { return (uint16_t)(payload_data(24)); }
+    uint16_t profile_data_length() const { uint16_t d; memcpy(&d, (payload_data(24)), 2); return d; };
     uint8_t* profile_data() const { return (uint8_t*)(payload_data(26)); }
     void set_profile_data_at(const uint16_t i, const u8 data) { memcpy((payload_data(26 + i)), &data, 1); }
 };
