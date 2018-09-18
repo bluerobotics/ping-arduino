@@ -15,11 +15,11 @@ public:
     ping_msg_ping1D_profile(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_profile(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_profile()
-        : PingMessage { 236 }
+        : PingMessage { 36 }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 226; // payload size
+        (uint16_t&)msgData[2] = 26; // payload size
         (uint16_t&)msgData[4] = 1300; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -39,10 +39,9 @@ public:
     void set_scan_length(const uint32_t scan_length) { memcpy((payload_data(16)), &scan_length, 4);};
     uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
     void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
-    uint16_t num_points() const { uint16_t d; memcpy(&d, (payload_data(24)), 2); return d; };
-    void set_num_points(const uint16_t num_points) { memcpy((payload_data(24)), &num_points, 2);};
-    uint8_t* data() const { return (payload_data(26)); }
-    void set_data_at(const uint16_t i, const uint8_t data) { memcpy((payload_data(26 + i)), &data, 1); }
+    uint16_t profile_data_length() const { return (uint16_t)(payload_data(24)); }
+    uint8_t* profile_data() const { return (uint8_t*)(payload_data(26)); }
+    void set_profile_data_at(const uint16_t i, const u8 data) { memcpy((payload_data(26 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_voltage_5 : public PingMessage
@@ -198,6 +197,7 @@ public:
     }
 
     char* msg() const { return (char*)(payload_data(0)); }
+    void set_msg_at(const uint16_t i, const char data) { memcpy((payload_data(0 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_set_device_id : public PingMessage
@@ -531,6 +531,7 @@ public:
     uint16_t nacked_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
     void set_nacked_id(const uint16_t nacked_id) { memcpy((payload_data(0)), &nacked_id, 2);};
     char* nack_msg() const { return (char*)(payload_data(2)); }
+    void set_nack_msg_at(const uint16_t i, const char data) { memcpy((payload_data(2 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_ack : public PingMessage

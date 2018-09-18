@@ -108,69 +108,77 @@ public:
   }
 
     /** Device information
-    *   Returns a dictionary of the reply payload
     *   @return device_type: Device type. 0: 1D Echosounder
     *   @return device_model: Device model. 0: Ping1D
     *   @return firmware_version_major: Firmware version major number.
     *   @return firmware_version_minor: Firmware version minor number.
     */
-    bool get_firmware_version(uint8_t* device_type = nullptr,
-                      uint8_t* device_model = nullptr,
-                      uint16_t* firmware_version_major = nullptr,
-                      uint16_t* firmware_version_minor = nullptr);
+    bool get_firmware_version(
+                     uint8_t* device_type = nullptr,
+                     uint8_t* device_model = nullptr,
+                     uint16_t* firmware_version_major = nullptr,
+                     uint16_t* firmware_version_minor = nullptr
+         );
 
     /** The device ID.
-    *   Returns a dictionary of the reply payload
     *   @return device_id: The device ID (0-254). 255 is reserved for broadcast messages.
     */
-    bool get_device_id(uint8_t* device_id = nullptr);
+    bool get_device_id(
+                     uint8_t* device_id = nullptr
+         );
 
     /** The 5V rail voltage.
-    *   Returns a dictionary of the reply payload
     *   @return voltage_5: Units: mV; The 5V rail voltage.
     */
-    bool get_voltage_5(uint16_t* voltage_5 = nullptr);
+    bool get_voltage_5(
+                     uint16_t* voltage_5 = nullptr
+         );
 
     /** The speed of sound used for distance calculations.
-    *   Returns a dictionary of the reply payload
     *   @return speed_of_sound: Units: mm/s; The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
     */
-    bool get_speed_of_sound(uint32_t* speed_of_sound = nullptr);
+    bool get_speed_of_sound(
+                     uint32_t* speed_of_sound = nullptr
+         );
 
     /** The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).
-    *   Returns a dictionary of the reply payload
     *   @return scan_start: Units: mm; The beginning of the scan range in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan range.
     */
-    bool get_range(uint32_t* scan_start = nullptr,
-                      uint32_t* scan_length = nullptr);
+    bool get_range(
+                     uint32_t* scan_start = nullptr,
+                     uint32_t* scan_length = nullptr
+         );
 
     /** The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.
-    *   Returns a dictionary of the reply payload
     *   @return mode_auto: 0: manual mode, 1: auto mode
     */
-    bool get_mode_auto(uint8_t* mode_auto = nullptr);
+    bool get_mode_auto(
+                     uint8_t* mode_auto = nullptr
+         );
 
     /** The interval between acoustic measurements.
-    *   Returns a dictionary of the reply payload
     *   @return ping_interval: Units: ms; The interval between acoustic measurements.
     */
-    bool get_ping_interval(uint16_t* ping_interval = nullptr);
+    bool get_ping_interval(
+                     uint16_t* ping_interval = nullptr
+         );
 
     /** The current gain setting.
-    *   Returns a dictionary of the reply payload
     *   @return gain_index: 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     */
-    bool get_gain_index(uint32_t* gain_index = nullptr);
+    bool get_gain_index(
+                     uint32_t* gain_index = nullptr
+         );
 
     /** The duration of the acoustic activation/transmission.
-    *   Returns a dictionary of the reply payload
     *   @return pulse_length: Units: microseconds; Acoustic pulse duration.
     */
-    bool get_pulse_length(uint16_t* pulse_length = nullptr);
+    bool get_pulse_length(
+                     uint16_t* pulse_length = nullptr
+         );
 
     /** General information.
-    *   Returns a dictionary of the reply payload
     *   @return firmware_version_major: Firmware major version.
     *   @return firmware_version_minor: Firmware minor version.
     *   @return voltage_5: Units: mV; Device supply voltage.
@@ -178,23 +186,25 @@ public:
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     *   @return mode_auto: The current operating mode of the device. 0: manual mode, 1: auto mode
     */
-    bool get_general_info(uint16_t* firmware_version_major = nullptr,
-                      uint16_t* firmware_version_minor = nullptr,
-                      uint16_t* voltage_5 = nullptr,
-                      uint16_t* ping_interval = nullptr,
-                      uint8_t* gain_index = nullptr,
-                      uint8_t* mode_auto = nullptr);
+    bool get_general_info(
+                     uint16_t* firmware_version_major = nullptr,
+                     uint16_t* firmware_version_minor = nullptr,
+                     uint16_t* voltage_5 = nullptr,
+                     uint16_t* ping_interval = nullptr,
+                     uint8_t* gain_index = nullptr,
+                     uint8_t* mode_auto = nullptr
+         );
 
     /** The distance to target with confidence estimate.
-    *   Returns a dictionary of the reply payload
     *   @return distance: Units: mm; Distance to the target.
     *   @return confidence: Units: %; Confidence in the distance measurement.
     */
-    bool get_distance_simple(uint32_t* distance = nullptr,
-                      uint8_t* confidence = nullptr);
+    bool get_distance_simple(
+                     uint32_t* distance = nullptr,
+                     uint8_t* confidence = nullptr
+         );
 
     /** 
-    *   Returns a dictionary of the reply payload
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
     *   @return confidence: Units: %; Confidence in the most recent range measurement.
     *   @return pulse_length: Units: us; The acoustic pulse length during acoustic transmission/activation.
@@ -203,34 +213,38 @@ public:
     *   @return scan_length: Units: mm; The length of the scan region.
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     */
-    bool get_distance(uint32_t* distance = nullptr,
-                      uint16_t* confidence = nullptr,
-                      uint16_t* pulse_length = nullptr,
-                      uint32_t* ping_number = nullptr,
-                      uint32_t* scan_start = nullptr,
-                      uint32_t* scan_length = nullptr,
-                      uint32_t* gain_index = nullptr);
+    bool get_distance(
+                     uint32_t* distance = nullptr,
+                     uint16_t* confidence = nullptr,
+                     uint16_t* pulse_length = nullptr,
+                     uint32_t* ping_number = nullptr,
+                     uint32_t* scan_start = nullptr,
+                     uint32_t* scan_length = nullptr,
+                     uint32_t* gain_index = nullptr
+         );
 
     /** Temperature of the device cpu.
-    *   Returns a dictionary of the reply payload
     *   @return processor_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
     */
-    bool get_processor_temperature(uint16_t* processor_temperature = nullptr);
+    bool get_processor_temperature(
+                     uint16_t* processor_temperature = nullptr
+         );
 
     /** Temperature of the on-board thermistor.
-    *   Returns a dictionary of the reply payload
     *   @return pcb_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
     */
-    bool get_pcb_temperature(uint16_t* pcb_temperature = nullptr);
+    bool get_pcb_temperature(
+                     uint16_t* pcb_temperature = nullptr
+         );
 
     /** Acoustic output enabled state.
-    *   Returns a dictionary of the reply payload
     *   @return ping_enabled: The state of the acoustic output. 0: disabled, 1:enabled
     */
-    bool get_ping_enable(uint8_t* ping_enabled = nullptr);
+    bool get_ping_enable(
+                     uint8_t* ping_enabled = nullptr
+         );
 
     /** A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between <scan_start> and <scan_start + scan_length> millimeters away from the transducer. A distance measurement to the target is also provided.
-    *   Returns a dictionary of the reply payload
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
     *   @return confidence: Units: %; Confidence in the most recent range measurement.
     *   @return pulse_length: Units: us; The acoustic pulse length during acoustic transmission/activation.
@@ -238,24 +252,26 @@ public:
     *   @return scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan region.
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
-    *   @return num_points: The number of data points for the profile. (The length of the proceeding array)
-    *   @return data: An array of return strength measurements taken at regular intervals across the scan region.
+    *   @return profile_data: The number of data points for the profile. (The length of the proceeding array)
     */
-    bool get_profile(uint32_t* distance = nullptr,
-                      uint16_t* confidence = nullptr,
-                      uint16_t* pulse_length = nullptr,
-                      uint32_t* ping_number = nullptr,
-                      uint32_t* scan_start = nullptr,
-                      uint32_t* scan_length = nullptr,
-                      uint32_t* gain_index = nullptr,
-                      uint16_t* num_points = nullptr,
-                      uint8_t* data = nullptr);
+    bool get_profile(
+                     uint32_t* distance = nullptr,
+                     uint16_t* confidence = nullptr,
+                     uint16_t* pulse_length = nullptr,
+                     uint32_t* ping_number = nullptr,
+                     uint32_t* scan_start = nullptr,
+                     uint32_t* scan_length = nullptr,
+                     uint32_t* gain_index = nullptr,
+                     uint16_t* profile_data_length = nullptr,
+                     uint8_t** profile_data = nullptr
+         );
 
     /** The protocol version
-    *   Returns a dictionary of the reply payload
-    *   @return protocol_version: 
+    *   @return protocol_version: The protocol version
     */
-    bool get_protocol_version(uint32_t* protocol_version = nullptr);
+    bool get_protocol_version(
+                     uint32_t* protocol_version = nullptr
+         );
 
 
     /** Set the device ID.
@@ -296,70 +312,68 @@ public:
 
 
     // Return the latest value received
-    uint16_t num_points() { return _num_points; }
-
-    // Return the latest value received
-    uint16_t firmware_version_minor() { return _firmware_version_minor; }
-
-    // Return the latest value received
-    uint16_t pcb_temperature() { return _pcb_temperature; }
-
-    // Return the latest value received
-    uint8_t device_type() { return _device_type; }
+    uint32_t distance() { return _distance; }
 
     // Return the latest value received
     uint16_t confidence() { return _confidence; }
 
     // Return the latest value received
-    uint16_t pulse_length() { return _pulse_length; }
-
-    // Return the latest value received
-    uint32_t speed_of_sound() { return _speed_of_sound; }
-
-    // Return the latest value received
-    uint32_t ping_number() { return _ping_number; }
-
-    // Return the latest value received
-    uint16_t processor_temperature() { return _processor_temperature; }
-
-    // Return the latest value received
-    uint32_t protocol_version() { return _protocol_version; }
-
-    // Return the latest value received
-    uint16_t voltage_5() { return _voltage_5; }
-
-    // Return the latest value received
-    uint32_t scan_start() { return _scan_start; }
-
-    // Return the latest value received
-    uint32_t gain_index() { return _gain_index; }
-
-    // Return the latest value received
-    uint8_t* data() { return _data; }
-
-    // Return the latest value received
-    uint8_t device_id() { return _device_id; }
-
-    // Return the latest value received
-    uint32_t distance() { return _distance; }
+    uint16_t profile_data_length() { return _profile_data_length; }
+    uint8_t* profile_data() { return _profile_data; }
 
     // Return the latest value received
     uint16_t ping_interval() { return _ping_interval; }
 
     // Return the latest value received
-    uint8_t ping_enabled() { return _ping_enabled; }
+    uint16_t pulse_length() { return _pulse_length; }
+
+    // Return the latest value received
+    uint16_t voltage_5() { return _voltage_5; }
 
     // Return the latest value received
     uint8_t device_model() { return _device_model; }
 
     // Return the latest value received
+    uint32_t speed_of_sound() { return _speed_of_sound; }
+
+    // Return the latest value received
+    uint16_t firmware_version_minor() { return _firmware_version_minor; }
+
+    // Return the latest value received
+    uint32_t ping_number() { return _ping_number; }
+
+    // Return the latest value received
     uint16_t firmware_version_major() { return _firmware_version_major; }
+
+    // Return the latest value received
+    uint16_t pcb_temperature() { return _pcb_temperature; }
 
     // Return the latest value received
     uint8_t mode_auto() { return _mode_auto; }
 
     // Return the latest value received
+    uint32_t scan_start() { return _scan_start; }
+
+    // Return the latest value received
+    uint8_t device_type() { return _device_type; }
+
+    // Return the latest value received
+    uint32_t protocol_version() { return _protocol_version; }
+
+    // Return the latest value received
     uint32_t scan_length() { return _scan_length; }
+
+    // Return the latest value received
+    uint32_t gain_index() { return _gain_index; }
+
+    // Return the latest value received
+    uint16_t processor_temperature() { return _processor_temperature; }
+
+    // Return the latest value received
+    uint8_t ping_enabled() { return _ping_enabled; }
+
+    // Return the latest value received
+    uint8_t device_id() { return _device_id; }
 
 
 private:
@@ -369,70 +383,68 @@ private:
   // For decoding PingMessages from the device
   PingParser _parser;
 
-    // The number of data points for the profile. (The length of the proceeding array)
-    uint16_t _num_points;
-
-    // Firmware minor version.
-    uint16_t _firmware_version_minor;
-
-    // The temperature in centi-degrees Centigrade (100 * degrees C).
-    uint16_t _pcb_temperature;
-
-    // Device type. 0: 1D Echosounder
-    uint8_t _device_type;
+    // The current return distance determined for the most recent acoustic measurement.
+    uint32_t _distance;
 
     // Confidence in the most recent range measurement.
     uint16_t _confidence;
 
-    // The acoustic pulse length during acoustic transmission/activation.
-    uint16_t _pulse_length;
-
-    // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
-    uint32_t _speed_of_sound;
-
-    // The pulse/measurement count since boot.
-    uint32_t _ping_number;
-
-    // The temperature in centi-degrees Centigrade (100 * degrees C).
-    uint16_t _processor_temperature;
-
-    // 
-    uint32_t _protocol_version;
-
-    // Device supply voltage.
-    uint16_t _voltage_5;
-
-    // The beginning of the scan region in mm from the transducer.
-    uint32_t _scan_start;
-
-    // The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
-    uint32_t _gain_index;
-
-    // An array of return strength measurements taken at regular intervals across the scan region.
-    uint8_t* _data;
-
-    // The device ID (0-254). 255 is reserved for broadcast messages.
-    uint8_t _device_id;
-
-    // The current return distance determined for the most recent acoustic measurement.
-    uint32_t _distance;
+    // The number of data points for the profile. (The length of the proceeding array)
+    uint16_t _profile_data_length;
+    uint8_t* _profile_data;
 
     // The interval between acoustic measurements.
     uint16_t _ping_interval;
 
-    // The state of the acoustic output. 0: disabled, 1:enabled
-    uint8_t _ping_enabled;
+    // The acoustic pulse length during acoustic transmission/activation.
+    uint16_t _pulse_length;
+
+    // Device supply voltage.
+    uint16_t _voltage_5;
 
     // Device model. 0: Ping1D
     uint8_t _device_model;
 
+    // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
+    uint32_t _speed_of_sound;
+
+    // Firmware minor version.
+    uint16_t _firmware_version_minor;
+
+    // The pulse/measurement count since boot.
+    uint32_t _ping_number;
+
     // Firmware major version.
     uint16_t _firmware_version_major;
+
+    // The temperature in centi-degrees Centigrade (100 * degrees C).
+    uint16_t _pcb_temperature;
 
     // The current operating mode of the device. 0: manual mode, 1: auto mode
     uint8_t _mode_auto;
 
+    // The beginning of the scan region in mm from the transducer.
+    uint32_t _scan_start;
+
+    // Device type. 0: 1D Echosounder
+    uint8_t _device_type;
+
+    // The protocol version
+    uint32_t _protocol_version;
+
     // The length of the scan region.
     uint32_t _scan_length;
+
+    // The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+    uint32_t _gain_index;
+
+    // The temperature in centi-degrees Centigrade (100 * degrees C).
+    uint16_t _processor_temperature;
+
+    // The state of the acoustic output. 0: disabled, 1:enabled
+    uint8_t _ping_enabled;
+
+    // The device ID (0-254). 255 is reserved for broadcast messages.
+    uint8_t _device_id;
 
 };
