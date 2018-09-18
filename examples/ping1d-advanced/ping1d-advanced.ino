@@ -83,6 +83,12 @@ void loop() {
       printf("attempt to get general info failed");
   }
 
-  //TODO get profile
+  if (ping.get_profile()) {
+      printf("got profile");
+      printf("profile points: ");
+      for (int i = 0; i < ping.num_points(); i++) {
+          printf("> %d", ping.data()[i]);
+      }
+  }
 }
 

@@ -204,8 +204,16 @@ Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
           _scan_start = m.scan_start();
           _scan_length = m.scan_length();
           _gain_index = m.gain_index();
+          if (m.num_points() > _num_points) {
+              if (_data) {
+                  free(_data);
+              }
+              _data = (uint8_t*)malloc(m.num_points() * sizeof(uint8_t));
+          }
           _num_points = m.num_points();
-          _data = m.data();
+          for (uint16_t i = 0; i < _num_points; i++) {
+              _data[i] = m.data()[i];
+          }
       }
           break;
       case Ping1DNamespace::Protocol_version:

@@ -335,7 +335,7 @@ public:
     uint32_t gain_index() { return _gain_index; }
 
     // Return the latest value received
-    uint8_t data() { return _data; }
+    uint8_t* data() { return _data; }
 
     // Return the latest value received
     uint8_t device_id() { return _device_id; }
@@ -409,7 +409,7 @@ private:
     uint32_t _gain_index;
 
     // An array of return strength measurements taken at regular intervals across the scan region.
-    uint8_t _data;
+    uint8_t* _data;
 
     // The device ID (0-254). 255 is reserved for broadcast messages.
     uint8_t _device_id;
