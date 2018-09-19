@@ -31,7 +31,7 @@ public:
   /** Destructor
    *
    */
-  ~Ping1D() = default;
+  ~Ping1D();
   
   /** Read in data from device, return a PingMessage if available
    *  Data will be read in from device until there is no data left in the RX buffer,

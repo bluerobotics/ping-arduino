@@ -86,8 +86,8 @@ void loop() {
   if (ping.get_profile()) {
       printf("got profile");
       printf("profile points: ");
-      for (int i = 0; i < ping.num_points(); i++) {
-          printf("> %d", ping.data()[i]);
+      for (int i = 0; i < ping.profile_data_length(); i++) {
+          printf("> %d", ping.profile_data()[i]);
       }
   }
 }
