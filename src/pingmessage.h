@@ -23,6 +23,7 @@ namespace Ping1DNamespace {
 #endif
     enum msg_ping1D_id {
         Profile = 1300,
+        Set_ping_enable = 1006,
         Voltage_5 = 1202,
         Set_mode_auto = 1003,
         Goto_bootloader = 1100,
@@ -41,7 +42,6 @@ namespace Ping1DNamespace {
         Continuous_stop = 1401,
         Set_ping_interval = 1004,
         Distance_simple = 1211,
-        Pulse_length = 1208,
         Set_range = 1001,
         Mode_auto = 1205,
         Speed_of_sound = 1203,
@@ -52,7 +52,7 @@ namespace Ping1DNamespace {
         Set_gain_index = 1005,
         Protocol_version = 5,
         Device_id = 1201,
-        Set_ping_enable = 1006,
+        Pulse_duration = 1208,
     };
 #ifdef QT_CORE_LIB
     Q_ENUM_NS(msg_ping1D_id)

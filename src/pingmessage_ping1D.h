@@ -23,7 +23,9 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 26; // payload size
+        (uint16_t&)msgData[2] = 26
+                              + profile_data_length
+; // payload size
         (uint16_t&)msgData[4] = 1300; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -33,8 +35,8 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
     void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(6)), &pulse_length, 2);};
+    uint16_t pulse_duration() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_duration(const uint16_t pulse_duration) { memcpy((payload_data(6)), &pulse_duration, 2);};
     uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
     void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
     uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
@@ -44,8 +46,33 @@ public:
     uint32_t gain_index() const { uint32_t d; memcpy(&d, (payload_data(20)), 4); return d; };
     void set_gain_index(const uint32_t gain_index) { memcpy((payload_data(20)), &gain_index, 4);};
     uint16_t profile_data_length() const { uint16_t d; memcpy(&d, (payload_data(24)), 2); return d; };
+    //TODO do this in constructor (const)
+    void set_profile_data_length(const uint16_t profile_data_length) { memcpy((payload_data(24)), &profile_data_length, 2);};
     uint8_t* profile_data() const { return (uint8_t*)(payload_data(26)); }
-    void set_profile_data_at(const uint16_t i, const u8 data) { memcpy((payload_data(26 + i)), &data, 1); }
+    void set_profile_data_at(const uint16_t i, const uint8_t data) { memcpy((payload_data(26 + i)), &data, 1); }
+};
+
+class ping_msg_ping1D_set_ping_enable : public PingMessage
+{
+public:
+    ping_msg_ping1D_set_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_set_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_set_ping_enable(
+)
+        : PingMessage { 11
+                              }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 1
+; // payload size
+        (uint16_t&)msgData[4] = 1006; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint8_t ping_enabled() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
+    void set_ping_enabled(const uint8_t ping_enabled) { memcpy((payload_data(0)), &ping_enabled, 1);};
 };
 
 class ping_msg_ping1D_voltage_5 : public PingMessage
@@ -60,7 +87,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1202; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -82,7 +110,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1003; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -104,7 +133,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 0; // payload size
+        (uint16_t&)msgData[2] = 0
+; // payload size
         (uint16_t&)msgData[4] = 1100; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -124,7 +154,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 0; // payload size
+        (uint16_t&)msgData[2] = 0
+; // payload size
         (uint16_t&)msgData[4] = 0; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -144,7 +175,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[2] = 4
+; // payload size
         (uint16_t&)msgData[4] = 1002; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -166,7 +198,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1214; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -188,7 +221,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1215; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -210,14 +244,15 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 0; // payload size
+        (uint16_t&)msgData[2] = 0
+; // payload size
         (uint16_t&)msgData[4] = 3; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    char* msg() const { return (char*)(payload_data(0)); }
-    void set_msg_at(const uint16_t i, const char data) { memcpy((payload_data(0 + i)), &data, 1); }
+    char* ascii_message() const { return (char*)(payload_data(0)); }
+    void set_ascii_message_at(const uint16_t i, const char data) { memcpy((payload_data(0 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_set_device_id : public PingMessage
@@ -232,7 +267,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1000; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -254,7 +290,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1400; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -276,7 +313,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 6; // payload size
+        (uint16_t&)msgData[2] = 6
+; // payload size
         (uint16_t&)msgData[4] = 1200; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -304,7 +342,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 10; // payload size
+        (uint16_t&)msgData[2] = 10
+; // payload size
         (uint16_t&)msgData[4] = 1210; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -336,7 +375,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[2] = 4
+; // payload size
         (uint16_t&)msgData[4] = 1207; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -358,7 +398,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1206; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -380,7 +421,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 24; // payload size
+        (uint16_t&)msgData[2] = 24
+; // payload size
         (uint16_t&)msgData[4] = 1212; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -390,8 +432,8 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint16_t confidence() const { uint16_t d; memcpy(&d, (payload_data(4)), 2); return d; };
     void set_confidence(const uint16_t confidence) { memcpy((payload_data(4)), &confidence, 2);};
-    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
-    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(6)), &pulse_length, 2);};
+    uint16_t pulse_duration() const { uint16_t d; memcpy(&d, (payload_data(6)), 2); return d; };
+    void set_pulse_duration(const uint16_t pulse_duration) { memcpy((payload_data(6)), &pulse_duration, 2);};
     uint32_t ping_number() const { uint32_t d; memcpy(&d, (payload_data(8)), 4); return d; };
     void set_ping_number(const uint32_t ping_number) { memcpy((payload_data(8)), &ping_number, 4);};
     uint32_t scan_start() const { uint32_t d; memcpy(&d, (payload_data(12)), 4); return d; };
@@ -414,7 +456,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1401; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -436,7 +479,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1004; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -458,7 +502,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 5; // payload size
+        (uint16_t&)msgData[2] = 5
+; // payload size
         (uint16_t&)msgData[4] = 1211; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -468,28 +513,6 @@ public:
     void set_distance(const uint32_t distance) { memcpy((payload_data(0)), &distance, 4);};
     uint8_t confidence() const { uint8_t d; memcpy(&d, (payload_data(4)), 1); return d; };
     void set_confidence(const uint8_t confidence) { memcpy((payload_data(4)), &confidence, 1);};
-};
-
-class ping_msg_ping1D_pulse_length : public PingMessage
-{
-public:
-    ping_msg_ping1D_pulse_length(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_pulse_length(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_pulse_length(
-)
-        : PingMessage { 12
-                              }
-    {
-        msgData[0] = 'B';
-        msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
-        (uint16_t&)msgData[4] = 1208; // ID
-        msgData[6] = 0;
-        msgData[7] = 0;
-    }
-
-    uint16_t pulse_length() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
-    void set_pulse_length(const uint16_t pulse_length) { memcpy((payload_data(0)), &pulse_length, 2);};
 };
 
 class ping_msg_ping1D_set_range : public PingMessage
@@ -504,7 +527,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 8; // payload size
+        (uint16_t&)msgData[2] = 8
+; // payload size
         (uint16_t&)msgData[4] = 1001; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -528,7 +552,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1205; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -550,7 +575,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[2] = 4
+; // payload size
         (uint16_t&)msgData[4] = 1203; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -572,7 +598,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 2; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -580,8 +607,8 @@ public:
 
     uint16_t nacked_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
     void set_nacked_id(const uint16_t nacked_id) { memcpy((payload_data(0)), &nacked_id, 2);};
-    char* nack_msg() const { return (char*)(payload_data(2)); }
-    void set_nack_msg_at(const uint16_t i, const char data) { memcpy((payload_data(2 + i)), &data, 1); }
+    char* nack_message() const { return (char*)(payload_data(2)); }
+    void set_nack_message_at(const uint16_t i, const char data) { memcpy((payload_data(2 + i)), &data, 1); }
 };
 
 class ping_msg_ping1D_ack : public PingMessage
@@ -596,7 +623,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -618,7 +646,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 8; // payload size
+        (uint16_t&)msgData[2] = 8
+; // payload size
         (uint16_t&)msgData[4] = 1204; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -642,7 +671,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2
+; // payload size
         (uint16_t&)msgData[4] = 1213; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -664,7 +694,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1005; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -686,7 +717,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[2] = 4
+; // payload size
         (uint16_t&)msgData[4] = 5; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -708,7 +740,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 1
+; // payload size
         (uint16_t&)msgData[4] = 1201; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -718,25 +751,26 @@ public:
     void set_device_id(const uint8_t device_id) { memcpy((payload_data(0)), &device_id, 1);};
 };
 
-class ping_msg_ping1D_set_ping_enable : public PingMessage
+class ping_msg_ping1D_pulse_duration : public PingMessage
 {
 public:
-    ping_msg_ping1D_set_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
-    ping_msg_ping1D_set_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_set_ping_enable(
+    ping_msg_ping1D_pulse_duration(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_pulse_duration(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_pulse_duration(
 )
-        : PingMessage { 11
+        : PingMessage { 12
                               }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
-        (uint16_t&)msgData[4] = 1006; // ID
+        (uint16_t&)msgData[2] = 2
+; // payload size
+        (uint16_t&)msgData[4] = 1208; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t ping_enabled() const { uint8_t d; memcpy(&d, (payload_data(0)), 1); return d; };
-    void set_ping_enabled(const uint8_t ping_enabled) { memcpy((payload_data(0)), &ping_enabled, 1);};
+    uint16_t pulse_duration() const { uint16_t d; memcpy(&d, (payload_data(0)), 2); return d; };
+    void set_pulse_duration(const uint16_t pulse_duration) { memcpy((payload_data(0)), &pulse_duration, 2);};
 };
 

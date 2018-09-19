@@ -22,90 +22,90 @@ class Ping1D
 
 public:
 
-  /** Constructor
-   *  @param ser: The device I/O
-   *  @param baudrate: The device I/O baudrate
-   */
-  Ping1D(Stream& ser, uint32_t baudrate);
+    /** Constructor
+     *  @param ser: The device I/O
+     *  @param baudrate: The device I/O baudrate
+     */
+    Ping1D(Stream& ser, uint32_t baudrate);
 
-  /** Destructor
-   *
-   */
-  ~Ping1D();
+    /** Destructor
+     *
+     */
+    ~Ping1D();
   
-  /** Read in data from device, return a PingMessage if available
-   *  Data will be read in from device until there is no data left in the RX buffer,
-   *  or a valid PingMessage is successfully decoded.
-   *  Note that there may still be data available in the RX buffer for decoding when
-   *  this function returns a PingMessage
-   *  @return: The next PingMessage from the device
-   *  @return: null if the RX buffer is empty and no PingMessage has been decoded
-   */
-  PingMessage* read();
+    /** Read in data from device, return a PingMessage if available
+     *  Data will be read in from device until there is no data left in the RX buffer,
+     *  or a valid PingMessage is successfully decoded.
+     *  Note that there may still be data available in the RX buffer for decoding when
+     *  this function returns a PingMessage
+     *  @return: The next PingMessage from the device
+     *  @return: null if the RX buffer is empty and no PingMessage has been decoded
+     */
+    PingMessage* read();
 
-  /** Write data to device
-   *  @param data: pointer to buffer to write
-   *  @param length: buffer length to write
-   *  @return: size of data buffer written to the device
-   */
-  size_t write(uint8_t* data, uint16_t length);
+    /** Write data to device
+     *  @param data: pointer to buffer to write
+     *  @param length: buffer length to write
+     *  @return: size of data buffer written to the device
+     */
+    size_t write(uint8_t* data, uint16_t length);
 
-  /** Establish communications with the device, and initialize the update interval
-   *  @param ping_interval_ms: The interval (in milliseconds) between acoustic measurements
-   *  @return true if the device was initialized successfully
-   */
-  bool initialize(uint16_t ping_interval_ms = 50);
+    /** Establish communications with the device, and initialize the update interval
+     *  @param ping_interval_ms: The interval (in milliseconds) between acoustic measurements
+     *  @return true if the device was initialized successfully
+     */
+    bool initialize(uint16_t ping_interval_ms = 50);
 
 
-  /** Wait for reciept of a message with a particular message id from device
-   *  @param id: The message id to wait for
-   *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
-   *  @return The PingMessage received with matching id
-   *  @return null if the timeout expires and no PingMessage was received with a matching id
-   */
-  PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms);
+    /** Wait for reciept of a message with a particular message id from device
+     *  @param id: The message id to wait for
+     *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
+     *  @return The PingMessage received with matching id
+     *  @return null if the timeout expires and no PingMessage was received with a matching id
+     */
+    PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms);
 
-  /** Wait for reciept of a message with a particular message id from device
-   *  @param id: The message ID to wait for
-   *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
-   *  @return The PingMessage received with matching id
-   *  @return null if the timeout expires and no PingMessage was received with a matching id
-   */
-  void handleMessage(PingMessage* pmsg);
+    /** Wait for reciept of a message with a particular message id from device
+     *  @param id: The message ID to wait for
+     *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
+     *  @return The PingMessage received with matching id
+     *  @return null if the timeout expires and no PingMessage was received with a matching id
+     */
+    void handleMessage(PingMessage* pmsg);
 
-  /** Request a PingMessage from the device
-   *  @param id: The message ID to request
-   *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
-   *  @return The PingMessage that was requested
-   *  @return null if the device did not reply with the requested message before the timeout period expired
-   *
-   *  @par ex.
-   *  @code
-   *  ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
-   *  @endcode 
-   */
-  PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
+    /** Request a PingMessage from the device
+     *  @param id: The message ID to request
+     *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
+     *  @return The PingMessage that was requested
+     *  @return null if the device did not reply with the requested message before the timeout period expired
+     *
+     *  @par ex.
+     *  @code
+     *  ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
+     *  @endcode 
+     */
+    PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
   
 
-  /** Request a PingMessage of type T from the device
-   *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
-   *  @return The PingMessage that was requested
-   *  @return null if the device did not reply with the requested message before the timeout period expired
-   *
-   *  @par ex.
-   *  @code
-   *  auto msg = pd.request<ping_msg_ping1D_voltage_5>();
-   *  @endcode
-   */
-  template <typename T>
-  T* request();
+    /** Request a PingMessage of type T from the device
+     *  @param timeout_ms: The timeout period to wait for the requested PingMessage to be received
+     *  @return The PingMessage that was requested
+     *  @return null if the device did not reply with the requested message before the timeout period expired
+     *
+     *  @par ex.
+     *  @code
+     *  auto msg = pd.request<ping_msg_ping1D_voltage_5>();
+     *  @endcode
+     */
+    template <typename T>
+    T* request();
 
-  /** Helper to request distance and confidence
-   *  @return true if the distance and confidence have been updated successfully
-   */
-  bool update() {
-      return request(Ping1DNamespace::Distance_simple);
-  }
+    /** Helper to request distance and confidence
+     *  @return true if the distance and confidence have been updated successfully
+     */
+    bool update() {
+        return request(Ping1DNamespace::Distance_simple);
+    }
 
     /** Device information
     *   @return device_type: Device type. 0: 1D Echosounder
@@ -172,10 +172,10 @@ public:
          );
 
     /** The duration of the acoustic activation/transmission.
-    *   @return pulse_length: Units: microseconds; Acoustic pulse duration.
+    *   @return pulse_duration: Units: microseconds; Acoustic pulse duration.
     */
-    bool get_pulse_length(
-                     uint16_t* pulse_length = nullptr
+    bool get_pulse_duration(
+                     uint16_t* pulse_duration = nullptr
          );
 
     /** General information.
@@ -207,7 +207,7 @@ public:
     /** 
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
     *   @return confidence: Units: %; Confidence in the most recent range measurement.
-    *   @return pulse_length: Units: us; The acoustic pulse length during acoustic transmission/activation.
+    *   @return pulse_duration: Units: us; The acoustic pulse length during acoustic transmission/activation.
     *   @return ping_number: The pulse/measurement count since boot.
     *   @return scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan region.
@@ -216,7 +216,7 @@ public:
     bool get_distance(
                      uint32_t* distance = nullptr,
                      uint16_t* confidence = nullptr,
-                     uint16_t* pulse_length = nullptr,
+                     uint16_t* pulse_duration = nullptr,
                      uint32_t* ping_number = nullptr,
                      uint32_t* scan_start = nullptr,
                      uint32_t* scan_length = nullptr,
@@ -247,7 +247,7 @@ public:
     /** A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between <scan_start> and <scan_start + scan_length> millimeters away from the transducer. A distance measurement to the target is also provided.
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
     *   @return confidence: Units: %; Confidence in the most recent range measurement.
-    *   @return pulse_length: Units: us; The acoustic pulse length during acoustic transmission/activation.
+    *   @return pulse_duration: Units: us; The acoustic pulse length during acoustic transmission/activation.
     *   @return ping_number: The pulse/measurement count since boot.
     *   @return scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan region.
@@ -257,7 +257,7 @@ public:
     bool get_profile(
                      uint32_t* distance = nullptr,
                      uint16_t* confidence = nullptr,
-                     uint16_t* pulse_length = nullptr,
+                     uint16_t* pulse_duration = nullptr,
                      uint32_t* ping_number = nullptr,
                      uint32_t* scan_start = nullptr,
                      uint32_t* scan_length = nullptr,
@@ -325,7 +325,7 @@ public:
     uint16_t ping_interval() { return _ping_interval; }
 
     // Return the latest value received
-    uint16_t pulse_length() { return _pulse_length; }
+    uint8_t ping_enabled() { return _ping_enabled; }
 
     // Return the latest value received
     uint16_t voltage_5() { return _voltage_5; }
@@ -370,18 +370,18 @@ public:
     uint16_t processor_temperature() { return _processor_temperature; }
 
     // Return the latest value received
-    uint8_t ping_enabled() { return _ping_enabled; }
+    uint16_t pulse_duration() { return _pulse_duration; }
 
     // Return the latest value received
     uint8_t device_id() { return _device_id; }
 
 
 private:
-  // Device I/O
-  Stream& _stream;
+    // Device I/O
+    Stream& _stream;
 
-  // For decoding PingMessages from the device
-  PingParser _parser;
+    // For decoding PingMessages from the device
+    PingParser _parser;
 
     // The current return distance determined for the most recent acoustic measurement.
     uint32_t _distance;
@@ -396,8 +396,8 @@ private:
     // The interval between acoustic measurements.
     uint16_t _ping_interval;
 
-    // The acoustic pulse length during acoustic transmission/activation.
-    uint16_t _pulse_length;
+    // The state of the acoustic output. 0: disabled, 1:enabled
+    uint8_t _ping_enabled;
 
     // Device supply voltage.
     uint16_t _voltage_5;
@@ -441,8 +441,8 @@ private:
     // The temperature in centi-degrees Centigrade (100 * degrees C).
     uint16_t _processor_temperature;
 
-    // The state of the acoustic output. 0: disabled, 1:enabled
-    uint8_t _ping_enabled;
+    // The acoustic pulse length during acoustic transmission/activation.
+    uint16_t _pulse_duration;
 
     // The device ID (0-254). 255 is reserved for broadcast messages.
     uint8_t _device_id;
