@@ -222,7 +222,7 @@ public:
     *   @return scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan region.
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
-    *   @return profile_data: The number of data points for the profile. (The length of the proceeding array)
+    *   @return profile_data: An array of return strength measurements taken at regular intervals across the scan region.
     */
     bool get_profile(uint32_t* distance = nullptr,
                      uint16_t* confidence = nullptr,
@@ -354,7 +354,7 @@ private:
     // Confidence in the most recent range measurement.
     uint16_t _confidence;
 
-    // The number of data points for the profile. (The length of the proceeding array)
+    // An array of return strength measurements taken at regular intervals across the scan region.
     uint16_t _profile_data_length;
     uint8_t* _profile_data;
 
