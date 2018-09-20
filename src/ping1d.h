@@ -113,70 +113,52 @@ public:
     *   @return firmware_version_major: Firmware version major number.
     *   @return firmware_version_minor: Firmware version minor number.
     */
-    bool get_firmware_version(
-                     uint8_t* device_type = nullptr,
+    bool get_firmware_version(uint8_t* device_type = nullptr,
                      uint8_t* device_model = nullptr,
                      uint16_t* firmware_version_major = nullptr,
-                     uint16_t* firmware_version_minor = nullptr
-         );
+                     uint16_t* firmware_version_minor = nullptr);
 
     /** The device ID.
     *   @return device_id: The device ID (0-254). 255 is reserved for broadcast messages.
     */
-    bool get_device_id(
-                     uint8_t* device_id = nullptr
-         );
+    bool get_device_id(uint8_t* device_id = nullptr);
 
     /** The 5V rail voltage.
     *   @return voltage_5: Units: mV; The 5V rail voltage.
     */
-    bool get_voltage_5(
-                     uint16_t* voltage_5 = nullptr
-         );
+    bool get_voltage_5(uint16_t* voltage_5 = nullptr);
 
     /** The speed of sound used for distance calculations.
     *   @return speed_of_sound: Units: mm/s; The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
     */
-    bool get_speed_of_sound(
-                     uint32_t* speed_of_sound = nullptr
-         );
+    bool get_speed_of_sound(uint32_t* speed_of_sound = nullptr);
 
     /** The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).
     *   @return scan_start: Units: mm; The beginning of the scan range in mm from the transducer.
     *   @return scan_length: Units: mm; The length of the scan range.
     */
-    bool get_range(
-                     uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr
-         );
+    bool get_range(uint32_t* scan_start = nullptr,
+                     uint32_t* scan_length = nullptr);
 
     /** The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.
     *   @return mode_auto: 0: manual mode, 1: auto mode
     */
-    bool get_mode_auto(
-                     uint8_t* mode_auto = nullptr
-         );
+    bool get_mode_auto(uint8_t* mode_auto = nullptr);
 
     /** The interval between acoustic measurements.
     *   @return ping_interval: Units: ms; The interval between acoustic measurements.
     */
-    bool get_ping_interval(
-                     uint16_t* ping_interval = nullptr
-         );
+    bool get_ping_interval(uint16_t* ping_interval = nullptr);
 
     /** The current gain setting.
     *   @return gain_index: 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     */
-    bool get_gain_index(
-                     uint32_t* gain_index = nullptr
-         );
+    bool get_gain_index(uint32_t* gain_index = nullptr);
 
     /** The duration of the acoustic activation/transmission.
     *   @return pulse_duration: Units: microseconds; Acoustic pulse duration.
     */
-    bool get_pulse_duration(
-                     uint16_t* pulse_duration = nullptr
-         );
+    bool get_pulse_duration(uint16_t* pulse_duration = nullptr);
 
     /** General information.
     *   @return firmware_version_major: Firmware major version.
@@ -186,23 +168,19 @@ public:
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     *   @return mode_auto: The current operating mode of the device. 0: manual mode, 1: auto mode
     */
-    bool get_general_info(
-                     uint16_t* firmware_version_major = nullptr,
+    bool get_general_info(uint16_t* firmware_version_major = nullptr,
                      uint16_t* firmware_version_minor = nullptr,
                      uint16_t* voltage_5 = nullptr,
                      uint16_t* ping_interval = nullptr,
                      uint8_t* gain_index = nullptr,
-                     uint8_t* mode_auto = nullptr
-         );
+                     uint8_t* mode_auto = nullptr);
 
     /** The distance to target with confidence estimate.
     *   @return distance: Units: mm; Distance to the target.
     *   @return confidence: Units: %; Confidence in the distance measurement.
     */
-    bool get_distance_simple(
-                     uint32_t* distance = nullptr,
-                     uint8_t* confidence = nullptr
-         );
+    bool get_distance_simple(uint32_t* distance = nullptr,
+                     uint8_t* confidence = nullptr);
 
     /** 
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
@@ -213,36 +191,28 @@ public:
     *   @return scan_length: Units: mm; The length of the scan region.
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     */
-    bool get_distance(
-                     uint32_t* distance = nullptr,
+    bool get_distance(uint32_t* distance = nullptr,
                      uint16_t* confidence = nullptr,
                      uint16_t* pulse_duration = nullptr,
                      uint32_t* ping_number = nullptr,
                      uint32_t* scan_start = nullptr,
                      uint32_t* scan_length = nullptr,
-                     uint32_t* gain_index = nullptr
-         );
+                     uint32_t* gain_index = nullptr);
 
     /** Temperature of the device cpu.
     *   @return processor_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
     */
-    bool get_processor_temperature(
-                     uint16_t* processor_temperature = nullptr
-         );
+    bool get_processor_temperature(uint16_t* processor_temperature = nullptr);
 
     /** Temperature of the on-board thermistor.
     *   @return pcb_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
     */
-    bool get_pcb_temperature(
-                     uint16_t* pcb_temperature = nullptr
-         );
+    bool get_pcb_temperature(uint16_t* pcb_temperature = nullptr);
 
     /** Acoustic output enabled state.
     *   @return ping_enabled: The state of the acoustic output. 0: disabled, 1:enabled
     */
-    bool get_ping_enable(
-                     uint8_t* ping_enabled = nullptr
-         );
+    bool get_ping_enable(uint8_t* ping_enabled = nullptr);
 
     /** A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between <scan_start> and <scan_start + scan_length> millimeters away from the transducer. A distance measurement to the target is also provided.
     *   @return distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
@@ -254,24 +224,19 @@ public:
     *   @return gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
     *   @return profile_data: The number of data points for the profile. (The length of the proceeding array)
     */
-    bool get_profile(
-                     uint32_t* distance = nullptr,
+    bool get_profile(uint32_t* distance = nullptr,
                      uint16_t* confidence = nullptr,
                      uint16_t* pulse_duration = nullptr,
                      uint32_t* ping_number = nullptr,
                      uint32_t* scan_start = nullptr,
                      uint32_t* scan_length = nullptr,
                      uint32_t* gain_index = nullptr,
-                     uint16_t* profile_data_length = nullptr,
-                     uint8_t** profile_data = nullptr
-         );
+                     uint16_t* profile_data_length = nullptr, uint8_t** profile_data = nullptr);
 
     /** The protocol version
     *   @return protocol_version: The protocol version
     */
-    bool get_protocol_version(
-                     uint32_t* protocol_version = nullptr
-         );
+    bool get_protocol_version(uint32_t* protocol_version = nullptr);
 
 
     /** Set the device ID.
