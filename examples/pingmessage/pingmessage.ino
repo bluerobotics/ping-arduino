@@ -20,7 +20,7 @@ HardwareSerial& debugSerial = Serial;
 #include "ping_parser.h"
 #include "ping1d.h"
 
-static Ping1D ping { pingSerial, 19200 };
+static Ping1D ping { pingSerial };
 static PingParser parser;
 
 static const uint8_t ledPin = 13;
