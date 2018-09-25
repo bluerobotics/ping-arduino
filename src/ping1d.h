@@ -26,7 +26,7 @@ public:
      *  @param ser: The device I/O
      *  @param baudrate: The device I/O baudrate
      */
-    Ping1D(Stream& ser, uint32_t baudrate);
+    Ping1D(Stream& ser);
 
     /** Destructor
      *

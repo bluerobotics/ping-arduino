@@ -11,7 +11,7 @@
 
 #include "ping1d.h"
 
-Ping1D::Ping1D(Stream& ser, uint32_t baudrate) : _stream ( ser ) {}
+Ping1D::Ping1D(Stream& ser) : _stream ( ser ) {}
 
 Ping1D::~Ping1D()
 {
@@ -278,10 +278,10 @@ T* Ping1D::request()
 }
 
 
-bool Ping1D::get_firmware_version(uint8_t* device_type = nullptr,
-                     uint8_t* device_model = nullptr,
-                     uint16_t* firmware_version_major = nullptr,
-                     uint16_t* firmware_version_minor = nullptr)
+bool Ping1D::get_firmware_version(uint8_t* device_type,
+                     uint8_t* device_model,
+                     uint16_t* firmware_version_major,
+                     uint16_t* firmware_version_minor)
 {
 
     if (!request(Ping1DNamespace::Firmware_version)) {
@@ -296,7 +296,7 @@ bool Ping1D::get_firmware_version(uint8_t* device_type = nullptr,
     return true;
 }
 
-bool Ping1D::get_device_id(uint8_t* device_id = nullptr)
+bool Ping1D::get_device_id(uint8_t* device_id)
 {
 
     if (!request(Ping1DNamespace::Device_id)) {
@@ -308,7 +308,7 @@ bool Ping1D::get_device_id(uint8_t* device_id = nullptr)
     return true;
 }
 
-bool Ping1D::get_voltage_5(uint16_t* voltage_5 = nullptr)
+bool Ping1D::get_voltage_5(uint16_t* voltage_5)
 {
 
     if (!request(Ping1DNamespace::Voltage_5)) {
@@ -320,7 +320,7 @@ bool Ping1D::get_voltage_5(uint16_t* voltage_5 = nullptr)
     return true;
 }
 
-bool Ping1D::get_speed_of_sound(uint32_t* speed_of_sound = nullptr)
+bool Ping1D::get_speed_of_sound(uint32_t* speed_of_sound)
 {
 
     if (!request(Ping1DNamespace::Speed_of_sound)) {
@@ -332,8 +332,8 @@ bool Ping1D::get_speed_of_sound(uint32_t* speed_of_sound = nullptr)
     return true;
 }
 
-bool Ping1D::get_range(uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr)
+bool Ping1D::get_range(uint32_t* scan_start,
+                     uint32_t* scan_length)
 {
 
     if (!request(Ping1DNamespace::Range)) {
@@ -346,7 +346,7 @@ bool Ping1D::get_range(uint32_t* scan_start = nullptr,
     return true;
 }
 
-bool Ping1D::get_mode_auto(uint8_t* mode_auto = nullptr)
+bool Ping1D::get_mode_auto(uint8_t* mode_auto)
 {
 
     if (!request(Ping1DNamespace::Mode_auto)) {
@@ -358,7 +358,7 @@ bool Ping1D::get_mode_auto(uint8_t* mode_auto = nullptr)
     return true;
 }
 
-bool Ping1D::get_ping_interval(uint16_t* ping_interval = nullptr)
+bool Ping1D::get_ping_interval(uint16_t* ping_interval)
 {
 
     if (!request(Ping1DNamespace::Ping_interval)) {
@@ -370,7 +370,7 @@ bool Ping1D::get_ping_interval(uint16_t* ping_interval = nullptr)
     return true;
 }
 
-bool Ping1D::get_gain_index(uint32_t* gain_index = nullptr)
+bool Ping1D::get_gain_index(uint32_t* gain_index)
 {
 
     if (!request(Ping1DNamespace::Gain_index)) {
@@ -382,7 +382,7 @@ bool Ping1D::get_gain_index(uint32_t* gain_index = nullptr)
     return true;
 }
 
-bool Ping1D::get_pulse_duration(uint16_t* pulse_duration = nullptr)
+bool Ping1D::get_pulse_duration(uint16_t* pulse_duration)
 {
 
     if (!request(Ping1DNamespace::Pulse_duration)) {
@@ -394,12 +394,12 @@ bool Ping1D::get_pulse_duration(uint16_t* pulse_duration = nullptr)
     return true;
 }
 
-bool Ping1D::get_general_info(uint16_t* firmware_version_major = nullptr,
-                     uint16_t* firmware_version_minor = nullptr,
-                     uint16_t* voltage_5 = nullptr,
-                     uint16_t* ping_interval = nullptr,
-                     uint8_t* gain_index = nullptr,
-                     uint8_t* mode_auto = nullptr)
+bool Ping1D::get_general_info(uint16_t* firmware_version_major,
+                     uint16_t* firmware_version_minor,
+                     uint16_t* voltage_5,
+                     uint16_t* ping_interval,
+                     uint8_t* gain_index,
+                     uint8_t* mode_auto)
 {
 
     if (!request(Ping1DNamespace::General_info)) {
@@ -416,8 +416,8 @@ bool Ping1D::get_general_info(uint16_t* firmware_version_major = nullptr,
     return true;
 }
 
-bool Ping1D::get_distance_simple(uint32_t* distance = nullptr,
-                     uint8_t* confidence = nullptr)
+bool Ping1D::get_distance_simple(uint32_t* distance,
+                     uint8_t* confidence)
 {
 
     if (!request(Ping1DNamespace::Distance_simple)) {
@@ -430,13 +430,13 @@ bool Ping1D::get_distance_simple(uint32_t* distance = nullptr,
     return true;
 }
 
-bool Ping1D::get_distance(uint32_t* distance = nullptr,
-                     uint16_t* confidence = nullptr,
-                     uint16_t* pulse_duration = nullptr,
-                     uint32_t* ping_number = nullptr,
-                     uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr,
-                     uint32_t* gain_index = nullptr)
+bool Ping1D::get_distance(uint32_t* distance,
+                     uint16_t* confidence,
+                     uint16_t* pulse_duration,
+                     uint32_t* ping_number,
+                     uint32_t* scan_start,
+                     uint32_t* scan_length,
+                     uint32_t* gain_index)
 {
 
     if (!request(Ping1DNamespace::Distance)) {
@@ -454,7 +454,7 @@ bool Ping1D::get_distance(uint32_t* distance = nullptr,
     return true;
 }
 
-bool Ping1D::get_processor_temperature(uint16_t* processor_temperature = nullptr)
+bool Ping1D::get_processor_temperature(uint16_t* processor_temperature)
 {
 
     if (!request(Ping1DNamespace::Processor_temperature)) {
@@ -466,7 +466,7 @@ bool Ping1D::get_processor_temperature(uint16_t* processor_temperature = nullptr
     return true;
 }
 
-bool Ping1D::get_pcb_temperature(uint16_t* pcb_temperature = nullptr)
+bool Ping1D::get_pcb_temperature(uint16_t* pcb_temperature)
 {
 
     if (!request(Ping1DNamespace::Pcb_temperature)) {
@@ -478,7 +478,7 @@ bool Ping1D::get_pcb_temperature(uint16_t* pcb_temperature = nullptr)
     return true;
 }
 
-bool Ping1D::get_ping_enable(uint8_t* ping_enabled = nullptr)
+bool Ping1D::get_ping_enable(uint8_t* ping_enabled)
 {
 
     if (!request(Ping1DNamespace::Ping_enable)) {
@@ -490,14 +490,14 @@ bool Ping1D::get_ping_enable(uint8_t* ping_enabled = nullptr)
     return true;
 }
 
-bool Ping1D::get_profile(uint32_t* distance = nullptr,
-                     uint16_t* confidence = nullptr,
-                     uint16_t* pulse_duration = nullptr,
-                     uint32_t* ping_number = nullptr,
-                     uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr,
-                     uint32_t* gain_index = nullptr,
-                     uint16_t* profile_data_length = nullptr, uint8_t** profile_data = nullptr)
+bool Ping1D::get_profile(uint32_t* distance,
+                     uint16_t* confidence,
+                     uint16_t* pulse_duration,
+                     uint32_t* ping_number,
+                     uint32_t* scan_start,
+                     uint32_t* scan_length,
+                     uint32_t* gain_index,
+                     uint16_t* profile_data_length, uint8_t** profile_data)
 {
 
     if (!request(Ping1DNamespace::Profile)) {
@@ -517,7 +517,7 @@ bool Ping1D::get_profile(uint32_t* distance = nullptr,
     return true;
 }
 
-bool Ping1D::get_protocol_version(uint32_t* protocol_version = nullptr)
+bool Ping1D::get_protocol_version(uint32_t* protocol_version)
 {
 
     if (!request(Ping1DNamespace::Protocol_version)) {
