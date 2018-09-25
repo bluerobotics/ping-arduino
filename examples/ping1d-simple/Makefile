@@ -1,11 +1,11 @@
 #Makefile for arduino projects
 SRC_DIR = ${PWD}
 BUILD_DIR = ${PWD}/build
-MAIN_FILE = ping1d.ino
+MAIN_FILE = ping1d-simple.ino
 
 PACKAGE ?= arduino
 ARCH ?= avr
-BOARD ?= nano
+BOARD ?= uno
 
 ARG = --board ${PACKAGE}:${ARCH}:${BOARD} --verbose-build --pref build.path=${BUILD_DIR}
 
@@ -29,3 +29,4 @@ run: all flash
 
 # Make examples:
 # make flash SERIAL=/dev/ttyUSBx
+
