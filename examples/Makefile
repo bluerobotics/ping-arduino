@@ -12,20 +12,20 @@ ARG = --board ${PACKAGE}:${ARCH}:${BOARD} --verbose-build --pref build.path=${BU
 # Define default serial port
 SERIAL ?= /dev/ttyUSB0
 
-all:
-	arduino --verify ${ARG} ${SRC_DIR}/${MAIN_FILE}
-
 deps:
 	arduino --install-boards ${PACKAGE}:${ARCH}
 	arduino --install-library "ping-arduino"
 
-flash:
-	arduino --upload ${ARG} ${SRC_DIR}/${MAIN_FILE} --port ${SERIAL}
+%: %/%.ino
+
+%-verify: %
+	arduino --verify ${ARG} $</$<.ino
+
+%-upload : %
+	arduino --upload ${ARG} $</$<.ino --port ${SERIAL}
 
 clean:
 	rm -rf ${BUILD_DIR}
-
-run: all flash
 
 # Make examples:
 # make flash SERIAL=/dev/ttyUSBx
