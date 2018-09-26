@@ -7,7 +7,7 @@ PACKAGE ?= arduino
 ARCH ?= avr
 BOARD ?= uno
 
-ARG = --board ${PACKAGE}:${ARCH}:${BOARD} --verbose-build --pref build.path=${BUILD_DIR}
+ARG += --board ${PACKAGE}:${ARCH}:${BOARD} --verbose-build --pref build.path=${BUILD_DIR}
 
 # Define default serial port
 SERIAL ?= /dev/ttyUSB0
