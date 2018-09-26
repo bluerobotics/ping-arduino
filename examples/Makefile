@@ -14,7 +14,6 @@ SERIAL ?= /dev/ttyUSB0
 
 deps:
 	arduino --install-boards ${PACKAGE}:${ARCH}
-	arduino --install-library "ping-arduino"
 
 %: %/%.ino
 
