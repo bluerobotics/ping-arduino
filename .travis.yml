@@ -15,7 +15,11 @@ script:
   - cd examples
   - arduino --get-pref sketchbook.path
   - echo $HOME
+  - ls $HOME/Arduino
+  - ls $HOME/Arduino/libraries
   - ln -s $HOME/Arduino/libraries .
-  - make pingmessage-verify 
+  - ls $HOME/Arduino/libraries
+  - ls
+  - make pingmessage-verify
   - make ping1d-simple-verify
   - make ping1d-advanced-verify
