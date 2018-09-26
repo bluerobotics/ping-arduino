@@ -11,8 +11,8 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
 
 script:
-  - mkdir -p $HOME/Arduino
-  - ln -sf $(pwd)/.. $HOME/Arduino/libraries
+  - mkdir -p $HOME/Arduino/libraries
+  - cp . $HOME/Arduino/libraries
   - cd examples
   - make pingmessage-verify
   - make ping1d-simple-verify
