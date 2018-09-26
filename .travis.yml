@@ -11,7 +11,9 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
 
 script:
+  - pwd
   - cd examples
-  - make pingmessage-verify
+  - arduino --get-pref sketchbook.path
+  - make pingmessage-verify 
   - make ping1d-simple-verify
   - make ping1d-advanced-verify
