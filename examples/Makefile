@@ -27,6 +27,10 @@ deps:
 clean:
 	rm -rf ${BUILD_DIR}
 
-# Make examples:
-# make flash SERIAL=/dev/ttyUSBx
+# Make usage:
+# make <example_name>-verify
+# make <example_name>-upload
+
+# ex:
+# make ping1d-simple-upload SERIAL=/dev/ttyUSBx
 
