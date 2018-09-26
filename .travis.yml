@@ -11,15 +11,8 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
 
 script:
-  - pwd
-  - arduino --get-pref sketchbook.path
-  - echo $HOME
-  - ls $HOME/Arduino
-  - ls $HOME/Arduino/libraries
   - rm -rf $HOME/Arduino/libraries
   - ln -sf $(pwd)/.. $HOME/Arduino/libraries
-  - ls $HOME/Arduino/libraries
-  - ls
   - cd examples
   - make pingmessage-verify
   - make ping1d-simple-verify
