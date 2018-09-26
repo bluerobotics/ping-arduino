@@ -1,0 +1,17 @@
+language: cpp
+
+env:
+  global:
+    - ARDUINO_VERSION=1.8.7
+
+before_install:
+  - wget https://downloads.arduino.cc/arduino-${ARDUINO_VERSION}-linux64.tar.xz
+  - tar xf arduino-${ARDUINO_VERSION}-linux64.tar.xz
+  - sudo mv arduino-${ARDUINO_VERSION} /usr/local/share/arduino
+  - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
+
+script:
+  - cd examples
+  - make pingmessage-verify
+  - make ping1d-simple-verify
+  - make ping1d-advanced-verify
