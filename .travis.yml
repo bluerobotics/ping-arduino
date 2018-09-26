@@ -12,14 +12,15 @@ before_install:
 
 script:
   - pwd
-  - cd examples
   - arduino --get-pref sketchbook.path
   - echo $HOME
   - ls $HOME/Arduino
   - ls $HOME/Arduino/libraries
-  - ln -sf .. $HOME/Arduino/libraries
+  - rm -rf $HOME/Arduino/libraries
+  - ln -sf $(pwd)/.. $HOME/Arduino/libraries
   - ls $HOME/Arduino/libraries
   - ls
+  - cd examples
   - make pingmessage-verify
   - make ping1d-simple-verify
   - make ping1d-advanced-verify
