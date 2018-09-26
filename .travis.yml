@@ -12,7 +12,7 @@ before_install:
 
 script:
   - mkdir -p $HOME/Arduino/libraries
-  - cp . $HOME/Arduino/libraries
+  - cp -r . $HOME/Arduino/libraries
   - cd examples
   - make pingmessage-verify
   - make ping1d-simple-verify
