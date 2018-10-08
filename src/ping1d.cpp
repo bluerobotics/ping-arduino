@@ -30,7 +30,7 @@ PingMessage* Ping1D::read()
     }
     return nullptr;
 }
-  
+
 size_t Ping1D::write(uint8_t* data, uint16_t length)
 {
     return _stream.write(data, length);
@@ -61,7 +61,7 @@ bool Ping1D::initialize(uint16_t ping_interval_ms)
 
     return true;
 }
-  
+
 PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
 {
     uint32_t tstart = millis();
@@ -89,16 +89,15 @@ PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_
         }
     }
 
-    //debug("timed out waiting for id %d", id);
     return nullptr;
 }
-  
+
 void Ping1D::handleMessage(PingMessage* pmsg)
 {
     switch (pmsg->message_id()) {
         case Ping1DNamespace::Firmware_version:
         {
-          ping_msg_ping1D_firmware_version m(*pmsg);
+            ping_msg_ping1D_firmware_version m(*pmsg);
             _device_type = m.device_type();
             _device_model = m.device_model();
             _firmware_version_major = m.firmware_version_major();
@@ -108,28 +107,28 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Device_id:
         {
-          ping_msg_ping1D_device_id m(*pmsg);
+            ping_msg_ping1D_device_id m(*pmsg);
             _device_id = m.device_id();
         }
             break;
 
         case Ping1DNamespace::Voltage_5:
         {
-          ping_msg_ping1D_voltage_5 m(*pmsg);
+            ping_msg_ping1D_voltage_5 m(*pmsg);
             _voltage_5 = m.voltage_5();
         }
             break;
 
         case Ping1DNamespace::Speed_of_sound:
         {
-          ping_msg_ping1D_speed_of_sound m(*pmsg);
+            ping_msg_ping1D_speed_of_sound m(*pmsg);
             _speed_of_sound = m.speed_of_sound();
         }
             break;
 
         case Ping1DNamespace::Range:
         {
-          ping_msg_ping1D_range m(*pmsg);
+            ping_msg_ping1D_range m(*pmsg);
             _scan_start = m.scan_start();
             _scan_length = m.scan_length();
         }
@@ -137,35 +136,35 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Mode_auto:
         {
-          ping_msg_ping1D_mode_auto m(*pmsg);
+            ping_msg_ping1D_mode_auto m(*pmsg);
             _mode_auto = m.mode_auto();
         }
             break;
 
         case Ping1DNamespace::Ping_interval:
         {
-          ping_msg_ping1D_ping_interval m(*pmsg);
+            ping_msg_ping1D_ping_interval m(*pmsg);
             _ping_interval = m.ping_interval();
         }
             break;
 
         case Ping1DNamespace::Gain_index:
         {
-          ping_msg_ping1D_gain_index m(*pmsg);
+            ping_msg_ping1D_gain_index m(*pmsg);
             _gain_index = m.gain_index();
         }
             break;
 
         case Ping1DNamespace::Pulse_duration:
         {
-          ping_msg_ping1D_pulse_duration m(*pmsg);
+            ping_msg_ping1D_pulse_duration m(*pmsg);
             _pulse_duration = m.pulse_duration();
         }
             break;
 
         case Ping1DNamespace::General_info:
         {
-          ping_msg_ping1D_general_info m(*pmsg);
+            ping_msg_ping1D_general_info m(*pmsg);
             _firmware_version_major = m.firmware_version_major();
             _firmware_version_minor = m.firmware_version_minor();
             _voltage_5 = m.voltage_5();
@@ -177,7 +176,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Distance_simple:
         {
-          ping_msg_ping1D_distance_simple m(*pmsg);
+            ping_msg_ping1D_distance_simple m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
         }
@@ -185,7 +184,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Distance:
         {
-          ping_msg_ping1D_distance m(*pmsg);
+            ping_msg_ping1D_distance m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
             _pulse_duration = m.pulse_duration();
@@ -198,28 +197,28 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Processor_temperature:
         {
-          ping_msg_ping1D_processor_temperature m(*pmsg);
+            ping_msg_ping1D_processor_temperature m(*pmsg);
             _processor_temperature = m.processor_temperature();
         }
             break;
 
         case Ping1DNamespace::Pcb_temperature:
         {
-          ping_msg_ping1D_pcb_temperature m(*pmsg);
+            ping_msg_ping1D_pcb_temperature m(*pmsg);
             _pcb_temperature = m.pcb_temperature();
         }
             break;
 
         case Ping1DNamespace::Ping_enable:
         {
-          ping_msg_ping1D_ping_enable m(*pmsg);
+            ping_msg_ping1D_ping_enable m(*pmsg);
             _ping_enabled = m.ping_enabled();
         }
             break;
 
         case Ping1DNamespace::Profile:
         {
-          ping_msg_ping1D_profile m(*pmsg);
+            ping_msg_ping1D_profile m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
             _pulse_duration = m.pulse_duration();
@@ -231,7 +230,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
                 if (_profile_data) {
                     free(_profile_data);
                 }
-              _profile_data = (uint8_t*)malloc(_profile_data_length * sizeof(uint8_t));
+                _profile_data = (uint8_t*)malloc(_profile_data_length * sizeof(uint8_t));
             }
 
             _profile_data_length = m.profile_data_length();
@@ -244,14 +243,14 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 
         case Ping1DNamespace::Protocol_version:
         {
-          ping_msg_ping1D_protocol_version m(*pmsg);
+            ping_msg_ping1D_protocol_version m(*pmsg);
             _protocol_version = m.protocol_version();
         }
             break;
 
 
-      default:
-          break;
+        default:
+            break;
     }
 }
 
@@ -285,51 +284,55 @@ bool Ping1D::get_firmware_version(uint8_t* device_type,
 {
 
     if (!request(Ping1DNamespace::Firmware_version)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (device_type) *device_type = _device_type;
     if (device_model) *device_model = _device_model;
     if (firmware_version_major) *firmware_version_major = _firmware_version_major;
     if (firmware_version_minor) *firmware_version_minor = _firmware_version_minor;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_device_id(uint8_t* device_id)
 {
 
     if (!request(Ping1DNamespace::Device_id)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (device_id) *device_id = _device_id;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_voltage_5(uint16_t* voltage_5)
 {
 
     if (!request(Ping1DNamespace::Voltage_5)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (voltage_5) *voltage_5 = _voltage_5;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_speed_of_sound(uint32_t* speed_of_sound)
 {
 
     if (!request(Ping1DNamespace::Speed_of_sound)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (speed_of_sound) *speed_of_sound = _speed_of_sound;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_range(uint32_t* scan_start,
@@ -337,61 +340,66 @@ bool Ping1D::get_range(uint32_t* scan_start,
 {
 
     if (!request(Ping1DNamespace::Range)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (scan_start) *scan_start = _scan_start;
     if (scan_length) *scan_length = _scan_length;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_mode_auto(uint8_t* mode_auto)
 {
 
     if (!request(Ping1DNamespace::Mode_auto)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (mode_auto) *mode_auto = _mode_auto;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_ping_interval(uint16_t* ping_interval)
 {
 
     if (!request(Ping1DNamespace::Ping_interval)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (ping_interval) *ping_interval = _ping_interval;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_gain_index(uint32_t* gain_index)
 {
 
     if (!request(Ping1DNamespace::Gain_index)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (gain_index) *gain_index = _gain_index;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_pulse_duration(uint16_t* pulse_duration)
 {
 
     if (!request(Ping1DNamespace::Pulse_duration)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (pulse_duration) *pulse_duration = _pulse_duration;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_general_info(uint16_t* firmware_version_major,
@@ -403,9 +411,10 @@ bool Ping1D::get_general_info(uint16_t* firmware_version_major,
 {
 
     if (!request(Ping1DNamespace::General_info)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (firmware_version_major) *firmware_version_major = _firmware_version_major;
     if (firmware_version_minor) *firmware_version_minor = _firmware_version_minor;
     if (voltage_5) *voltage_5 = _voltage_5;
@@ -413,7 +422,7 @@ bool Ping1D::get_general_info(uint16_t* firmware_version_major,
     if (gain_index) *gain_index = _gain_index;
     if (mode_auto) *mode_auto = _mode_auto;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_distance_simple(uint32_t* distance,
@@ -421,13 +430,14 @@ bool Ping1D::get_distance_simple(uint32_t* distance,
 {
 
     if (!request(Ping1DNamespace::Distance_simple)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (distance) *distance = _distance;
     if (confidence) *confidence = _confidence;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_distance(uint32_t* distance,
@@ -440,9 +450,10 @@ bool Ping1D::get_distance(uint32_t* distance,
 {
 
     if (!request(Ping1DNamespace::Distance)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (distance) *distance = _distance;
     if (confidence) *confidence = _confidence;
     if (pulse_duration) *pulse_duration = _pulse_duration;
@@ -451,43 +462,46 @@ bool Ping1D::get_distance(uint32_t* distance,
     if (scan_length) *scan_length = _scan_length;
     if (gain_index) *gain_index = _gain_index;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_processor_temperature(uint16_t* processor_temperature)
 {
 
     if (!request(Ping1DNamespace::Processor_temperature)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (processor_temperature) *processor_temperature = _processor_temperature;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_pcb_temperature(uint16_t* pcb_temperature)
 {
 
     if (!request(Ping1DNamespace::Pcb_temperature)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (pcb_temperature) *pcb_temperature = _pcb_temperature;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_ping_enable(uint8_t* ping_enabled)
 {
 
     if (!request(Ping1DNamespace::Ping_enable)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (ping_enabled) *ping_enabled = _ping_enabled;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_profile(uint32_t* distance,
@@ -501,9 +515,10 @@ bool Ping1D::get_profile(uint32_t* distance,
 {
 
     if (!request(Ping1DNamespace::Profile)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (distance) *distance = _distance;
     if (confidence) *confidence = _confidence;
     if (pulse_duration) *pulse_duration = _pulse_duration;
@@ -514,19 +529,20 @@ bool Ping1D::get_profile(uint32_t* distance,
     if (profile_data_length) *profile_data_length = _profile_data_length;
     if (profile_data) *profile_data = _profile_data;
 
-    return true;
+    return true; // success
 }
 
 bool Ping1D::get_protocol_version(uint32_t* protocol_version)
 {
 
     if (!request(Ping1DNamespace::Protocol_version)) {
-        return false;
+        return false; // no reply from device
     }
 
+    // Copy selected fields
     if (protocol_version) *protocol_version = _protocol_version;
 
-    return true;
+    return true; // success
 }
 
 
@@ -537,12 +553,12 @@ bool Ping1D::set_device_id(uint8_t device_id, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Device_id)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _device_id != device_id) {
-        return false;
+        && (_device_id != device_id)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -555,13 +571,13 @@ bool Ping1D::set_range(uint32_t scan_start, uint32_t scan_length, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Range)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _scan_start != scan_start
-        || _scan_length != scan_length) {
-        return false;
+        && (_scan_start != scan_start
+        || _scan_length != scan_length)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -573,12 +589,12 @@ bool Ping1D::set_speed_of_sound(uint32_t speed_of_sound, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Speed_of_sound)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _speed_of_sound != speed_of_sound) {
-        return false;
+        && (_speed_of_sound != speed_of_sound)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -590,12 +606,12 @@ bool Ping1D::set_mode_auto(uint8_t mode_auto, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Mode_auto)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _mode_auto != mode_auto) {
-        return false;
+        && (_mode_auto != mode_auto)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -607,12 +623,12 @@ bool Ping1D::set_ping_interval(uint16_t ping_interval, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Ping_interval)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _ping_interval != ping_interval) {
-        return false;
+        && (_ping_interval != ping_interval)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -624,12 +640,12 @@ bool Ping1D::set_gain_index(uint8_t gain_index, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Gain_index)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _gain_index != gain_index) {
-        return false;
+        && (_gain_index != gain_index)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
@@ -641,12 +657,12 @@ bool Ping1D::set_ping_enable(uint8_t ping_enabled, bool verify)
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
     if (!request(Ping1DNamespace::Ping_enable)) {
-        return false;
+        return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && _ping_enabled != ping_enabled) {
-        return false;
+        && (_ping_enabled != ping_enabled)) {
+        return false; // device reply does not match
     }
     return true; // success
 }
