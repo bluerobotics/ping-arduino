@@ -10,6 +10,7 @@
 */
 
 #include "ping1d.h"
+#include "pingmessage_all.h"
 
 Ping1D::Ping1D(Stream& ser) : _stream ( ser ) {}
 
@@ -255,7 +256,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
 }
 
 // ex ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
-PingMessage* Ping1D::request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
+PingMessage* Ping1D::request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
 {
     ping_msg_ping1D_empty msg;
     msg.set_id(id);

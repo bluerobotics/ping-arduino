@@ -14,7 +14,6 @@
 #include <Arduino.h>
 #include <Stream.h>
 #include "pingmessage.h"
-#include "pingmessage_all.h"
 #include "ping_parser.h"
 
 class Ping1D
@@ -23,13 +22,13 @@ public:
 
     /**
      *  @brief Constructor
+     *
      *  @param ser: The device I/O
-     *  @param baudrate: The device I/O baudrate
      */
     Ping1D(Stream& ser);
 
-    /** Destructor
-     *
+    /**
+     * @brief Destructor
      */
     ~Ping1D();
 
@@ -74,16 +73,12 @@ public:
      *  @return The PingMessage received with matching id
      *  @return null if the timeout expires and no PingMessage was received with a matching id
      */
-    PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms);
+    PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 500);
 
     /**
-     *  @brief Wait for reciept of a message with a particular message id from device
+     *  @brief Handle an incoming message from the device. Internal values are updated according to the device data.
      *
-     *  @param id: The message ID to wait for
-     *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
-     *
-     *  @return The PingMessage received with matching id
-     *  @return null if the timeout expires and no PingMessage was received with a matching id
+     *  @param pmsg: The message received from the device
      */
     void handleMessage(PingMessage* pmsg);
 
@@ -101,7 +96,7 @@ public:
      *  ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
      *  @endcode
      */
-    PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
+    PingMessage* request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 500);
 
 
     /**
