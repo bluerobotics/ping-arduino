@@ -79,7 +79,6 @@ PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_
         if (pmsg->message_id() == Ping1DNamespace::Nack) {
             ping_msg_ping1D_nack nack(*pmsg);
 
-            // TODO remove, this won't ever be true in the current design
             if (nack.nacked_id() == id) {
                 return nullptr;
             }

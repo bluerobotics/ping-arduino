@@ -65,7 +65,7 @@ public:
 
 
     /**
-     *  @brief Wait for reciept of a message with a particular message id from device
+     *  @brief Wait for receipt of a message with a particular message id from device
      *
      *  @param id: The message id to wait for
      *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received

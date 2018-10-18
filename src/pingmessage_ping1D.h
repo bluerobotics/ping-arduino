@@ -14,8 +14,9 @@ class ping_msg_ping1D_profile : public PingMessage
 public:
     ping_msg_ping1D_profile(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_profile(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_profile(uint16_t profile_data_length)
-        : PingMessage { 36 + profile_data_length }
+    ping_msg_ping1D_profile(uint16_t profile_data_length
+)
+        : PingMessage { static_cast<uint16_t>(36 + profile_data_length) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -52,7 +53,7 @@ public:
     ping_msg_ping1D_set_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_ping_enable()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -72,7 +73,7 @@ public:
     ping_msg_ping1D_voltage_5(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_voltage_5(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_voltage_5()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -92,7 +93,7 @@ public:
     ping_msg_ping1D_set_mode_auto(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_mode_auto(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_mode_auto()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -112,7 +113,7 @@ public:
     ping_msg_ping1D_goto_bootloader(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_goto_bootloader(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_goto_bootloader()
-        : PingMessage { 10 }
+        : PingMessage { static_cast<uint16_t>(10) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -130,7 +131,7 @@ public:
     ping_msg_ping1D_undefined(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_undefined(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_undefined()
-        : PingMessage { 10 }
+        : PingMessage { static_cast<uint16_t>(10) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -148,7 +149,7 @@ public:
     ping_msg_ping1D_set_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_speed_of_sound()
-        : PingMessage { 14 }
+        : PingMessage { static_cast<uint16_t>(14) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -168,7 +169,7 @@ public:
     ping_msg_ping1D_pcb_temperature(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_pcb_temperature(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_pcb_temperature()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -188,7 +189,7 @@ public:
     ping_msg_ping1D_ping_enable(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_ping_enable(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ping_enable()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -207,12 +208,12 @@ class ping_msg_ping1D_ascii_text : public PingMessage
 public:
     ping_msg_ping1D_ascii_text(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_ascii_text(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_ascii_text()
-        : PingMessage { 10 }
+    ping_msg_ping1D_ascii_text(uint16_t ascii_message_length)
+        : PingMessage { static_cast<uint16_t>(10 + ascii_message_length) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 0; // payload size
+        (uint16_t&)msgData[2] = 0 + ascii_message_length; // payload size
         (uint16_t&)msgData[4] = 3; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -228,7 +229,7 @@ public:
     ping_msg_ping1D_set_device_id(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_device_id(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_device_id()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -248,7 +249,7 @@ public:
     ping_msg_ping1D_continuous_start(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_continuous_start(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_continuous_start()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -268,7 +269,7 @@ public:
     ping_msg_ping1D_firmware_version(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_firmware_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_firmware_version()
-        : PingMessage { 16 }
+        : PingMessage { static_cast<uint16_t>(16) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -294,7 +295,7 @@ public:
     ping_msg_ping1D_general_info(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_general_info(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_general_info()
-        : PingMessage { 20 }
+        : PingMessage { static_cast<uint16_t>(20) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -324,7 +325,7 @@ public:
     ping_msg_ping1D_gain_index(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_gain_index()
-        : PingMessage { 14 }
+        : PingMessage { static_cast<uint16_t>(14) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -344,7 +345,7 @@ public:
     ping_msg_ping1D_ping_interval(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_ping_interval(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ping_interval()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -364,7 +365,7 @@ public:
     ping_msg_ping1D_distance(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_distance(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_distance()
-        : PingMessage { 34 }
+        : PingMessage { static_cast<uint16_t>(34) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -396,7 +397,7 @@ public:
     ping_msg_ping1D_continuous_stop(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_continuous_stop(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_continuous_stop()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -416,7 +417,7 @@ public:
     ping_msg_ping1D_set_ping_interval(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_ping_interval(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_ping_interval()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -436,7 +437,7 @@ public:
     ping_msg_ping1D_distance_simple(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_distance_simple(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_distance_simple()
-        : PingMessage { 15 }
+        : PingMessage { static_cast<uint16_t>(15) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -458,7 +459,7 @@ public:
     ping_msg_ping1D_set_range(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_range(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_range()
-        : PingMessage { 18 }
+        : PingMessage { static_cast<uint16_t>(18) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -480,7 +481,7 @@ public:
     ping_msg_ping1D_mode_auto(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_mode_auto(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_mode_auto()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -500,7 +501,7 @@ public:
     ping_msg_ping1D_speed_of_sound(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_speed_of_sound(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_speed_of_sound()
-        : PingMessage { 14 }
+        : PingMessage { static_cast<uint16_t>(14) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -519,12 +520,12 @@ class ping_msg_ping1D_nack : public PingMessage
 public:
     ping_msg_ping1D_nack(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_nack(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
-    ping_msg_ping1D_nack()
-        : PingMessage { 12 }
+    ping_msg_ping1D_nack(uint16_t nack_message_length)
+        : PingMessage { static_cast<uint16_t>(12 + nack_message_length) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[2] = 2 + nack_message_length; // payload size
         (uint16_t&)msgData[4] = 2; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -542,7 +543,7 @@ public:
     ping_msg_ping1D_ack(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_ack(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_ack()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -562,7 +563,7 @@ public:
     ping_msg_ping1D_range(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_range(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_range()
-        : PingMessage { 18 }
+        : PingMessage { static_cast<uint16_t>(18) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -584,7 +585,7 @@ public:
     ping_msg_ping1D_processor_temperature(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_processor_temperature(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_processor_temperature()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -604,7 +605,7 @@ public:
     ping_msg_ping1D_set_gain_index(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_set_gain_index(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_set_gain_index()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -624,7 +625,7 @@ public:
     ping_msg_ping1D_protocol_version(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_protocol_version(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_protocol_version()
-        : PingMessage { 14 }
+        : PingMessage { static_cast<uint16_t>(14) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -644,7 +645,7 @@ public:
     ping_msg_ping1D_device_id(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_device_id(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_device_id()
-        : PingMessage { 11 }
+        : PingMessage { static_cast<uint16_t>(11) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
@@ -664,7 +665,7 @@ public:
     ping_msg_ping1D_pulse_duration(const PingMessage& msg) : PingMessage { msg } {}
     ping_msg_ping1D_pulse_duration(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
     ping_msg_ping1D_pulse_duration()
-        : PingMessage { 12 }
+        : PingMessage { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
