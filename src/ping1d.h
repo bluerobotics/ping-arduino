@@ -404,68 +404,68 @@ public:
 
 
     // Return the latest value received
+    uint8_t device_type() { return _device_type; }
+
+    // Return the latest value received
+    uint8_t device_model() { return _device_model; }
+
+    // Return the latest value received
+    uint16_t firmware_version_major() { return _firmware_version_major; }
+
+    // Return the latest value received
+    uint16_t firmware_version_minor() { return _firmware_version_minor; }
+
+    // Return the latest value received
+    uint8_t device_id() { return _device_id; }
+
+    // Return the latest value received
+    uint16_t voltage_5() { return _voltage_5; }
+
+    // Return the latest value received
+    uint32_t speed_of_sound() { return _speed_of_sound; }
+
+    // Return the latest value received
+    uint32_t scan_start() { return _scan_start; }
+
+    // Return the latest value received
+    uint32_t scan_length() { return _scan_length; }
+
+    // Return the latest value received
+    uint8_t mode_auto() { return _mode_auto; }
+
+    // Return the latest value received
+    uint16_t ping_interval() { return _ping_interval; }
+
+    // Return the latest value received
+    uint32_t gain_index() { return _gain_index; }
+
+    // Return the latest value received
+    uint16_t pulse_duration() { return _pulse_duration; }
+
+    // Return the latest value received
     uint32_t distance() { return _distance; }
 
     // Return the latest value received
     uint16_t confidence() { return _confidence; }
 
     // Return the latest value received
-    uint16_t profile_data_length() { return _profile_data_length; }
-    uint8_t* profile_data() { return _profile_data; }
-
-    // Return the latest value received
-    uint16_t ping_interval() { return _ping_interval; }
-
-    // Return the latest value received
-    uint8_t ping_enabled() { return _ping_enabled; }
-
-    // Return the latest value received
-    uint16_t voltage_5() { return _voltage_5; }
-
-    // Return the latest value received
-    uint8_t device_model() { return _device_model; }
-
-    // Return the latest value received
-    uint32_t speed_of_sound() { return _speed_of_sound; }
-
-    // Return the latest value received
-    uint16_t firmware_version_minor() { return _firmware_version_minor; }
-
-    // Return the latest value received
     uint32_t ping_number() { return _ping_number; }
-
-    // Return the latest value received
-    uint16_t firmware_version_major() { return _firmware_version_major; }
-
-    // Return the latest value received
-    uint16_t pcb_temperature() { return _pcb_temperature; }
-
-    // Return the latest value received
-    uint8_t mode_auto() { return _mode_auto; }
-
-    // Return the latest value received
-    uint32_t scan_start() { return _scan_start; }
-
-    // Return the latest value received
-    uint8_t device_type() { return _device_type; }
-
-    // Return the latest value received
-    uint32_t protocol_version() { return _protocol_version; }
-
-    // Return the latest value received
-    uint32_t scan_length() { return _scan_length; }
-
-    // Return the latest value received
-    uint32_t gain_index() { return _gain_index; }
 
     // Return the latest value received
     uint16_t processor_temperature() { return _processor_temperature; }
 
     // Return the latest value received
-    uint16_t pulse_duration() { return _pulse_duration; }
+    uint16_t pcb_temperature() { return _pcb_temperature; }
 
     // Return the latest value received
-    uint8_t device_id() { return _device_id; }
+    uint8_t ping_enabled() { return _ping_enabled; }
+
+    // Return the latest value received
+    uint16_t profile_data_length() { return _profile_data_length; }
+    uint8_t* profile_data() { return _profile_data; }
+
+    // Return the latest value received
+    uint32_t protocol_version() { return _protocol_version; }
 
 
 private:
@@ -475,68 +475,68 @@ private:
     // For decoding PingMessages from the device
     PingParser _parser;
 
+    // Device type. 0: 1D Echosounder
+    uint8_t _device_type = 0;
+
+    // Device model. 0: Ping1D
+    uint8_t _device_model = 0;
+
+    // Firmware major version.
+    uint16_t _firmware_version_major = 0;
+
+    // Firmware minor version.
+    uint16_t _firmware_version_minor = 0;
+
+    // The device ID (0-254). 255 is reserved for broadcast messages.
+    uint8_t _device_id = 0;
+
+    // Device supply voltage.
+    uint16_t _voltage_5 = 0;
+
+    // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
+    uint32_t _speed_of_sound = 0;
+
+    // The beginning of the scan region in mm from the transducer.
+    uint32_t _scan_start = 0;
+
+    // The length of the scan region.
+    uint32_t _scan_length = 0;
+
+    // The current operating mode of the device. 0: manual mode, 1: auto mode
+    uint8_t _mode_auto = 0;
+
+    // The interval between acoustic measurements.
+    uint16_t _ping_interval = 0;
+
+    // The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+    uint32_t _gain_index = 0;
+
+    // The acoustic pulse length during acoustic transmission/activation.
+    uint16_t _pulse_duration = 0;
+
     // The current return distance determined for the most recent acoustic measurement.
     uint32_t _distance = 0;
 
     // Confidence in the most recent range measurement.
     uint16_t _confidence = 0;
 
-    // An array of return strength measurements taken at regular intervals across the scan region.
-    uint16_t _profile_data_length = 0;
-    uint8_t* _profile_data = 0;
-
-    // The interval between acoustic measurements.
-    uint16_t _ping_interval = 0;
-
-    // The state of the acoustic output. 0: disabled, 1:enabled
-    uint8_t _ping_enabled = 0;
-
-    // Device supply voltage.
-    uint16_t _voltage_5 = 0;
-
-    // Device model. 0: Ping1D
-    uint8_t _device_model = 0;
-
-    // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
-    uint32_t _speed_of_sound = 0;
-
-    // Firmware minor version.
-    uint16_t _firmware_version_minor = 0;
-
     // The pulse/measurement count since boot.
     uint32_t _ping_number = 0;
-
-    // Firmware major version.
-    uint16_t _firmware_version_major = 0;
-
-    // The temperature in centi-degrees Centigrade (100 * degrees C).
-    uint16_t _pcb_temperature = 0;
-
-    // The current operating mode of the device. 0: manual mode, 1: auto mode
-    uint8_t _mode_auto = 0;
-
-    // The beginning of the scan region in mm from the transducer.
-    uint32_t _scan_start = 0;
-
-    // Device type. 0: 1D Echosounder
-    uint8_t _device_type = 0;
-
-    // The protocol version
-    uint32_t _protocol_version = 0;
-
-    // The length of the scan region.
-    uint32_t _scan_length = 0;
-
-    // The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
-    uint32_t _gain_index = 0;
 
     // The temperature in centi-degrees Centigrade (100 * degrees C).
     uint16_t _processor_temperature = 0;
 
-    // The acoustic pulse length during acoustic transmission/activation.
-    uint16_t _pulse_duration = 0;
+    // The temperature in centi-degrees Centigrade (100 * degrees C).
+    uint16_t _pcb_temperature = 0;
 
-    // The device ID (0-254). 255 is reserved for broadcast messages.
-    uint8_t _device_id = 0;
+    // The state of the acoustic output. 0: disabled, 1:enabled
+    uint8_t _ping_enabled = 0;
+
+    // An array of return strength measurements taken at regular intervals across the scan region.
+    uint16_t _profile_data_length = 0;
+    uint8_t* _profile_data = 0;
+
+    // The protocol version
+    uint32_t _protocol_version = 0;
 
 };
