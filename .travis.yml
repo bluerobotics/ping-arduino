@@ -16,3 +16,5 @@ script:
   - cd examples
   - make deps
   - make
+  - cd ..
+  - ./doc/update-gh-pages.sh
