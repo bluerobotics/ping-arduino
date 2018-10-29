@@ -19,14 +19,14 @@ echob() {
 
 echob "Check build type."
 # Do not build pull requests
-if [[ ${TRAVIS_PULL_REQUEST} != "false" ]]; then
+if [ ${TRAVIS_PULL_REQUEST} != "false" ]; then
     echo "- Do not deploy PRs."
     exit 0
 fi
 
 echob "Check branch."
 # Do only build master branch
-if [[ ${TRAVIS_BRANCH} != "master" ]]; then
+if [ ${TRAVIS_BRANCH} != "master" ]; then
     echo "- Only master branch will be deployed."
     exit 0
 fi
@@ -41,7 +41,7 @@ else
     echo "- Git configuration already exist."
 fi
 
-echob "Build python protocol."
+echob "Build doxygen documentation."
 if ! doxygen "${script_path}"; then
     echo "- Doxygen generation failed."
     exit 1
