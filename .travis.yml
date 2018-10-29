@@ -1,8 +1,18 @@
 language: cpp
 
-env:
-  global:
-    - ARDUINO_VERSION=1.8.7
+matrix:
+  include:
+    # Tests build
+    - os: linux
+      dist: trusty
+      sudo: require
+      addons:
+        apt:
+          packages:
+            - doxygen
+      env:
+        - DESC="Test examples and deploy documentation"
+        - ARDUINO_VERSION=1.8.7
 
 before_install:
   - wget https://downloads.arduino.cc/arduino-${ARDUINO_VERSION}-linux64.tar.xz
