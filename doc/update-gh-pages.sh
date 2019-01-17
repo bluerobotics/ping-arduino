@@ -42,11 +42,10 @@ else
 fi
 
 echob "Build doxygen documentation."
-if ! doxygen "${script_path}"; then
+if ! ( cd $script_path && doxygen "Doxyfile" ); then
     echo "- Doxygen generation failed."
     exit 1
 fi
-mv "${project_path}/html/" "${script_path}"
 echo "- Check files"
 ls "${script_path}/html/"
 
