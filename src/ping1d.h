@@ -127,8 +127,8 @@ public:
     /**
      * @brief Device information
      *
-     * @param device_type: Device type. 0: 1D Echosounder
-     * @param device_model: Device model. 0: Ping1D
+     * @param device_type: Device type. 0: Unknown; 1: Echosounder
+     * @param device_model: Device model. 0: Unknown; 1: Ping1D
      * @param firmware_version_major: Firmware version major number.
      * @param firmware_version_minor: Firmware version minor number.
      *
@@ -189,7 +189,7 @@ public:
     /**
      * @brief The interval between acoustic measurements.
      *
-     * @param ping_interval: Units: ms; The interval between acoustic measurements.
+     * @param ping_interval: Units: ms; The minimum interval between acoustic measurements. The actual interval may be longer.
      *
      * @return true if a valid reply is received from the device
      */
@@ -198,7 +198,7 @@ public:
     /**
      * @brief The current gain setting.
      *
-     * @param gain_index: 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      *
      * @return true if a valid reply is received from the device
      */
@@ -220,7 +220,7 @@ public:
      * @param firmware_version_minor: Firmware minor version.
      * @param voltage_5: Units: mV; Device supply voltage.
      * @param ping_interval: Units: ms; The interval between acoustic measurements.
-     * @param gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      * @param mode_auto: The current operating mode of the device. 0: manual mode, 1: auto mode
      *
      * @return true if a valid reply is received from the device
@@ -252,7 +252,7 @@ public:
      * @param ping_number: The pulse/measurement count since boot.
      * @param scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
      * @param scan_length: Units: mm; The length of the scan region.
-     * @param gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      *
      * @return true if a valid reply is received from the device
      */
@@ -300,7 +300,7 @@ public:
      * @param ping_number: The pulse/measurement count since boot.
      * @param scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
      * @param scan_length: Units: mm; The length of the scan region.
-     * @param gain_index: The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      * @param profile_data: An array of return strength measurements taken at regular intervals across the scan region.
      *
      * @return true if a valid reply is received from the device
@@ -381,9 +381,9 @@ public:
     bool set_ping_interval(uint16_t ping_interval, bool verify = true);
 
     /**
-     * @brief Set the current gain selection.
+     * @brief Set the current gain setting.
      *
-     * @param gain_index - 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+     * @param gain_index - The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      *
      * @return true when verify = false if a valid reply is received from the device.
      * @return true when verify = true if a valid reply is received from the
@@ -475,10 +475,10 @@ private:
     // For decoding PingMessages from the device
     PingParser _parser;
 
-    // Device type. 0: 1D Echosounder
+    // Device type. 0: Unknown; 1: Echosounder
     uint8_t _device_type = 0;
 
-    // Device model. 0: Ping1D
+    // Device model. 0: Unknown; 1: Ping1D
     uint8_t _device_model = 0;
 
     // Firmware major version.
@@ -508,7 +508,7 @@ private:
     // The interval between acoustic measurements.
     uint16_t _ping_interval = 0;
 
-    // The current gain setting. 0: 0.6dB, 1: 1.8dB, 2: 5.5dB, 3: 12.9dB, 4: 30.2dB, 5: 66.1dB, 6: 144dB
+    // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
     uint32_t _gain_index = 0;
 
     // The acoustic pulse length during acoustic transmission/activation.
