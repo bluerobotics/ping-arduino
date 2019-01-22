@@ -22,24 +22,7 @@ static PingParser parser;
 
 static const uint8_t ledPin = 13;
 
-bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
-{
-    uint32_t tstart = millis();
-    while (millis() < tstart + timeout_ms) {
-
-        while(pingSerial.available()) {
-
-            if (parser.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
-                if (parser.rxMsg.message_id() == id) {
-                    return true;
-                }
-            }
-        }
-    }
-    Serial.print("timeout waiting for message id: ");
-    Serial.println(id);
-    return false;
-}
+bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
 
 void setup()
 {
@@ -171,4 +154,23 @@ void loop()
 
     // Toggle the LED to show that the program is running
     digitalWrite(ledPin, !digitalRead(ledPin));
+}
+
+bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
+{
+    uint32_t tstart = millis();
+    while (millis() < tstart + timeout_ms) {
+
+        while(pingSerial.available()) {
+
+            if (parser.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
+                if (parser.rxMsg.message_id() == id) {
+                    return true;
+                }
+            }
+        }
+    }
+    Serial.print("timeout waiting for message id: ");
+    Serial.println(id);
+    return false;
 }
