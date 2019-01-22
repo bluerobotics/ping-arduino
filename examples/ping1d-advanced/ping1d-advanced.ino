@@ -18,7 +18,10 @@
 // This serial port is used to communicate with the Ping device
 // If you are using and Arduino UNO or Nano, this must be software serial, and you must use
 // 9600 baud communication
-SoftwareSerial pingSerial = SoftwareSerial(9, 10);
+// Here, we use pin 9 as arduino rx (Ping tx, white), 10 as arduino tx (Ping rx, green)
+static const uint8_t arduinoRxPin = 9;
+static const uint8_t arduinoTxPin = 10;
+SoftwareSerial pingSerial = SoftwareSerial(arduinoRxPin, arduinoTxPin);
 static Ping1D ping { pingSerial };
 
 static const uint8_t ledPin = 13;
@@ -30,7 +33,14 @@ void setup()
     pinMode(ledPin, OUTPUT);
     Serial.println("Blue Robotics ping1d-advanced.ino");
     while (!ping.initialize()) {
-        Serial.println("Ping device failed to initialize!");
+        Serial.println("\nPing device failed to initialize!");
+        Serial.println("Are the Ping rx/tx wired correctly?");
+        Serial.print("Ping rx is the green wire, and should be connected to Arduino pin ");
+        Serial.print(arduinoTxPin);
+        Serial.println(" (Arduino tx)");
+        Serial.print("Ping tx is the white wire, and should be connected to Arduino pin ");
+        Serial.print(arduinoRxPin);
+        Serial.println(" (Arduino rx)");
         delay(2000);
     }
 }
