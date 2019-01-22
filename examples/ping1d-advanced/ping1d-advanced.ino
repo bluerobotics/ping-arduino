@@ -49,41 +49,28 @@ void loop()
     // If the result is true, we have received an update from the device
     // If the result is true, the accessors processor_temperature() etc.
     // will return the updated value
-    if (ping.get_processor_temperature()) {
+    if (ping.request(Ping1DNamespace::Processor_temperature)) {
         printf("got processor temperature");
-        printf("> %d", ping.processor_temperature());
+        printf("> processor_temperature: %d", ping.processor_temperature());
     } else {
         printf("attempt to get processor temperature failed");
     }
 
     // Get general info
 
-    // If you want to hold on to results of each request locally, you may pass
-    // pointer references cooresponding to the payload fields.
-    // If we receive an update from the device, non-null arguments will be
-    // populated with the updated values
-    uint16_t version_major, version_minor, mvolts, msec_per_ping;
-    uint8_t gain_index, is_auto;
-
-    if (ping.get_general_info(
-                &version_major,
-                &version_minor,
-                &mvolts,
-                &msec_per_ping,
-                &gain_index,
-                &is_auto)) {
+    if (ping.request(Ping1DNamespace::General_info)) {
         printf("got general info");
-        printf("> version_major: %d", version_major);
-        printf("> version_minor: %d", version_minor);
-        printf("> mvolts: %d", mvolts);
-        printf("> msec_per_ping: %d", msec_per_ping);
-        printf("> gain_index: %d", gain_index);
-        printf("> is_auto: %d", is_auto);
+        printf("> firmware_version_major: %d", ping.firmware_version_major());
+        printf("> firmware_version_minor: %d", ping.firmware_version_minor());
+        printf("> voltage_5: %d", ping.voltage_5());
+        printf("> ping_interval: %d", ping.ping_interval());
+        printf("> gain_index: %d", ping.gain_index());
+        printf("> mode_auto: %d", ping.mode_auto());
     } else {
         printf("attempt to get general info failed");
     }
 
-    if (ping.get_profile()) {
+    if (ping.request(Ping1DNamespace::Profile)) {
         printf("got profile");
         printf("profile points: ");
         for (int i = 0; i < ping.profile_data_length(); i++) {
