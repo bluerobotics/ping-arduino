@@ -117,7 +117,7 @@ void loop()
         case Ping1DNamespace::General_info: {
             ping_msg_ping1D_general_info m(parser.rxMsg);
             printf("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
-            printf("> device voltage: %dV", m.voltage_5());
+            printf("> device voltage: %dmV", m.voltage_5());
             printf("> ping_interval: %dms", m.ping_interval());
             printf("> gain setting: %.1f", gain_settings[m.gain_index()]);
             printf("> Mode: %s", m.mode_auto() ? "Auto" : "Manual");
