@@ -13,9 +13,6 @@
 
 SoftwareSerial pingSerial = SoftwareSerial(9, 10);
 
-static char _debug_buffer[200];
-#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); Serial.print(_debug_buffer);} while(0)
-
 #include "pingmessage_all.h"
 #include "ping_parser.h"
 #include "ping1d.h"
@@ -49,33 +46,47 @@ void loop()
     // If the result is true, the accessors processor_temperature() etc.
     // will return the updated value
     if (ping.request(Ping1DNamespace::Processor_temperature)) {
-        printf("got processor temperature");
-        printf("> processor_temperature: %d", ping.processor_temperature());
+        Serial.println("got processor temperature");
+        Serial.print("> processor_temperature: ");
+        Serial.println(ping.processor_temperature());
     } else {
-        printf("attempt to get processor temperature failed");
+        Serial.println("attempt to get processor temperature failed");
     }
 
     // Get general info
 
     if (ping.request(Ping1DNamespace::General_info)) {
-        printf("got general info");
-        printf("> firmware_version_major: %d", ping.firmware_version_major());
-        printf("> firmware_version_minor: %d", ping.firmware_version_minor());
-        printf("> voltage_5: %d", ping.voltage_5());
-        printf("> ping_interval: %d", ping.ping_interval());
-        printf("> gain_index: %d", ping.gain_index());
-        printf("> mode_auto: %d", ping.mode_auto());
+        Serial.println("got general info");
+
+        Serial.print("> firmware_version_major: ");
+        Serial.println(ping.firmware_version_major());
+
+        Serial.print("> firmware_version_minor: ");
+        Serial.println(ping.firmware_version_minor());
+
+        Serial.print("> voltage_5: ");
+        Serial.println(ping.voltage_5());
+
+        Serial.print("> ping_interval: ");
+        Serial.println(ping.ping_interval());
+
+        Serial.print("> gain_index: ");
+        Serial.println(ping.gain_index());
+
+        Serial.print("> mode_auto: ");
+        Serial.println(ping.mode_auto());
     } else {
-        printf("attempt to get general info failed");
+        Serial.println("attempt to get general info failed");
     }
 
     if (ping.request(Ping1DNamespace::Profile)) {
-        printf("got profile");
-        printf("profile points: ");
+        Serial.println("got profile");
+        Serial.println("profile points: ");
         for (int i = 0; i < ping.profile_data_length(); i++) {
-            printf("> %d", ping.profile_data()[i]);
+            Serial.print(" > ");
+            Serial.println(ping.profile_data()[i]);
         }
     } else {
-        printf("attempt to get profile failed");
+        Serial.println("attempt to get profile failed");
     }
 }

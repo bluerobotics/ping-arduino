@@ -10,9 +10,6 @@
 
 SoftwareSerial pingSerial = SoftwareSerial(9, 10);
 
-static char _debug_buffer[200];
-#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); Serial.print(_debug_buffer);} while(0)
-
 #include "pingmessage_all.h"
 #include "ping_parser.h"
 #include "ping1d.h"
@@ -41,7 +38,8 @@ bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 4
             }
         }
     }
-    printf("timeout waiting for message id: %d", id);
+    Serial.print("timeout waiting for message id: ");
+    Serial.println(id);
     return false;
 }
 
@@ -95,31 +93,47 @@ void loop()
 
         case Ping1DNamespace::Firmware_version: {
             ping_msg_ping1D_firmware_version m(parser.rxMsg);
-            printf("> type: %d", m.device_type());
-            printf("> model: %d", m.device_model());
-            printf("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
+            Serial.print("> type: ");
+            Serial.println(m.device_type());
+            Serial.print("> model: ");
+            Serial.println(m.device_model());
+            Serial.print("> firmware version: ");
+            Serial.print(m.firmware_version_major());
+            Serial.print(".");
+            Serial.println(m.firmware_version_minor());
             break;
         }
 
         case Ping1DNamespace::Voltage_5: {
             ping_msg_ping1D_voltage_5 m(parser.rxMsg);
-            printf("> device voltage: %d", m.voltage_5());
+            Serial.print("> device voltage: ");
+            Serial.println(m.voltage_5());
             break;
         }
 
         case Ping1DNamespace::Processor_temperature: {
             ping_msg_ping1D_processor_temperature m(parser.rxMsg);
-            printf("> processor temperature: %d", m.processor_temperature());
+            Serial.print("> processor temperature: ");
+            Serial.println(m.processor_temperature());
             break;
         }
 
         case Ping1DNamespace::General_info: {
             ping_msg_ping1D_general_info m(parser.rxMsg);
-            printf("> firmware version: %d.%d", m.firmware_version_major(), m.firmware_version_minor());
-            printf("> device voltage: %dmV", m.voltage_5());
-            printf("> ping_interval: %dms", m.ping_interval());
-            printf("> gain setting: %.1f", gain_settings[m.gain_index()]);
-            printf("> Mode: %s", m.mode_auto() ? "Auto" : "Manual");
+            Serial.print("> firmware version: ");
+            Serial.print(m.firmware_version_major());
+            Serial.print(".");
+            Serial.println(m.firmware_version_minor());
+            Serial.print("> device voltage: ");
+            Serial.print(m.voltage_5());
+            Serial.println("mV");
+            Serial.print("> ping_interval: ");
+            Serial.print(m.ping_interval());
+            Serial.println("ms");
+            Serial.print("> gain setting: ");
+            Serial.println(gain_settings[m.gain_index()]);
+            Serial.print("> Mode: ");
+            Serial.println(m.mode_auto() ? "Auprintfto" : "Manual");
             break;
         }
 
@@ -148,7 +162,13 @@ void loop()
         }
 
         toggleLed();
-        printf("> id: %d\t Length: %d\t parsed: %d\t errors: %d", parser.rxMsg.message_id(), parser.rxMsg.payload_length(),
-              parser.parsed, parser.errors);
+        Serial.print("> id: ");
+        Serial.print(parser.rxMsg.message_id());
+        Serial.print("\t Length: ");
+        Serial.print(parser.rxMsg.payload_length());
+        Serial.print("\t parsed: ");
+        Serial.print(parser.parsed);
+        Serial.print("\t errors: ");
+        Serial.println(parser.errors);
     }
 }
