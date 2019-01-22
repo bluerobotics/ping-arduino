@@ -26,7 +26,7 @@ bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 4
 
 void setup()
 {
-    pingSerial.begin(19200);
+    pingSerial.begin(9600);
     Serial.begin(115200);
     pinMode(ledPin, OUTPUT);
     Serial.println("Blue Robotics pingmessage.ino");
