@@ -89,5 +89,7 @@ void loop()
         for (int i = 0; i < ping.profile_data_length(); i++) {
             printf("> %d", ping.profile_data()[i]);
         }
+    } else {
+        printf("attempt to get profile failed");
     }
 }
