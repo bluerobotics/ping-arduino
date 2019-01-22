@@ -20,10 +20,10 @@ deps:
 %: %/%.ino
 
 %-verify: %
-	arduino --verify ${ARG} $</$<.ino
+	arduino --verify ${ARG} ${SRC_DIR}/$</$<.ino
 
 %-upload : %
-	arduino --upload ${ARG} $</$<.ino --port ${SERIAL}
+	arduino --upload ${ARG} ${SRC_DIR}/$</$<.ino --port ${SERIAL}
 
 clean:
 	rm -rf ${BUILD_DIR}
