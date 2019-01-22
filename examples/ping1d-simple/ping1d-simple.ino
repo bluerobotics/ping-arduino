@@ -10,14 +10,16 @@
  *  Communication is performed with a Blue Robotics Ping1D Echosounder
  */
 
-#include "SoftwareSerial.h"
-
-SoftwareSerial pingSerial = SoftwareSerial(9, 10);
-
 #include "pingmessage_all.h"
 #include "ping_parser.h"
 #include "ping1d.h"
 
+#include "SoftwareSerial.h"
+
+// This serial port is used to communicate with the Ping device
+// If you are using and Arduino UNO or Nano, this must be software serial, and you must use
+// 9600 baud communication
+SoftwareSerial pingSerial = SoftwareSerial(9, 10);
 static Ping1D ping { pingSerial };
 
 static const uint8_t ledPin = 13;
