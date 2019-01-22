@@ -91,4 +91,7 @@ void loop()
     } else {
         Serial.println("attempt to get profile failed");
     }
+
+    // Toggle the LED to show that the program is running
+    toggleLed();
 }

@@ -48,8 +48,10 @@ void loop()
         Serial.print(ping.distance());
         Serial.print("\tConfidence: ");
         Serial.println(ping.confidence());
-        toggleLed();
     } else {
         Serial.println("No update received!");
     }
+
+    // Toggle the LED to show that the program is running
+    toggleLed();
 }
