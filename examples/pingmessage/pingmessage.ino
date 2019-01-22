@@ -164,7 +164,6 @@ void loop()
             break;
         }
 
-        toggleLed();
         Serial.print("> id: ");
         Serial.print(parser.rxMsg.message_id());
         Serial.print("\t Length: ");
@@ -174,4 +173,7 @@ void loop()
         Serial.print("\t errors: ");
         Serial.println(parser.errors);
     }
+
+    // Toggle the LED to show that the program is running
+    toggleLed();
 }
