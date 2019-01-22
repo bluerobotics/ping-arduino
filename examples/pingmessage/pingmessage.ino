@@ -22,11 +22,6 @@ static PingParser parser;
 
 static const uint8_t ledPin = 13;
 
-void toggleLed()
-{
-    digitalWrite(ledPin, !digitalRead(ledPin));
-}
-
 bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
 {
     uint32_t tstart = millis();
@@ -175,5 +170,5 @@ void loop()
     }
 
     // Toggle the LED to show that the program is running
-    toggleLed();
+    digitalWrite(ledPin, !digitalRead(ledPin));
 }

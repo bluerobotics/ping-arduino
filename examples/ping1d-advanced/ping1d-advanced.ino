@@ -23,11 +23,6 @@ static Ping1D ping { pingSerial };
 
 static const uint8_t ledPin = 13;
 
-void toggleLed()
-{
-    digitalWrite(ledPin, !digitalRead(ledPin));
-}
-
 void setup()
 {
     pingSerial.begin(19200);
@@ -93,5 +88,5 @@ void loop()
     }
 
     // Toggle the LED to show that the program is running
-    toggleLed();
+    digitalWrite(ledPin, !digitalRead(ledPin));
 }
