@@ -12,10 +12,9 @@
 #include "SoftwareSerial.h"
 
 SoftwareSerial pingSerial = SoftwareSerial(9, 10);
-HardwareSerial& debugSerial = Serial;
 
 static char _debug_buffer[200];
-#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); debugSerial.print(_debug_buffer);} while(0)
+#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); Serial.print(_debug_buffer);} while(0)
 
 #include "pingmessage_all.h"
 #include "ping_parser.h"
@@ -33,11 +32,11 @@ void toggleLed()
 void setup()
 {
     pingSerial.begin(19200);
-    debugSerial.begin(115200);
+    Serial.begin(115200);
     pinMode(ledPin, OUTPUT);
-    debugSerial.println("Blue Robotics ping1d-advanced.ino");
+    Serial.println("Blue Robotics ping1d-advanced.ino");
     while (!ping.initialize()) {
-        debugSerial.println("Ping device failed to initialize!");
+        Serial.println("Ping device failed to initialize!");
         delay(2000);
     }
 }
