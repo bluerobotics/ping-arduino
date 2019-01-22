@@ -14,9 +14,6 @@
 
 SoftwareSerial pingSerial = SoftwareSerial(9, 10);
 
-static char _debug_buffer[200];
-#define printf(fmt, args ...)  do {sprintf(_debug_buffer, fmt "\n\r", ## args); Serial.print(_debug_buffer);} while(0)
-
 #include "pingmessage_all.h"
 #include "ping_parser.h"
 #include "ping1d.h"
@@ -45,9 +42,12 @@ void setup()
 void loop()
 {
     if (ping.update()) {
-        printf("Distance: %d\tConfidence: %d", ping.distance(), ping.confidence());
+        Serial.print("Distance: ");
+        Serial.print(ping.distance());
+        Serial.print("\tConfidence: ");
+        Serial.println(ping.confidence());
         toggleLed();
     } else {
-        printf("No update received!");
+        Serial.println("No update received!");
     }
 }
