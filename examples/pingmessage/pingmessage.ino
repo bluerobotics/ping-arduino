@@ -168,8 +168,8 @@ void loop()
 
 bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
 {
-    uint32_t tstart = millis();
-    while (millis() < tstart + timeout_ms) {
+    uint32_t timeout_time = millis() + timeout_ms;
+    while (millis() < timeout_time) {
 
         while(pingSerial.available()) {
 
