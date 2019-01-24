@@ -42,7 +42,7 @@ The examples use the SoftwareSerial library to communicate with the Ping device,
 
 The Ping1D object is created with a reference to the Serial object that the Ping device is connected to.
 
-```
+```cpp
 #include "SoftwareSerial.h"
 #include "ping1d.h"
 SoftwareSerial pingSerial { 9, 10 };
@@ -51,7 +51,7 @@ Ping1D myPing { pingSerial };
 
 To begin communicating with the Ping device, first initialize the serial port with `begin(<baudrate>)`. Then, you can initialize the Ping device with [`initialize()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#a103b04fc987383d0db256852ad12249b). `initialize()` will return false if the the device communication fails.
 
-```
+```cpp
 void setup {
     // Use 9600 bits per second to communicate with the Ping device
     myPing.begin(9600);
@@ -73,7 +73,7 @@ void setup {
 
 To get the [distance and confidence measurements](https://github.com/bluerobotics/ping-viewer/wiki#target-locking) from the Ping device, call [`update()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#a57e42863075c4b0026bef3ef4418c116) to request a new distance measurement from the device before calling [`distance()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ab0b70fd7133b564a96f09cc7df9591ec) and [confidence()](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ae0f8635de222c8a095c42b1b1d3ad3f6) to use the measurement values. The values returned by the `distance()` and `confidence()` functions will not change until `update()` is called again.
 
-```
+```cpp
 void loop() {
     while (!myPing.update()) {
         Serial.println("Ping device update failed");
@@ -93,7 +93,7 @@ The Ping communicates with the [Ping communication protocol](https://github.com/
 
 Call [`request(<message id>)`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#a97f5121aee989b3d7048feb42367efcf) to request a message from the ping device. The message ids are also placed in the [`Ping1DNamespace`](http://docs.bluerobotics.com/ping-arduino/namespace_ping1_d_namespace.html) for convenience. To use the values from the response, use the Ping1D class accessors matching the message field names (eg. [`distance()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ab0b70fd7133b564a96f09cc7df9591ec) and [`speed_of_sound()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#aa8c3bb77e49fb260558ac9e8276cd345)).
 
-```
+```cpp
 void loop() {
     while (!myPing.request(Ping1DNamespace::Processor_temperature)) {
         Serial.println("Failed to get processor temperature");
