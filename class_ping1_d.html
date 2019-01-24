@@ -101,21 +101,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a405906310c91a2ef9eaf3be06f9c8a8d">~Ping1D</a> ()</td></tr>
 <tr class="memdesc:a405906310c91a2ef9eaf3be06f9c8a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a405906310c91a2ef9eaf3be06f9c8a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33a25b38a507b9751aa9fb7cdf4dde18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_ping_message.html">PingMessage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a33a25b38a507b9751aa9fb7cdf4dde18">read</a> ()</td></tr>
-<tr class="memdesc:a33a25b38a507b9751aa9fb7cdf4dde18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read in data from device, return a <a class="el" href="class_ping_message.html">PingMessage</a> if available. Data will be read in from device until there is no data left in the RX buffer, or a valid <a class="el" href="class_ping_message.html">PingMessage</a> is successfully decoded. Note that there may still be data available in the RX buffer for decoding when this function returns a <a class="el" href="class_ping_message.html">PingMessage</a>.  <a href="#a33a25b38a507b9751aa9fb7cdf4dde18">More...</a><br/></td></tr>
-<tr class="separator:a33a25b38a507b9751aa9fb7cdf4dde18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e963a771801642c41b401de3116fe27"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a2e963a771801642c41b401de3116fe27">write</a> (uint8_t *data, uint16_t length)</td></tr>
-<tr class="memdesc:a2e963a771801642c41b401de3116fe27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to device.  <a href="#a2e963a771801642c41b401de3116fe27">More...</a><br/></td></tr>
-<tr class="separator:a2e963a771801642c41b401de3116fe27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a103b04fc987383d0db256852ad12249b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a103b04fc987383d0db256852ad12249b">initialize</a> (uint16_t ping_interval_ms=50)</td></tr>
 <tr class="memdesc:a103b04fc987383d0db256852ad12249b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establish communications with the device, and initialize the update interval.  <a href="#a103b04fc987383d0db256852ad12249b">More...</a><br/></td></tr>
 <tr class="separator:a103b04fc987383d0db256852ad12249b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29dae3c9af32a1d849edada44bed60a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_ping_message.html">PingMessage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a29dae3c9af32a1d849edada44bed60a9">waitMessage</a> (enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms=500)</td></tr>
-<tr class="memdesc:a29dae3c9af32a1d849edada44bed60a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for receipt of a message with a particular message id from device.  <a href="#a29dae3c9af32a1d849edada44bed60a9">More...</a><br/></td></tr>
-<tr class="separator:a29dae3c9af32a1d849edada44bed60a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abafb92ac3b739f278a81ad0015fc0245"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#abafb92ac3b739f278a81ad0015fc0245">handleMessage</a> (<a class="el" href="class_ping_message.html">PingMessage</a> *pmsg)</td></tr>
-<tr class="memdesc:abafb92ac3b739f278a81ad0015fc0245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle an incoming message from the device. Internal values are updated according to the device data.  <a href="#abafb92ac3b739f278a81ad0015fc0245">More...</a><br/></td></tr>
-<tr class="separator:abafb92ac3b739f278a81ad0015fc0245"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97f5121aee989b3d7048feb42367efcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_ping_message.html">PingMessage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a97f5121aee989b3d7048feb42367efcf">request</a> (enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms=500)</td></tr>
 <tr class="memdesc:a97f5121aee989b3d7048feb42367efcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a <a class="el" href="class_ping_message.html">PingMessage</a> from the device.  <a href="#a97f5121aee989b3d7048feb42367efcf">More...</a><br/></td></tr>
 <tr class="separator:a97f5121aee989b3d7048feb42367efcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,143 +114,70 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a57e42863075c4b0026bef3ef4418c116"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a57e42863075c4b0026bef3ef4418c116">update</a> ()</td></tr>
 <tr class="memdesc:a57e42863075c4b0026bef3ef4418c116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to request distance and confidence.  <a href="#a57e42863075c4b0026bef3ef4418c116">More...</a><br/></td></tr>
 <tr class="separator:a57e42863075c4b0026bef3ef4418c116"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0fa0f26609042ac8ff88c84473fd8fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ae0fa0f26609042ac8ff88c84473fd8fd">get_firmware_version</a> (uint8_t *device_type=nullptr, uint8_t *device_model=nullptr, uint16_t *firmware_version_major=nullptr, uint16_t *firmware_version_minor=nullptr)</td></tr>
-<tr class="memdesc:ae0fa0f26609042ac8ff88c84473fd8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device information.  <a href="#ae0fa0f26609042ac8ff88c84473fd8fd">More...</a><br/></td></tr>
-<tr class="separator:ae0fa0f26609042ac8ff88c84473fd8fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f5afddc97d00c043f9ba7bd8e42de22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a0f5afddc97d00c043f9ba7bd8e42de22">get_device_id</a> (uint8_t *device_id=nullptr)</td></tr>
-<tr class="memdesc:a0f5afddc97d00c043f9ba7bd8e42de22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The device ID.  <a href="#a0f5afddc97d00c043f9ba7bd8e42de22">More...</a><br/></td></tr>
-<tr class="separator:a0f5afddc97d00c043f9ba7bd8e42de22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa178f07ade07c5ea788f5655010389b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa178f07ade07c5ea788f5655010389b1">get_voltage_5</a> (uint16_t *voltage_5=nullptr)</td></tr>
-<tr class="memdesc:aa178f07ade07c5ea788f5655010389b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The 5V rail voltage.  <a href="#aa178f07ade07c5ea788f5655010389b1">More...</a><br/></td></tr>
-<tr class="separator:aa178f07ade07c5ea788f5655010389b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bfce5e6373c1eb3df3f137123616e2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a8bfce5e6373c1eb3df3f137123616e2a">get_speed_of_sound</a> (uint32_t *speed_of_sound=nullptr)</td></tr>
-<tr class="memdesc:a8bfce5e6373c1eb3df3f137123616e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The speed of sound used for distance calculations.  <a href="#a8bfce5e6373c1eb3df3f137123616e2a">More...</a><br/></td></tr>
-<tr class="separator:a8bfce5e6373c1eb3df3f137123616e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47d8c9784f3725fda570111c804eea73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a47d8c9784f3725fda570111c804eea73">get_range</a> (uint32_t *scan_start=nullptr, uint32_t *scan_length=nullptr)</td></tr>
-<tr class="memdesc:a47d8c9784f3725fda570111c804eea73"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).  <a href="#a47d8c9784f3725fda570111c804eea73">More...</a><br/></td></tr>
-<tr class="separator:a47d8c9784f3725fda570111c804eea73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05e5b5d755c79c97ff0fe0c99d4864f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a05e5b5d755c79c97ff0fe0c99d4864f2">get_mode_auto</a> (uint8_t *mode_auto=nullptr)</td></tr>
-<tr class="memdesc:a05e5b5d755c79c97ff0fe0c99d4864f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.  <a href="#a05e5b5d755c79c97ff0fe0c99d4864f2">More...</a><br/></td></tr>
-<tr class="separator:a05e5b5d755c79c97ff0fe0c99d4864f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21c57e86ab6580613acce88b2ca57546"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a21c57e86ab6580613acce88b2ca57546">get_ping_interval</a> (uint16_t *ping_interval=nullptr)</td></tr>
-<tr class="memdesc:a21c57e86ab6580613acce88b2ca57546"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval between acoustic measurements.  <a href="#a21c57e86ab6580613acce88b2ca57546">More...</a><br/></td></tr>
-<tr class="separator:a21c57e86ab6580613acce88b2ca57546"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeafd837336245f200ad53ce0ca27736a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aeafd837336245f200ad53ce0ca27736a">get_gain_index</a> (uint32_t *gain_index=nullptr)</td></tr>
-<tr class="memdesc:aeafd837336245f200ad53ce0ca27736a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current gain setting.  <a href="#aeafd837336245f200ad53ce0ca27736a">More...</a><br/></td></tr>
-<tr class="separator:aeafd837336245f200ad53ce0ca27736a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb17a68e243a32b3dcb377ce01bfc234"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#acb17a68e243a32b3dcb377ce01bfc234">get_pulse_duration</a> (uint16_t *pulse_duration=nullptr)</td></tr>
-<tr class="memdesc:acb17a68e243a32b3dcb377ce01bfc234"><td class="mdescLeft">&#160;</td><td class="mdescRight">The duration of the acoustic activation/transmission.  <a href="#acb17a68e243a32b3dcb377ce01bfc234">More...</a><br/></td></tr>
-<tr class="separator:acb17a68e243a32b3dcb377ce01bfc234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a928035dd10016ee49c247acef75c98da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a928035dd10016ee49c247acef75c98da">get_general_info</a> (uint16_t *firmware_version_major=nullptr, uint16_t *firmware_version_minor=nullptr, uint16_t *voltage_5=nullptr, uint16_t *ping_interval=nullptr, uint8_t *gain_index=nullptr, uint8_t *mode_auto=nullptr)</td></tr>
-<tr class="memdesc:a928035dd10016ee49c247acef75c98da"><td class="mdescLeft">&#160;</td><td class="mdescRight">General information.  <a href="#a928035dd10016ee49c247acef75c98da">More...</a><br/></td></tr>
-<tr class="separator:a928035dd10016ee49c247acef75c98da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef9130ea341440eb6af3e49eb2188034"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aef9130ea341440eb6af3e49eb2188034">get_distance_simple</a> (uint32_t *distance=nullptr, uint8_t *confidence=nullptr)</td></tr>
-<tr class="memdesc:aef9130ea341440eb6af3e49eb2188034"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance to target with confidence estimate.  <a href="#aef9130ea341440eb6af3e49eb2188034">More...</a><br/></td></tr>
-<tr class="separator:aef9130ea341440eb6af3e49eb2188034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a703b996fca1ce0d40e771a6c7c80a30f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a703b996fca1ce0d40e771a6c7c80a30f">get_distance</a> (uint32_t *distance=nullptr, uint16_t *confidence=nullptr, uint16_t *pulse_duration=nullptr, uint32_t *ping_number=nullptr, uint32_t *scan_start=nullptr, uint32_t *scan_length=nullptr, uint32_t *gain_index=nullptr)</td></tr>
-<tr class="memdesc:a703b996fca1ce0d40e771a6c7c80a30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided.  <a href="#a703b996fca1ce0d40e771a6c7c80a30f">More...</a><br/></td></tr>
-<tr class="separator:a703b996fca1ce0d40e771a6c7c80a30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a634ff613cdcbf0ca52324926ed223b9f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a634ff613cdcbf0ca52324926ed223b9f">get_processor_temperature</a> (uint16_t *processor_temperature=nullptr)</td></tr>
-<tr class="memdesc:a634ff613cdcbf0ca52324926ed223b9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temperature of the device cpu.  <a href="#a634ff613cdcbf0ca52324926ed223b9f">More...</a><br/></td></tr>
-<tr class="separator:a634ff613cdcbf0ca52324926ed223b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2247c3c1627bcbaea0168b4b0adc19d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a2247c3c1627bcbaea0168b4b0adc19d4">get_pcb_temperature</a> (uint16_t *pcb_temperature=nullptr)</td></tr>
-<tr class="memdesc:a2247c3c1627bcbaea0168b4b0adc19d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temperature of the on-board thermistor.  <a href="#a2247c3c1627bcbaea0168b4b0adc19d4">More...</a><br/></td></tr>
-<tr class="separator:a2247c3c1627bcbaea0168b4b0adc19d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a981f023d3b539583d3aeb9101ea469d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a981f023d3b539583d3aeb9101ea469d6">get_ping_enable</a> (uint8_t *ping_enabled=nullptr)</td></tr>
-<tr class="memdesc:a981f023d3b539583d3aeb9101ea469d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acoustic output enabled state.  <a href="#a981f023d3b539583d3aeb9101ea469d6">More...</a><br/></td></tr>
-<tr class="separator:a981f023d3b539583d3aeb9101ea469d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab94ae2a1829bbd58d5ba44ed2b82f3ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ab94ae2a1829bbd58d5ba44ed2b82f3ed">get_profile</a> (uint32_t *distance=nullptr, uint16_t *confidence=nullptr, uint16_t *pulse_duration=nullptr, uint32_t *ping_number=nullptr, uint32_t *scan_start=nullptr, uint32_t *scan_length=nullptr, uint32_t *gain_index=nullptr, uint16_t *profile_data_length=nullptr, uint8_t **profile_data=nullptr)</td></tr>
-<tr class="memdesc:ab94ae2a1829bbd58d5ba44ed2b82f3ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. A distance measurement to the target is also provided.  <a href="#ab94ae2a1829bbd58d5ba44ed2b82f3ed">More...</a><br/></td></tr>
-<tr class="separator:ab94ae2a1829bbd58d5ba44ed2b82f3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6191270bca246abd0ce014f44c71365"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ab6191270bca246abd0ce014f44c71365">get_protocol_version</a> (uint32_t *protocol_version=nullptr)</td></tr>
-<tr class="memdesc:ab6191270bca246abd0ce014f44c71365"><td class="mdescLeft">&#160;</td><td class="mdescRight">The protocol version.  <a href="#ab6191270bca246abd0ce014f44c71365">More...</a><br/></td></tr>
-<tr class="separator:ab6191270bca246abd0ce014f44c71365"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f20c8fdf978ad46b87beee497a7bbc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a4f20c8fdf978ad46b87beee497a7bbc6">set_device_id</a> (uint8_t device_id, bool verify=true)</td></tr>
+<tr class="memitem:a4f20c8fdf978ad46b87beee497a7bbc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a4f20c8fdf978ad46b87beee497a7bbc6">set_device_id</a> (uint8_t <a class="el" href="class_ping1_d.html#aa9ebcaba89401536ae27ea8c5be7a9d0">device_id</a>, bool verify=true)</td></tr>
 <tr class="memdesc:a4f20c8fdf978ad46b87beee497a7bbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device ID.  <a href="#a4f20c8fdf978ad46b87beee497a7bbc6">More...</a><br/></td></tr>
 <tr class="separator:a4f20c8fdf978ad46b87beee497a7bbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34fd2023c5fbf98f39c5c05a2cc541ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a34fd2023c5fbf98f39c5c05a2cc541ed">set_range</a> (uint32_t scan_start, uint32_t scan_length, bool verify=true)</td></tr>
+<tr class="memitem:a34fd2023c5fbf98f39c5c05a2cc541ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a34fd2023c5fbf98f39c5c05a2cc541ed">set_range</a> (uint32_t <a class="el" href="class_ping1_d.html#a81a7e089bdf6404bf496286dfda66f54">scan_start</a>, uint32_t <a class="el" href="class_ping1_d.html#a8e2913c5d4bbc568be572050b022c5aa">scan_length</a>, bool verify=true)</td></tr>
 <tr class="memdesc:a34fd2023c5fbf98f39c5c05a2cc541ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scan range for acoustic measurements.  <a href="#a34fd2023c5fbf98f39c5c05a2cc541ed">More...</a><br/></td></tr>
 <tr class="separator:a34fd2023c5fbf98f39c5c05a2cc541ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0dd3c79810185c39ce371b9c786e3d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa0dd3c79810185c39ce371b9c786e3d8">set_speed_of_sound</a> (uint32_t speed_of_sound, bool verify=true)</td></tr>
+<tr class="memitem:aa0dd3c79810185c39ce371b9c786e3d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa0dd3c79810185c39ce371b9c786e3d8">set_speed_of_sound</a> (uint32_t <a class="el" href="class_ping1_d.html#aa8c3bb77e49fb260558ac9e8276cd345">speed_of_sound</a>, bool verify=true)</td></tr>
 <tr class="memdesc:aa0dd3c79810185c39ce371b9c786e3d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the speed of sound used for distance calculations.  <a href="#aa0dd3c79810185c39ce371b9c786e3d8">More...</a><br/></td></tr>
 <tr class="separator:aa0dd3c79810185c39ce371b9c786e3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1754a646377cf016515a810dd31878a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a1754a646377cf016515a810dd31878a3">set_mode_auto</a> (uint8_t mode_auto, bool verify=true)</td></tr>
+<tr class="memitem:a1754a646377cf016515a810dd31878a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a1754a646377cf016515a810dd31878a3">set_mode_auto</a> (uint8_t <a class="el" href="class_ping1_d.html#a88842c34a98431c0bb153af4e10a8035">mode_auto</a>, bool verify=true)</td></tr>
 <tr class="memdesc:a1754a646377cf016515a810dd31878a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set automatic or manual mode. Manual mode allows for manual selection of the gain and scan range.  <a href="#a1754a646377cf016515a810dd31878a3">More...</a><br/></td></tr>
 <tr class="separator:a1754a646377cf016515a810dd31878a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fb1839ce02359f3b363c604d3788200"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a3fb1839ce02359f3b363c604d3788200">set_ping_interval</a> (uint16_t ping_interval, bool verify=true)</td></tr>
+<tr class="memitem:a3fb1839ce02359f3b363c604d3788200"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a3fb1839ce02359f3b363c604d3788200">set_ping_interval</a> (uint16_t <a class="el" href="class_ping1_d.html#a26e0c00d274b6ab3520c51f2444c8a31">ping_interval</a>, bool verify=true)</td></tr>
 <tr class="memdesc:a3fb1839ce02359f3b363c604d3788200"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval between acoustic measurements.  <a href="#a3fb1839ce02359f3b363c604d3788200">More...</a><br/></td></tr>
 <tr class="separator:a3fb1839ce02359f3b363c604d3788200"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54fd058c97a560b8f23bf5ce9492a821"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a54fd058c97a560b8f23bf5ce9492a821">set_gain_index</a> (uint8_t gain_index, bool verify=true)</td></tr>
+<tr class="memitem:a54fd058c97a560b8f23bf5ce9492a821"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a54fd058c97a560b8f23bf5ce9492a821">set_gain_index</a> (uint8_t <a class="el" href="class_ping1_d.html#a71a92d322870a6bf4ab2542db3078bc9">gain_index</a>, bool verify=true)</td></tr>
 <tr class="memdesc:a54fd058c97a560b8f23bf5ce9492a821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current gain setting.  <a href="#a54fd058c97a560b8f23bf5ce9492a821">More...</a><br/></td></tr>
 <tr class="separator:a54fd058c97a560b8f23bf5ce9492a821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac37eecd0ef3c4c6e6d5813e6e89d5b2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ac37eecd0ef3c4c6e6d5813e6e89d5b2c">set_ping_enable</a> (uint8_t ping_enabled, bool verify=true)</td></tr>
+<tr class="memitem:ac37eecd0ef3c4c6e6d5813e6e89d5b2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ac37eecd0ef3c4c6e6d5813e6e89d5b2c">set_ping_enable</a> (uint8_t <a class="el" href="class_ping1_d.html#a34772952942a3d2ad12afa2835f19c56">ping_enabled</a>, bool verify=true)</td></tr>
 <tr class="memdesc:ac37eecd0ef3c4c6e6d5813e6e89d5b2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable acoustic measurements.  <a href="#ac37eecd0ef3c4c6e6d5813e6e89d5b2c">More...</a><br/></td></tr>
 <tr class="separator:ac37eecd0ef3c4c6e6d5813e6e89d5b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6546461509f3b9780da890f6cbd2b963"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6546461509f3b9780da890f6cbd2b963"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>device_type</b> ()</td></tr>
+<tr class="memitem:a6546461509f3b9780da890f6cbd2b963"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a6546461509f3b9780da890f6cbd2b963">device_type</a> ()</td></tr>
 <tr class="separator:a6546461509f3b9780da890f6cbd2b963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5594c20891c28b4c9d90560186e217c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5594c20891c28b4c9d90560186e217c9"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>device_model</b> ()</td></tr>
+<tr class="memitem:a5594c20891c28b4c9d90560186e217c9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a5594c20891c28b4c9d90560186e217c9">device_model</a> ()</td></tr>
 <tr class="separator:a5594c20891c28b4c9d90560186e217c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fc14a1c990ab0c2873f8735b725df46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fc14a1c990ab0c2873f8735b725df46"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_version_major</b> ()</td></tr>
+<tr class="memitem:a7fc14a1c990ab0c2873f8735b725df46"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a7fc14a1c990ab0c2873f8735b725df46">firmware_version_major</a> ()</td></tr>
 <tr class="separator:a7fc14a1c990ab0c2873f8735b725df46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59c77136a8791f14ce1cf8ec3a5f44d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae59c77136a8791f14ce1cf8ec3a5f44d"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_version_minor</b> ()</td></tr>
+<tr class="memitem:ae59c77136a8791f14ce1cf8ec3a5f44d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ae59c77136a8791f14ce1cf8ec3a5f44d">firmware_version_minor</a> ()</td></tr>
 <tr class="separator:ae59c77136a8791f14ce1cf8ec3a5f44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9ebcaba89401536ae27ea8c5be7a9d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9ebcaba89401536ae27ea8c5be7a9d0"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>device_id</b> ()</td></tr>
+<tr class="memitem:aa9ebcaba89401536ae27ea8c5be7a9d0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa9ebcaba89401536ae27ea8c5be7a9d0">device_id</a> ()</td></tr>
 <tr class="separator:aa9ebcaba89401536ae27ea8c5be7a9d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b7bf2f8f0d54970d1c36f27517f2a00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b7bf2f8f0d54970d1c36f27517f2a00"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>voltage_5</b> ()</td></tr>
+<tr class="memitem:a4b7bf2f8f0d54970d1c36f27517f2a00"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a4b7bf2f8f0d54970d1c36f27517f2a00">voltage_5</a> ()</td></tr>
 <tr class="separator:a4b7bf2f8f0d54970d1c36f27517f2a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8c3bb77e49fb260558ac9e8276cd345"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8c3bb77e49fb260558ac9e8276cd345"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>speed_of_sound</b> ()</td></tr>
+<tr class="memitem:aa8c3bb77e49fb260558ac9e8276cd345"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa8c3bb77e49fb260558ac9e8276cd345">speed_of_sound</a> ()</td></tr>
 <tr class="separator:aa8c3bb77e49fb260558ac9e8276cd345"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81a7e089bdf6404bf496286dfda66f54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81a7e089bdf6404bf496286dfda66f54"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>scan_start</b> ()</td></tr>
+<tr class="memitem:a81a7e089bdf6404bf496286dfda66f54"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a81a7e089bdf6404bf496286dfda66f54">scan_start</a> ()</td></tr>
 <tr class="separator:a81a7e089bdf6404bf496286dfda66f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e2913c5d4bbc568be572050b022c5aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e2913c5d4bbc568be572050b022c5aa"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>scan_length</b> ()</td></tr>
+<tr class="memitem:a8e2913c5d4bbc568be572050b022c5aa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a8e2913c5d4bbc568be572050b022c5aa">scan_length</a> ()</td></tr>
 <tr class="separator:a8e2913c5d4bbc568be572050b022c5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88842c34a98431c0bb153af4e10a8035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88842c34a98431c0bb153af4e10a8035"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode_auto</b> ()</td></tr>
+<tr class="memitem:a88842c34a98431c0bb153af4e10a8035"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a88842c34a98431c0bb153af4e10a8035">mode_auto</a> ()</td></tr>
 <tr class="separator:a88842c34a98431c0bb153af4e10a8035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26e0c00d274b6ab3520c51f2444c8a31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26e0c00d274b6ab3520c51f2444c8a31"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>ping_interval</b> ()</td></tr>
+<tr class="memitem:a26e0c00d274b6ab3520c51f2444c8a31"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a26e0c00d274b6ab3520c51f2444c8a31">ping_interval</a> ()</td></tr>
 <tr class="separator:a26e0c00d274b6ab3520c51f2444c8a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71a92d322870a6bf4ab2542db3078bc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71a92d322870a6bf4ab2542db3078bc9"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>gain_index</b> ()</td></tr>
+<tr class="memitem:a71a92d322870a6bf4ab2542db3078bc9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a71a92d322870a6bf4ab2542db3078bc9">gain_index</a> ()</td></tr>
 <tr class="separator:a71a92d322870a6bf4ab2542db3078bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f57f154f94dd27afe65683c76a4348"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0f57f154f94dd27afe65683c76a4348"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>pulse_duration</b> ()</td></tr>
+<tr class="memitem:aa0f57f154f94dd27afe65683c76a4348"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa0f57f154f94dd27afe65683c76a4348">pulse_duration</a> ()</td></tr>
 <tr class="separator:aa0f57f154f94dd27afe65683c76a4348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0b70fd7133b564a96f09cc7df9591ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0b70fd7133b564a96f09cc7df9591ec"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>distance</b> ()</td></tr>
+<tr class="memitem:ab0b70fd7133b564a96f09cc7df9591ec"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ab0b70fd7133b564a96f09cc7df9591ec">distance</a> ()</td></tr>
 <tr class="separator:ab0b70fd7133b564a96f09cc7df9591ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0f8635de222c8a095c42b1b1d3ad3f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0f8635de222c8a095c42b1b1d3ad3f6"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>confidence</b> ()</td></tr>
+<tr class="memitem:ae0f8635de222c8a095c42b1b1d3ad3f6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#ae0f8635de222c8a095c42b1b1d3ad3f6">confidence</a> ()</td></tr>
 <tr class="separator:ae0f8635de222c8a095c42b1b1d3ad3f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed5d3aa837a9a20e0ebf1cf62624597b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed5d3aa837a9a20e0ebf1cf62624597b"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ping_number</b> ()</td></tr>
+<tr class="memitem:aed5d3aa837a9a20e0ebf1cf62624597b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aed5d3aa837a9a20e0ebf1cf62624597b">ping_number</a> ()</td></tr>
 <tr class="separator:aed5d3aa837a9a20e0ebf1cf62624597b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0bef9c667c32bf78926969e3fe73212"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0bef9c667c32bf78926969e3fe73212"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>processor_temperature</b> ()</td></tr>
+<tr class="memitem:aa0bef9c667c32bf78926969e3fe73212"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#aa0bef9c667c32bf78926969e3fe73212">processor_temperature</a> ()</td></tr>
 <tr class="separator:aa0bef9c667c32bf78926969e3fe73212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a556d783d7359b629af070096dec4174b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a556d783d7359b629af070096dec4174b"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>pcb_temperature</b> ()</td></tr>
+<tr class="memitem:a556d783d7359b629af070096dec4174b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a556d783d7359b629af070096dec4174b">pcb_temperature</a> ()</td></tr>
 <tr class="separator:a556d783d7359b629af070096dec4174b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34772952942a3d2ad12afa2835f19c56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34772952942a3d2ad12afa2835f19c56"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ping_enabled</b> ()</td></tr>
+<tr class="memitem:a34772952942a3d2ad12afa2835f19c56"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a34772952942a3d2ad12afa2835f19c56">ping_enabled</a> ()</td></tr>
 <tr class="separator:a34772952942a3d2ad12afa2835f19c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc8bc1e7182c1b1e6ab96d535a2debee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc8bc1e7182c1b1e6ab96d535a2debee"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>profile_data_length</b> ()</td></tr>
+<tr class="memitem:afc8bc1e7182c1b1e6ab96d535a2debee"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#afc8bc1e7182c1b1e6ab96d535a2debee">profile_data_length</a> ()</td></tr>
 <tr class="separator:afc8bc1e7182c1b1e6ab96d535a2debee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3783e46c0b42532537c842a2e9ec031f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3783e46c0b42532537c842a2e9ec031f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>profile_data</b> ()</td></tr>
+<tr class="memitem:a3783e46c0b42532537c842a2e9ec031f"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a3783e46c0b42532537c842a2e9ec031f">profile_data</a> ()</td></tr>
 <tr class="separator:a3783e46c0b42532537c842a2e9ec031f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b60b0b32f21a0db968f7c67cf6ca9ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b60b0b32f21a0db968f7c67cf6ca9ca"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_version</b> ()</td></tr>
+<tr class="memitem:a0b60b0b32f21a0db968f7c67cf6ca9ca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a0b60b0b32f21a0db968f7c67cf6ca9ca">protocol_version</a> ()</td></tr>
 <tr class="separator:a0b60b0b32f21a0db968f7c67cf6ca9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -291,643 +206,195 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_version<
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0f5afddc97d00c043f9ba7bd8e42de22"></a>
+<a class="anchor" id="ae0f8635de222c8a095c42b1b1d3ad3f6"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_device_id </td>
+          <td class="memname">uint16_t Ping1D::confidence </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>device_id</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>The device ID. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">device_id</td><td>The device ID (0-254). 255 is reserved for broadcast messages.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a703b996fca1ce0d40e771a6c7c80a30f"></a>
+<a class="anchor" id="aa9ebcaba89401536ae27ea8c5be7a9d0"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_distance </td>
+          <td class="memname">uint8_t Ping1D::device_id </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>distance</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>confidence</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pulse_duration</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>ping_number</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_start</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_length</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>gain_index</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">distance</td><td>Units: mm; The current return distance determined for the most recent acoustic measurement. </td></tr>
-    <tr><td class="paramname">confidence</td><td>Units: %; Confidence in the most recent range measurement. </td></tr>
-    <tr><td class="paramname">pulse_duration</td><td>Units: us; The acoustic pulse length during acoustic transmission/activation. </td></tr>
-    <tr><td class="paramname">ping_number</td><td>The pulse/measurement count since boot. </td></tr>
-    <tr><td class="paramname">scan_start</td><td>Units: mm; The beginning of the scan region in mm from the transducer. </td></tr>
-    <tr><td class="paramname">scan_length</td><td>Units: mm; The length of the scan region. </td></tr>
-    <tr><td class="paramname">gain_index</td><td>The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aef9130ea341440eb6af3e49eb2188034"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_distance_simple </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>distance</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>confidence</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The distance to target with confidence estimate. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">distance</td><td>Units: mm; Distance to the target. </td></tr>
-    <tr><td class="paramname">confidence</td><td>Units: %; Confidence in the distance measurement.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae0fa0f26609042ac8ff88c84473fd8fd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_firmware_version </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>device_type</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>device_model</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>firmware_version_major</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>firmware_version_minor</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Device information. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">device_type</td><td>Device type. 0: Unknown; 1: Echosounder </td></tr>
-    <tr><td class="paramname">device_model</td><td>Device model. 0: Unknown; 1: <a class="el" href="class_ping1_d.html">Ping1D</a> </td></tr>
-    <tr><td class="paramname">firmware_version_major</td><td>Firmware version major number. </td></tr>
-    <tr><td class="paramname">firmware_version_minor</td><td>Firmware version minor number.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aeafd837336245f200ad53ce0ca27736a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_gain_index </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>gain_index</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>The current gain setting. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">gain_index</td><td>The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a928035dd10016ee49c247acef75c98da"></a>
+<a class="anchor" id="a5594c20891c28b4c9d90560186e217c9"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_general_info </td>
+          <td class="memname">uint8_t Ping1D::device_model </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>firmware_version_major</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>firmware_version_minor</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>voltage_5</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>ping_interval</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>gain_index</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>mode_auto</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>General information. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">firmware_version_major</td><td>Firmware major version. </td></tr>
-    <tr><td class="paramname">firmware_version_minor</td><td>Firmware minor version. </td></tr>
-    <tr><td class="paramname">voltage_5</td><td>Units: mV; Device supply voltage. </td></tr>
-    <tr><td class="paramname">ping_interval</td><td>Units: ms; The interval between acoustic measurements. </td></tr>
-    <tr><td class="paramname">gain_index</td><td>The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144 </td></tr>
-    <tr><td class="paramname">mode_auto</td><td>The current operating mode of the device. 0: manual mode, 1: auto mode</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a05e5b5d755c79c97ff0fe0c99d4864f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_mode_auto </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>mode_auto</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode_auto</td><td>0: manual mode, 1: auto mode</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a2247c3c1627bcbaea0168b4b0adc19d4"></a>
+<a class="anchor" id="a6546461509f3b9780da890f6cbd2b963"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_pcb_temperature </td>
+          <td class="memname">uint8_t Ping1D::device_type </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pcb_temperature</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Temperature of the on-board thermistor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pcb_temperature</td><td>Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a981f023d3b539583d3aeb9101ea469d6"></a>
+<a class="anchor" id="ab0b70fd7133b564a96f09cc7df9591ec"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_ping_enable </td>
+          <td class="memname">uint32_t Ping1D::distance </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>ping_enabled</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Acoustic output enabled state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ping_enabled</td><td>The state of the acoustic output. 0: disabled, 1:enabled</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a21c57e86ab6580613acce88b2ca57546"></a>
+<a class="anchor" id="a7fc14a1c990ab0c2873f8735b725df46"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_ping_interval </td>
+          <td class="memname">uint16_t Ping1D::firmware_version_major </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>ping_interval</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>The interval between acoustic measurements. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ping_interval</td><td>Units: ms; The minimum interval between acoustic measurements. The actual interval may be longer.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="a634ff613cdcbf0ca52324926ed223b9f"></a>
+<a class="anchor" id="ae59c77136a8791f14ce1cf8ec3a5f44d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_processor_temperature </td>
+          <td class="memname">uint16_t Ping1D::firmware_version_minor </td>
           <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>processor_temperature</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Temperature of the device cpu. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">processor_temperature</td><td>Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
-<a class="anchor" id="ab94ae2a1829bbd58d5ba44ed2b82f3ed"></a>
+<a class="anchor" id="a71a92d322870a6bf4ab2542db3078bc9"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Ping1D::get_profile </td>
+          <td class="memname">uint32_t Ping1D::gain_index </td>
           <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>distance</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>confidence</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pulse_duration</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>ping_number</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_start</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_length</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>gain_index</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>profile_data_length</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t **&#160;</td>
-          <td class="paramname"><em>profile_data</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. A distance measurement to the target is also provided. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">distance</td><td>Units: mm; The current return distance determined for the most recent acoustic measurement. </td></tr>
-    <tr><td class="paramname">confidence</td><td>Units: %; Confidence in the most recent range measurement. </td></tr>
-    <tr><td class="paramname">pulse_duration</td><td>Units: us; The acoustic pulse length during acoustic transmission/activation. </td></tr>
-    <tr><td class="paramname">ping_number</td><td>The pulse/measurement count since boot. </td></tr>
-    <tr><td class="paramname">scan_start</td><td>Units: mm; The beginning of the scan region in mm from the transducer. </td></tr>
-    <tr><td class="paramname">scan_length</td><td>Units: mm; The length of the scan region. </td></tr>
-    <tr><td class="paramname">gain_index</td><td>The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144 </td></tr>
-    <tr><td class="paramname">profile_data</td><td>An array of return strength measurements taken at regular intervals across the scan region.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ab6191270bca246abd0ce014f44c71365"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_protocol_version </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>protocol_version</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>The protocol version. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">protocol_version</td><td>The protocol version</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="acb17a68e243a32b3dcb377ce01bfc234"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_pulse_duration </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pulse_duration</em> = <code>nullptr</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The duration of the acoustic activation/transmission. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pulse_duration</td><td>Units: microseconds; Acoustic pulse duration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a47d8c9784f3725fda570111c804eea73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_range </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_start</em> = <code>nullptr</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>scan_length</em> = <code>nullptr</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">scan_start</td><td>Units: mm; The beginning of the scan range in mm from the transducer. </td></tr>
-    <tr><td class="paramname">scan_length</td><td>Units: mm; The length of the scan range.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a8bfce5e6373c1eb3df3f137123616e2a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_speed_of_sound </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>speed_of_sound</em> = <code>nullptr</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The speed of sound used for distance calculations. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">speed_of_sound</td><td>Units: mm/s; The speed of sound in the measurement medium. ~1,500,000 mm/s for water.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aa178f07ade07c5ea788f5655010389b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Ping1D::get_voltage_5 </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>voltage_5</em> = <code>nullptr</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The 5V rail voltage. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">voltage_5</td><td>Units: mV; The 5V rail voltage.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if a valid reply is received from the device </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="abafb92ac3b739f278a81ad0015fc0245"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Ping1D::handleMessage </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_ping_message.html">PingMessage</a> *&#160;</td>
-          <td class="paramname"><em>pmsg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Handle an incoming message from the device. Internal values are updated according to the device data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pmsg</td><td>The message received from the device </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
@@ -956,23 +423,243 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_version<
 
 </div>
 </div>
-<a class="anchor" id="a33a25b38a507b9751aa9fb7cdf4dde18"></a>
+<a class="anchor" id="a88842c34a98431c0bb153af4e10a8035"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_ping_message.html">PingMessage</a> * Ping1D::read </td>
+          <td class="memname">uint8_t Ping1D::mode_auto </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<p>Return the latest value received </p>
 
-<p>Read in data from device, return a <a class="el" href="class_ping_message.html">PingMessage</a> if available. Data will be read in from device until there is no data left in the RX buffer, or a valid <a class="el" href="class_ping_message.html">PingMessage</a> is successfully decoded. Note that there may still be data available in the RX buffer for decoding when this function returns a <a class="el" href="class_ping_message.html">PingMessage</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>: The next <a class="el" href="class_ping_message.html">PingMessage</a> from the device </dd>
-<dd>
-: null if the RX buffer is empty and no <a class="el" href="class_ping_message.html">PingMessage</a> has been decoded </dd></dl>
+</div>
+</div>
+<a class="anchor" id="a556d783d7359b629af070096dec4174b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Ping1D::pcb_temperature </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a34772952942a3d2ad12afa2835f19c56"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Ping1D::ping_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a26e0c00d274b6ab3520c51f2444c8a31"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Ping1D::ping_interval </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="aed5d3aa837a9a20e0ebf1cf62624597b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Ping1D::ping_number </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="aa0bef9c667c32bf78926969e3fe73212"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Ping1D::processor_temperature </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a3783e46c0b42532537c842a2e9ec031f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* Ping1D::profile_data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="afc8bc1e7182c1b1e6ab96d535a2debee"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Ping1D::profile_data_length </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a0b60b0b32f21a0db968f7c67cf6ca9ca"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Ping1D::protocol_version </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="aa0f57f154f94dd27afe65683c76a4348"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Ping1D::pulse_duration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
 
 </div>
 </div>
@@ -1046,6 +733,54 @@ null if the device did not reply with the requested message before the timeout p
 
 </div>
 </div>
+<a class="anchor" id="a8e2913c5d4bbc568be572050b022c5aa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Ping1D::scan_length </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a81a7e089bdf6404bf496286dfda66f54"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Ping1D::scan_start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
 <a class="anchor" id="a4f20c8fdf978ad46b87beee497a7bbc6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1077,9 +812,9 @@ null if the device did not reply with the requested message before the timeout p
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1114,9 +849,9 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1151,9 +886,9 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1188,9 +923,9 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1225,9 +960,9 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1269,9 +1004,9 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
 
 </div>
 </div>
@@ -1306,9 +1041,33 @@ true when verify = true if a valid reply is received from the device, and the va
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true when verify = false if a valid reply is received from the device. </dd>
+<dl class="section return"><dt>Returns</dt><dd>when verify = false: true if a valid reply is received from the device. </dd>
 <dd>
-true when verify = true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+when verify = true: true if a valid reply is received from the device, and the values in the reply match the values that we applied </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa8c3bb77e49fb260558ac9e8276cd345"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Ping1D::speed_of_sound </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
 
 </div>
 </div>
@@ -1338,77 +1097,27 @@ true when verify = true if a valid reply is received from the device, and the va
 
 </div>
 </div>
-<a class="anchor" id="a29dae3c9af32a1d849edada44bed60a9"></a>
+<a class="anchor" id="a4b7bf2f8f0d54970d1c36f27517f2a00"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_ping_message.html">PingMessage</a> * Ping1D::waitMessage </td>
+          <td class="memname">uint16_t Ping1D::voltage_5 </td>
           <td>(</td>
-          <td class="paramtype">enum Ping1DNamespace::msg_ping1D_id&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>timeout_ms</em> = <code>500</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Wait for receipt of a message with a particular message id from device. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>The message id to wait for </td></tr>
-    <tr><td class="paramname">timeout_ms</td><td>The timeout period to wait for a matching <a class="el" href="class_ping_message.html">PingMessage</a> to be received</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_ping_message.html">PingMessage</a> received with matching id </dd>
-<dd>
-null if the timeout expires and no <a class="el" href="class_ping_message.html">PingMessage</a> was received with a matching id </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a2e963a771801642c41b401de3116fe27"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t Ping1D::write </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Write data to device. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>pointer to buffer to write </td></tr>
-    <tr><td class="paramname">length</td><td>buffer length to write</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>: size of data buffer written to the device </dd></dl>
+<p>Return the latest value received </p>
 
 </div>
 </div>
