@@ -33,28 +33,6 @@ public:
     ~Ping1D();
 
     /**
-     *  @brief Read in data from device, return a PingMessage if available.
-     *  Data will be read in from device until there is no data left in the RX buffer,
-     *  or a valid PingMessage is successfully decoded.
-     *  Note that there may still be data available in the RX buffer for decoding when
-     *  this function returns a PingMessage.
-     *
-     *  @return: The next PingMessage from the device
-     *  @return: null if the RX buffer is empty and no PingMessage has been decoded
-     */
-    PingMessage* read();
-
-    /**
-     *  @brief Write data to device
-     *
-     *  @param data: pointer to buffer to write
-     *  @param length: buffer length to write
-     *
-     *  @return: size of data buffer written to the device
-     */
-    size_t write(uint8_t* data, uint16_t length);
-
-    /**
      *  @brief Establish communications with the device, and initialize the update interval
      *
      *  @param ping_interval_ms: The interval (in milliseconds) between acoustic measurements
@@ -62,25 +40,6 @@ public:
      *  @return true if the device was initialized successfully
      */
     bool initialize(uint16_t ping_interval_ms = 50);
-
-
-    /**
-     *  @brief Wait for receipt of a message with a particular message id from device
-     *
-     *  @param id: The message id to wait for
-     *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
-     *
-     *  @return The PingMessage received with matching id
-     *  @return null if the timeout expires and no PingMessage was received with a matching id
-     */
-    PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 500);
-
-    /**
-     *  @brief Handle an incoming message from the device. Internal values are updated according to the device data.
-     *
-     *  @param pmsg: The message received from the device
-     */
-    void handleMessage(PingMessage* pmsg);
 
     /**
      *  @brief Request a PingMessage from the device
@@ -125,212 +84,12 @@ public:
     }
 
     /**
-     * @brief Device information
-     *
-     * @param device_type: Device type. 0: Unknown; 1: Echosounder
-     * @param device_model: Device model. 0: Unknown; 1: Ping1D
-     * @param firmware_version_major: Firmware version major number.
-     * @param firmware_version_minor: Firmware version minor number.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_firmware_version(uint8_t* device_type = nullptr,
-                     uint8_t* device_model = nullptr,
-                     uint16_t* firmware_version_major = nullptr,
-                     uint16_t* firmware_version_minor = nullptr);
-
-    /**
-     * @brief The device ID.
-     *
-     * @param device_id: The device ID (0-254). 255 is reserved for broadcast messages.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_device_id(uint8_t* device_id = nullptr);
-
-    /**
-     * @brief The 5V rail voltage.
-     *
-     * @param voltage_5: Units: mV; The 5V rail voltage.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_voltage_5(uint16_t* voltage_5 = nullptr);
-
-    /**
-     * @brief The speed of sound used for distance calculations.
-     *
-     * @param speed_of_sound: Units: mm/s; The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_speed_of_sound(uint32_t* speed_of_sound = nullptr);
-
-    /**
-     * @brief The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).
-     *
-     * @param scan_start: Units: mm; The beginning of the scan range in mm from the transducer.
-     * @param scan_length: Units: mm; The length of the scan range.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_range(uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr);
-
-    /**
-     * @brief The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.
-     *
-     * @param mode_auto: 0: manual mode, 1: auto mode
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_mode_auto(uint8_t* mode_auto = nullptr);
-
-    /**
-     * @brief The interval between acoustic measurements.
-     *
-     * @param ping_interval: Units: ms; The minimum interval between acoustic measurements. The actual interval may be longer.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_ping_interval(uint16_t* ping_interval = nullptr);
-
-    /**
-     * @brief The current gain setting.
-     *
-     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_gain_index(uint32_t* gain_index = nullptr);
-
-    /**
-     * @brief The duration of the acoustic activation/transmission.
-     *
-     * @param pulse_duration: Units: microseconds; Acoustic pulse duration.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_pulse_duration(uint16_t* pulse_duration = nullptr);
-
-    /**
-     * @brief General information.
-     *
-     * @param firmware_version_major: Firmware major version.
-     * @param firmware_version_minor: Firmware minor version.
-     * @param voltage_5: Units: mV; Device supply voltage.
-     * @param ping_interval: Units: ms; The interval between acoustic measurements.
-     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-     * @param mode_auto: The current operating mode of the device. 0: manual mode, 1: auto mode
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_general_info(uint16_t* firmware_version_major = nullptr,
-                     uint16_t* firmware_version_minor = nullptr,
-                     uint16_t* voltage_5 = nullptr,
-                     uint16_t* ping_interval = nullptr,
-                     uint8_t* gain_index = nullptr,
-                     uint8_t* mode_auto = nullptr);
-
-    /**
-     * @brief The distance to target with confidence estimate.
-     *
-     * @param distance: Units: mm; Distance to the target.
-     * @param confidence: Units: %; Confidence in the distance measurement.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_distance_simple(uint32_t* distance = nullptr,
-                     uint8_t* confidence = nullptr);
-
-    /**
-     * @brief The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided.
-     *
-     * @param distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
-     * @param confidence: Units: %; Confidence in the most recent range measurement.
-     * @param pulse_duration: Units: us; The acoustic pulse length during acoustic transmission/activation.
-     * @param ping_number: The pulse/measurement count since boot.
-     * @param scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
-     * @param scan_length: Units: mm; The length of the scan region.
-     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_distance(uint32_t* distance = nullptr,
-                     uint16_t* confidence = nullptr,
-                     uint16_t* pulse_duration = nullptr,
-                     uint32_t* ping_number = nullptr,
-                     uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr,
-                     uint32_t* gain_index = nullptr);
-
-    /**
-     * @brief Temperature of the device cpu.
-     *
-     * @param processor_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_processor_temperature(uint16_t* processor_temperature = nullptr);
-
-    /**
-     * @brief Temperature of the on-board thermistor.
-     *
-     * @param pcb_temperature: Units: cC; The temperature in centi-degrees Centigrade (100 * degrees C).
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_pcb_temperature(uint16_t* pcb_temperature = nullptr);
-
-    /**
-     * @brief Acoustic output enabled state.
-     *
-     * @param ping_enabled: The state of the acoustic output. 0: disabled, 1:enabled
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_ping_enable(uint8_t* ping_enabled = nullptr);
-
-    /**
-     * @brief A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between <scan_start> and <scan_start + scan_length> millimeters away from the transducer. A distance measurement to the target is also provided.
-     *
-     * @param distance: Units: mm; The current return distance determined for the most recent acoustic measurement.
-     * @param confidence: Units: %; Confidence in the most recent range measurement.
-     * @param pulse_duration: Units: us; The acoustic pulse length during acoustic transmission/activation.
-     * @param ping_number: The pulse/measurement count since boot.
-     * @param scan_start: Units: mm; The beginning of the scan region in mm from the transducer.
-     * @param scan_length: Units: mm; The length of the scan region.
-     * @param gain_index: The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-     * @param profile_data: An array of return strength measurements taken at regular intervals across the scan region.
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_profile(uint32_t* distance = nullptr,
-                     uint16_t* confidence = nullptr,
-                     uint16_t* pulse_duration = nullptr,
-                     uint32_t* ping_number = nullptr,
-                     uint32_t* scan_start = nullptr,
-                     uint32_t* scan_length = nullptr,
-                     uint32_t* gain_index = nullptr,
-                     uint16_t* profile_data_length = nullptr, uint8_t** profile_data = nullptr);
-
-    /**
-     * @brief The protocol version
-     *
-     * @param protocol_version: The protocol version
-     *
-     * @return true if a valid reply is received from the device
-     */
-    bool get_protocol_version(uint32_t* protocol_version = nullptr);
-
-
-    /**
      * @brief Set the device ID.
      *
      * @param device_id - Device ID (0-254). 255 is reserved for broadcast messages.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_device_id(uint8_t device_id, bool verify = true);
@@ -341,8 +100,8 @@ public:
      * @param scan_start - Units: mm; 
      * @param scan_length - Units: mm; The length of the scan range.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_range(uint32_t scan_start, uint32_t scan_length, bool verify = true);
@@ -352,8 +111,8 @@ public:
      *
      * @param speed_of_sound - Units: mm/s; The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_speed_of_sound(uint32_t speed_of_sound, bool verify = true);
@@ -363,8 +122,8 @@ public:
      *
      * @param mode_auto - 0: manual mode. 1: auto mode.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_mode_auto(uint8_t mode_auto, bool verify = true);
@@ -374,8 +133,8 @@ public:
      *
      * @param ping_interval - Units: ms; The interval between acoustic measurements.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_ping_interval(uint16_t ping_interval, bool verify = true);
@@ -385,8 +144,8 @@ public:
      *
      * @param gain_index - The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_gain_index(uint8_t gain_index, bool verify = true);
@@ -396,75 +155,120 @@ public:
      *
      * @param ping_enabled - 0: Disable, 1: Enable.
      *
-     * @return true when verify = false if a valid reply is received from the device.
-     * @return true when verify = true if a valid reply is received from the
+     * @return when verify = false: true if a valid reply is received from the device.
+     * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
     bool set_ping_enable(uint8_t ping_enabled, bool verify = true);
 
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint8_t device_type() { return _device_type; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint8_t device_model() { return _device_model; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t firmware_version_major() { return _firmware_version_major; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t firmware_version_minor() { return _firmware_version_minor; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint8_t device_id() { return _device_id; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t voltage_5() { return _voltage_5; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t speed_of_sound() { return _speed_of_sound; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t scan_start() { return _scan_start; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t scan_length() { return _scan_length; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint8_t mode_auto() { return _mode_auto; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t ping_interval() { return _ping_interval; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t gain_index() { return _gain_index; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t pulse_duration() { return _pulse_duration; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t distance() { return _distance; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t confidence() { return _confidence; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t ping_number() { return _ping_number; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t processor_temperature() { return _processor_temperature; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t pcb_temperature() { return _pcb_temperature; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint8_t ping_enabled() { return _ping_enabled; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint16_t profile_data_length() { return _profile_data_length; }
+    /**
+     * Return the latest value received
+     */
     uint8_t* profile_data() { return _profile_data; }
 
-    // Return the latest value received
+    /**
+     * Return the latest value received
+     */
     uint32_t protocol_version() { return _protocol_version; }
 
 
@@ -538,5 +342,46 @@ private:
 
     // The protocol version
     uint32_t _protocol_version = 0;
+
+
+    /**
+     *  @brief Read in data from device, return a PingMessage if available.
+     *  Data will be read in from device until there is no data left in the RX buffer,
+     *  or a valid PingMessage is successfully decoded.
+     *  Note that there may still be data available in the RX buffer for decoding when
+     *  this function returns a PingMessage.
+     *
+     *  @return: The next PingMessage from the device
+     *  @return: null if the RX buffer is empty and no PingMessage has been decoded
+     */
+    PingMessage* read();
+
+    /**
+     *  @brief Write data to device
+     *
+     *  @param data: pointer to buffer to write
+     *  @param length: buffer length to write
+     *
+     *  @return: size of data buffer written to the device
+     */
+    size_t write(uint8_t* data, uint16_t length);
+
+    /**
+     *  @brief Wait for receipt of a message with a particular message id from device
+     *
+     *  @param id: The message id to wait for
+     *  @param timeout_ms: The timeout period to wait for a matching PingMessage to be received
+     *
+     *  @return The PingMessage received with matching id
+     *  @return null if the timeout expires and no PingMessage was received with a matching id
+     */
+    PingMessage* waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 500);
+
+    /**
+     *  @brief Handle an incoming message from the device. Internal values are updated according to the device data.
+     *
+     *  @param pmsg: The message received from the device
+     */
+    void handleMessage(PingMessage* pmsg);
 
 };
