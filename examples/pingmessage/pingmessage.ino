@@ -130,24 +130,32 @@ void loop()
             break;
         }
 
-        /* TODO
         case Ping1DNamespace::Profile: {
-            ping_msg_ping1D_profile m(p.rxMsg);
-            printf("> distance: %d", m.distance());
-            printf("> confidence: %d", m.confidence());
-            printf("> pulse_usec: %d", m.pulse_usec());
-            printf("> ping_number: %d", m.ping_number());
-            printf("> start_mm: %d", m.scan_start());
-            printf("> length_mm: %d", m.scan_length());
-            printf("> gain_index: %d", m.gain_index());
-            printf("> num_points: %d", m.num_points());
-            printf("> gain_index: %d", m.gain_index());
-            for(int i =0; i < m.num_points(); i++) {
-            printf("> data: %d", m.data()[i]);
+            ping_msg_ping1D_profile m(parser.rxMsg);
+            Serial.print("> distance: ");
+            Serial.println(m.distance());
+            Serial.print("> confidence: ");
+            Serial.println(m.confidence());
+            Serial.print("> pulse_duration: ");
+            Serial.println(m.pulse_duration());
+            Serial.print("> ping_number: ");
+            Serial.println(m.ping_number());
+            Serial.print("> start_mm: ");
+            Serial.println(m.scan_start());
+            Serial.print("> length_mm: ");
+            Serial.println(m.scan_length());
+            Serial.print("> gain_index: ");
+            Serial.println(m.gain_index());
+            Serial.print("> profile_data_length: ");
+            Serial.println(m.profile_data_length());
+            Serial.print("> gain_index: ");
+            Serial.println(m.gain_index());
+            for(int i =0; i < m.profile_data_length(); i++) {
+                Serial.print("> ");
+                Serial.println(m.profile_data()[i]);
             }
             break;
         }
-        */
 
         default:
 
