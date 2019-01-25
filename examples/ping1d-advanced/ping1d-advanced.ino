@@ -84,16 +84,18 @@ void loop()
         Serial.println("attempt to get general info failed");
     }
 
-    if (ping.request(Ping1DNamespace::Profile)) {
-        Serial.println("got profile");
-        Serial.println("profile points: ");
-        for (int i = 0; i < ping.profile_data_length(); i++) {
-            Serial.print(" > ");
-            Serial.println(ping.profile_data()[i]);
-        }
-    } else {
-        Serial.println("attempt to get profile failed");
-    }
+    // SoftwareSerial cannot handle long profile messages
+    // Uncomment to activate (HardwareSerial recommended)
+    // if (ping.request(Ping1DNamespace::Profile)) {
+    //     Serial.println("got profile");
+    //     Serial.println("profile points: ");
+    //     for (int i = 0; i < ping.profile_data_length(); i++) {
+    //         Serial.print(" > ");
+    //         Serial.println(ping.profile_data()[i]);
+    //     }
+    // } else {
+    //     Serial.println("attempt to get profile failed");
+    // }
 
     // Toggle the LED to show that the program is running
     digitalWrite(ledPin, !digitalRead(ledPin));

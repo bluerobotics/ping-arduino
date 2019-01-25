@@ -58,7 +58,9 @@ void loop()
         Ping1DNamespace::Voltage_5,
         Ping1DNamespace::Processor_temperature,
         Ping1DNamespace::General_info,
-        Ping1DNamespace::Profile
+        // SoftwareSerial cannot handle the long profile messages
+        // Uncomment to activate (HardwareSerial recommended)
+        // Ping1DNamespace::Profile
     };
 
     static float gain_settings[] = { 0.6, 1.8, 5.5, 12.9, 30.2, 66.1, 144 };
