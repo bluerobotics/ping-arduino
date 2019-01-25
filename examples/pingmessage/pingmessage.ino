@@ -8,7 +8,6 @@
 
 #include "pingmessage_all.h"
 #include "ping_parser.h"
-#include "ping1d.h"
 
 #include "SoftwareSerial.h"
 
@@ -19,7 +18,6 @@
 static const uint8_t arduinoRxPin = 9;
 static const uint8_t arduinoTxPin = 10;
 SoftwareSerial pingSerial = SoftwareSerial(arduinoRxPin, arduinoTxPin);
-static Ping1D ping { pingSerial };
 
 static PingParser parser;
 
@@ -32,18 +30,22 @@ void setup()
     pingSerial.begin(9600);
     Serial.begin(115200);
     pinMode(ledPin, OUTPUT);
-    Serial.println("Blue Robotics pingmessage.ino");
-    while (!ping.initialize()) {
-        Serial.println("\nPing device failed to initialize!");
-        Serial.println("Are the Ping rx/tx wired correctly?");
-        Serial.print("Ping rx is the green wire, and should be connected to Arduino pin ");
-        Serial.print(arduinoTxPin);
-        Serial.println(" (Arduino tx)");
-        Serial.print("Ping tx is the white wire, and should be connected to Arduino pin ");
-        Serial.print(arduinoRxPin);
-        Serial.println(" (Arduino rx)");
+
+    // Loop until we get initial communications from the device
+    do {
+        Serial.println("Blue Robotics pingmessage.ino");
+
+        // An empty message is used for the request
+        ping_msg_ping1D_empty m;
+
+        // Request a firmware_version message
+        m.set_id(Ping1DNamespace::Firmware_version);
+
+        // Prepare the buffer and write to device
+        m.updateChecksum();
+        pingSerial.write(m.msgData, m.msgDataLength());
         delay(2000);
-    }
+    } while(!waitMessage(Ping1DNamespace::Firmware_version)); // wait for the response
 }
 
 void loop()
