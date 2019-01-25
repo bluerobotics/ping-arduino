@@ -126,7 +126,7 @@ void loop()
             Serial.print("> gain setting: ");
             Serial.println(gain_settings[m.gain_index()]);
             Serial.print("> Mode: ");
-            Serial.println(m.mode_auto() ? "Auprintfto" : "Manual");
+            Serial.println(m.mode_auto() ? "Auto" : "Manual");
             break;
         }
 
