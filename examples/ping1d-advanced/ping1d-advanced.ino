@@ -9,8 +9,6 @@
  *  Communication is performed with a Blue Robotics Ping1D Echosounder
  */
 
-#include "pingmessage_all.h"
-#include "ping_parser.h"
 #include "ping1d.h"
 
 #include "SoftwareSerial.h"
