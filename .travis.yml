@@ -4,7 +4,7 @@ matrix:
   include:
     # Tests build
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: require
       addons:
         apt:
