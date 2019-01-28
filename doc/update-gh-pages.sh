@@ -47,7 +47,7 @@ if ! ( cd $script_path && doxygen "Doxyfile" ); then
     exit 1
 fi
 echo "- Check files"
-ls "${script_path}/html/"
+ls -A "${script_path}/html/"
 
 repo_path=${clone_folder}/${repository_name}
 echo "- Clone ${repository_name}"
