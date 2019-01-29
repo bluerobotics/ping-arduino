@@ -3,7 +3,7 @@
 </a>
 
 [![Travis Build Status](https://travis-ci.org/bluerobotics/ping-arduino.svg?branch=master)](https://travis-ci.org/bluerobotics/ping-arduino)
-[![Gitter](https://img.shields.io/badge/gitter-online-green.svg)](https://gitter.im/bluerobotics/ardusub/)
+[![Gitter](https://img.shields.io/badge/gitter-online-green.svg)](https://gitter.im/bluerobotics/discussion/)
 
 The [Blue Robotics Ping Echosounder](https://www.bluerobotics.com/store/sensors-sonars-cameras/sonar/ping-r1/) is a low cost acoustic rangefinder for underwater applications. This Arduino library allows you to communicate and gather data from a Ping device.
 
