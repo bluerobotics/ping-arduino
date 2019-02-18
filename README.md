@@ -9,7 +9,7 @@ The [Blue Robotics Ping Echosounder](https://www.bluerobotics.com/store/sensors-
 
 ## Ping Firmware Setup
 
-[Change](https://github.com/bluerobotics/ping-viewer/wiki/firmware-update) the Ping device firmware to 9600 baud.
+[Change](https://docs.bluerobotics.com/ping-viewer/firmware-update/) the Ping device firmware to 9600 baud for this examples.
 
 ## Arduino Library Installation
 
@@ -71,7 +71,7 @@ void setup {
 
 ### Basic
 
-To get the [distance and confidence measurements](https://github.com/bluerobotics/ping-viewer/wiki#target-locking) from the Ping device, call [`update()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#a57e42863075c4b0026bef3ef4418c116) to request a new distance measurement from the device before calling [`distance()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ab0b70fd7133b564a96f09cc7df9591ec) and [confidence()](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ae0f8635de222c8a095c42b1b1d3ad3f6) to use the measurement values. The values returned by the `distance()` and `confidence()` functions will not change until `update()` is called again.
+To get the [distance and confidence measurements](https://docs.bluerobotics.com/ping-viewer/#target-locking) from the Ping device, call [`update()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#a57e42863075c4b0026bef3ef4418c116) to request a new distance measurement from the device before calling [`distance()`](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ab0b70fd7133b564a96f09cc7df9591ec) and [confidence()](http://docs.bluerobotics.com/ping-arduino/class_ping1_d.html#ae0f8635de222c8a095c42b1b1d3ad3f6) to use the measurement values. The values returned by the `distance()` and `confidence()` functions will not change until `update()` is called again.
 
 ```cpp
 void loop() {
