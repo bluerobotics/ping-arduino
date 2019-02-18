@@ -11,6 +11,8 @@ The [Blue Robotics Ping Echosounder](https://www.bluerobotics.com/store/sensors-
 
 [Change](https://docs.bluerobotics.com/ping-viewer/firmware-update/) the Ping device firmware to 9600 baud for this examples.
 
+> Note: If your arduino has multiple hardware serial interfaces, you can change the example to run with 115200 baud rate and with a hardware serial port.
+
 ## Arduino Library Installation
 
 This library can be found in the Arduino Library manager. To install the library, open the Arduino IDE and navigate to library manager with the menu items: *Sketch* -> *Include Library* -> *Manage Libraries*. Search for `Blue Robotics ping-arduino` to find the library, then click Install to install it.
