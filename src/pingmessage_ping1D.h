@@ -239,6 +239,26 @@ public:
     void set_mode_auto(const uint8_t mode_auto) { memcpy((payload_data(9.0)), &mode_auto, 1.0);};
 };
 
+class ping_msg_ping1D_general_request : public PingMessage
+{
+public:
+    ping_msg_ping1D_general_request(const PingMessage& msg) : PingMessage { msg } {}
+    ping_msg_ping1D_general_request(const uint8_t* buf, const uint16_t length) : PingMessage { buf, length } {}
+    ping_msg_ping1D_general_request()
+        : PingMessage { static_cast<uint16_t>(12) }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[4] = 6; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint16_t requested_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2.0); return d; };
+    void set_requested_id(const uint16_t requested_id) { memcpy((payload_data(0)), &requested_id, 2.0);};
+};
+
 class ping_msg_ping1D_goto_bootloader : public PingMessage
 {
 public:

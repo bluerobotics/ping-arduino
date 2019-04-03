@@ -32,6 +32,7 @@ namespace Ping1DNamespace {
         Firmware_version = 1200,
         Gain_index = 1207,
         General_info = 1210,
+        General_request = 6,
         Goto_bootloader = 1100,
         Mode_auto = 1205,
         Nack = 2,
