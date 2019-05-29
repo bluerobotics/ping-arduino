@@ -106,11 +106,11 @@ void Ping1D::handleMessage(PingMessage* pmsg)
             ping_msg_ping1D_distance m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
-            _pulse_duration = m.pulse_duration();
+            _transmit_duration = m.transmit_duration();
             _ping_number = m.ping_number();
             _scan_start = m.scan_start();
             _scan_length = m.scan_length();
-            _gain_index = m.gain_index();
+            _gain_setting = m.gain_setting();
         }
             break;
 
@@ -132,10 +132,10 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Gain_index:
+        case Ping1DNamespace::Gain_setting:
         {
-            ping_msg_ping1D_gain_index m(*pmsg);
-            _gain_index = m.gain_index();
+            ping_msg_ping1D_gain_setting m(*pmsg);
+            _gain_setting = m.gain_setting();
         }
             break;
 
@@ -146,7 +146,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
             _firmware_version_minor = m.firmware_version_minor();
             _voltage_5 = m.voltage_5();
             _ping_interval = m.ping_interval();
-            _gain_index = m.gain_index();
+            _gain_setting = m.gain_setting();
             _mode_auto = m.mode_auto();
         }
             break;
@@ -191,11 +191,11 @@ void Ping1D::handleMessage(PingMessage* pmsg)
             ping_msg_ping1D_profile m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
-            _pulse_duration = m.pulse_duration();
+            _transmit_duration = m.transmit_duration();
             _ping_number = m.ping_number();
             _scan_start = m.scan_start();
             _scan_length = m.scan_length();
-            _gain_index = m.gain_index();
+            _gain_setting = m.gain_setting();
             if (m.profile_data_length() > _profile_data_length) {
                 if (_profile_data) {
                     free(_profile_data);
@@ -218,13 +218,6 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Pulse_duration:
-        {
-            ping_msg_ping1D_pulse_duration m(*pmsg);
-            _pulse_duration = m.pulse_duration();
-        }
-            break;
-
         case Ping1DNamespace::Range:
         {
             ping_msg_ping1D_range m(*pmsg);
@@ -237,6 +230,13 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         {
             ping_msg_ping1D_speed_of_sound m(*pmsg);
             _speed_of_sound = m.speed_of_sound();
+        }
+            break;
+
+        case Ping1DNamespace::Transmit_duration:
+        {
+            ping_msg_ping1D_transmit_duration m(*pmsg);
+            _transmit_duration = m.transmit_duration();
         }
             break;
 
@@ -292,18 +292,18 @@ bool Ping1D::set_device_id(uint8_t device_id, bool verify)
     return true; // success
 }
 
-bool Ping1D::set_gain_index(uint8_t gain_index, bool verify)
+bool Ping1D::set_gain_setting(uint8_t gain_setting, bool verify)
 {
-    ping_msg_ping1D_set_gain_index m;
-    m.set_gain_index(gain_index);
+    ping_msg_ping1D_set_gain_setting m;
+    m.set_gain_setting(gain_setting);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Gain_index)) {
+    if (!request(Ping1DNamespace::Gain_setting)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (_gain_index != gain_index)) {
+        && (_gain_setting != gain_setting)) {
         return false; // device reply does not match
     }
     return true; // success

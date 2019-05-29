@@ -142,13 +142,13 @@ public:
     /**
      * @brief Set the current gain setting.
      *
-     * @param gain_index - The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
+     * @param gain_setting - The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
      *
      * @return when verify = false: true if a valid reply is received from the device.
      * @return when verify = true: true if a valid reply is received from the
      * device, and the values in the reply match the values that we applied
      */
-    bool set_gain_index(uint8_t gain_index, bool verify = true);
+    bool set_gain_setting(uint8_t gain_setting, bool verify = true);
 
     /**
      * @brief Enable or disable acoustic measurements.
@@ -220,12 +220,12 @@ public:
     /**
      * Return the latest value received
      */
-    uint32_t gain_index() { return _gain_index; }
+    uint32_t gain_setting() { return _gain_setting; }
 
     /**
      * Return the latest value received
      */
-    uint16_t pulse_duration() { return _pulse_duration; }
+    uint16_t transmit_duration() { return _transmit_duration; }
 
     /**
      * Return the latest value received
@@ -313,10 +313,10 @@ private:
     uint16_t _ping_interval = 0;
 
     // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-    uint32_t _gain_index = 0;
+    uint32_t _gain_setting = 0;
 
     // The acoustic pulse length during acoustic transmission/activation.
-    uint16_t _pulse_duration = 0;
+    uint16_t _transmit_duration = 0;
 
     // The current return distance determined for the most recent acoustic measurement.
     uint32_t _distance = 0;
