@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>ping-arduino: ping_ping360_reset Class Reference</title>
+<title>ping-arduino: ping_message_device_information Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,35 +87,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classping__ping360__reset-members.html">List of all members</a>  </div>
+<a href="classping__message__device__information-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ping_ping360_reset Class Reference</div>  </div>
+<div class="title">ping_message_device_information Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for ping_ping360_reset:</div>
+Inheritance diagram for ping_message_device_information:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classping__ping360__reset.png" usemap="#ping_5Fping360_5Freset_map" alt=""/>
-  <map id="ping_5Fping360_5Freset_map" name="ping_ping360_reset_map">
-<area href="classping__message.html" alt="ping_message" shape="rect" coords="0,0,123,24"/>
+  <img src="classping__message__device__information.png" usemap="#ping_5Fmessage_5Fdevice_5Finformation_map" alt=""/>
+  <map id="ping_5Fmessage_5Fdevice_5Finformation_map" name="ping_message_device_information_map">
+<area href="classping__message.html" alt="ping_message" shape="rect" coords="0,0,206,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2cbba436df8c4772597a48bdb9d163e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cbba436df8c4772597a48bdb9d163e8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ping_ping360_reset</b> (const <a class="el" href="classping__message.html">ping_message</a> &amp;msg)</td></tr>
-<tr class="separator:a2cbba436df8c4772597a48bdb9d163e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf435e10df26a59754a63358705fb95d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf435e10df26a59754a63358705fb95d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ping_ping360_reset</b> (const uint8_t *buf, const uint16_t length)</td></tr>
-<tr class="separator:abf435e10df26a59754a63358705fb95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98638b07a15741caa049e73e38ccefd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98638b07a15741caa049e73e38ccefd7"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>bootloader</b> () const </td></tr>
-<tr class="separator:a98638b07a15741caa049e73e38ccefd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27d7d0a51be621acc6247954bc852604"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27d7d0a51be621acc6247954bc852604"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_bootloader</b> (const uint8_t bootloader)</td></tr>
-<tr class="separator:a27d7d0a51be621acc6247954bc852604"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e832b96805e93b2566ebced4631d62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52e832b96805e93b2566ebced4631d62"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ping_message_device_information</b> (const <a class="el" href="classping__message.html">ping_message</a> &amp;msg)</td></tr>
+<tr class="separator:a52e832b96805e93b2566ebced4631d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae7d6c4e60041ca8858cd5416de196a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaae7d6c4e60041ca8858cd5416de196a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ping_message_device_information</b> (const uint8_t *buf, const uint16_t length)</td></tr>
+<tr class="separator:aaae7d6c4e60041ca8858cd5416de196a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad24e8ac907e75fd9859be9eafac0dfd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad24e8ac907e75fd9859be9eafac0dfd9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>device_type</b> () const </td></tr>
+<tr class="separator:ad24e8ac907e75fd9859be9eafac0dfd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a261b91dfcbc6a789e63a7024cbe13e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a261b91dfcbc6a789e63a7024cbe13e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_device_type</b> (const uint8_t device_type)</td></tr>
+<tr class="separator:a0a261b91dfcbc6a789e63a7024cbe13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e278737d2d26155da7e5da8df633756"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e278737d2d26155da7e5da8df633756"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>device_revision</b> () const </td></tr>
+<tr class="separator:a3e278737d2d26155da7e5da8df633756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56ff22380009ca9abd69e654791170b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56ff22380009ca9abd69e654791170b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_device_revision</b> (const uint8_t device_revision)</td></tr>
+<tr class="separator:a56ff22380009ca9abd69e654791170b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a6f7280b6f607baa6b962472d827cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3a6f7280b6f607baa6b962472d827cc"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_version_major</b> () const </td></tr>
+<tr class="separator:ae3a6f7280b6f607baa6b962472d827cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaf66377a31f93a5a7130006ecda18e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abaf66377a31f93a5a7130006ecda18e6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_firmware_version_major</b> (const uint8_t firmware_version_major)</td></tr>
+<tr class="separator:abaf66377a31f93a5a7130006ecda18e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54034ff152986b79aa1a53a0abe5215b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54034ff152986b79aa1a53a0abe5215b"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_version_minor</b> () const </td></tr>
+<tr class="separator:a54034ff152986b79aa1a53a0abe5215b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab86e03b737bb1d1b17b14f5a9aea191f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab86e03b737bb1d1b17b14f5a9aea191f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_firmware_version_minor</b> (const uint8_t firmware_version_minor)</td></tr>
+<tr class="separator:ab86e03b737bb1d1b17b14f5a9aea191f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9e09b96d9f611271c7f54adfeac9940"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9e09b96d9f611271c7f54adfeac9940"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>firmware_version_patch</b> () const </td></tr>
+<tr class="separator:ac9e09b96d9f611271c7f54adfeac9940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4610d3b1fcad8874b4f6edfd833427d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4610d3b1fcad8874b4f6edfd833427d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_firmware_version_patch</b> (const uint8_t firmware_version_patch)</td></tr>
+<tr class="separator:a4610d3b1fcad8874b4f6edfd833427d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classping__message"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classping__message')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classping__message.html">ping_message</a></td></tr>
 <tr class="memitem:a7b1e7a84afa525bfb53a7a175f79daef inherit pub_methods_classping__message"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b1e7a84afa525bfb53a7a175f79daef"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ping_message</b> (const <a class="el" href="classping__message.html">ping_message</a> &amp;msg)</td></tr>
@@ -182,7 +206,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>_bufferLength</b>
 <tr class="separator:ab657f7268ba24bc8577c04242758f2df inherit pro_attribs_classping__message"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/bluerobotics/ping-arduino/src/<a class="el" href="ping__ping360_8h_source.html">ping_ping360.h</a></li>
+<li>/home/travis/build/bluerobotics/ping-arduino/src/<a class="el" href="ping__message_8h_source.html">ping_message.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
