@@ -101,6 +101,17 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
+        case Ping1DNamespace::Device_information:
+        {
+            ping_msg_ping1D_device_information m(*pmsg);
+            _device_type = m.device_type();
+            _device_revision = m.device_revision();
+            _firmware_version_major = m.firmware_version_major();
+            _firmware_version_minor = m.firmware_version_minor();
+            _firmware_version_patch = m.firmware_version_patch();
+        }
+            break;
+
         case Ping1DNamespace::Distance:
         {
             ping_msg_ping1D_distance m(*pmsg);

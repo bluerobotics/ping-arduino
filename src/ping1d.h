@@ -175,12 +175,12 @@ public:
     /**
      * Return the latest value received
      */
-    uint16_t firmware_version_major() { return _firmware_version_major; }
+    uint8_t firmware_version_major() { return _firmware_version_major; }
 
     /**
      * Return the latest value received
      */
-    uint16_t firmware_version_minor() { return _firmware_version_minor; }
+    uint8_t firmware_version_minor() { return _firmware_version_minor; }
 
     /**
      * Return the latest value received
@@ -269,6 +269,16 @@ public:
     /**
      * Return the latest value received
      */
+    uint8_t device_revision() { return _device_revision; }
+
+    /**
+     * Return the latest value received
+     */
+    uint8_t firmware_version_patch() { return _firmware_version_patch; }
+
+    /**
+     * Return the latest value received
+     */
     uint32_t protocol_version() { return _protocol_version; }
 
 
@@ -279,17 +289,17 @@ private:
     // For decoding PingMessages from the device
     PingParser _parser;
 
-    // Device type. 0: Unknown; 1: Echosounder
+    // Device type. 0: Unknown; 1: Ping Echosounder; 2: Ping360
     uint8_t _device_type = 0;
 
     // Device model. 0: Unknown; 1: Ping1D
     uint8_t _device_model = 0;
 
-    // Firmware major version.
-    uint16_t _firmware_version_major = 0;
+    // Firmware version major number.
+    uint8_t _firmware_version_major = 0;
 
-    // Firmware minor version.
-    uint16_t _firmware_version_minor = 0;
+    // Firmware version minor number.
+    uint8_t _firmware_version_minor = 0;
 
     // The device ID (0-254). 255 is reserved for broadcast messages.
     uint8_t _device_id = 0;
@@ -339,6 +349,12 @@ private:
     // An array of return strength measurements taken at regular intervals across the scan region.
     uint16_t _profile_data_length = 0;
     uint8_t* _profile_data = 0;
+
+    // device-specific hardware revision
+    uint8_t _device_revision = 0;
+
+    // Firmware version patch number.
+    uint8_t _firmware_version_patch = 0;
 
     // The protocol version
     uint32_t _protocol_version = 0;

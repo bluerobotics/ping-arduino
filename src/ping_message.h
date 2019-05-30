@@ -26,6 +26,7 @@ namespace PingMessageNamespace {
         Nack = 2,
         AsciiText = 3,
         GeneralRequest = 6,
+        DeviceInformation = 4,
         ProtocolVersion = 5,
     };
 #ifdef QT_CORE_LIB
@@ -208,6 +209,34 @@ public:
 
     uint16_t requested_id() const { uint16_t d; memcpy(&d, (payload_data(0)), 2.0); return d; };
     void set_requested_id(const uint16_t requested_id) { memcpy((payload_data(0)), &requested_id, 2.0);};
+};
+
+class ping_message_device_information : public ping_message
+{
+public:
+    ping_message_device_information(const ping_message& msg) : ping_message { msg } {}
+    ping_message_device_information(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    ping_message_device_information()
+        : ping_message { static_cast<uint16_t>(15) }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 5; // payload size
+        (uint16_t&)msgData[4] = 4; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint8_t device_type() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
+    void set_device_type(const uint8_t device_type) { memcpy((payload_data(0)), &device_type, 1.0);};
+    uint8_t device_revision() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
+    void set_device_revision(const uint8_t device_revision) { memcpy((payload_data(1.0)), &device_revision, 1.0);};
+    uint8_t firmware_version_major() const { uint8_t d; memcpy(&d, (payload_data(2.0)), 1.0); return d; };
+    void set_firmware_version_major(const uint8_t firmware_version_major) { memcpy((payload_data(2.0)), &firmware_version_major, 1.0);};
+    uint8_t firmware_version_minor() const { uint8_t d; memcpy(&d, (payload_data(3.0)), 1.0); return d; };
+    void set_firmware_version_minor(const uint8_t firmware_version_minor) { memcpy((payload_data(3.0)), &firmware_version_minor, 1.0);};
+    uint8_t firmware_version_patch() const { uint8_t d; memcpy(&d, (payload_data(4.0)), 1.0); return d; };
+    void set_firmware_version_patch(const uint8_t firmware_version_patch) { memcpy((payload_data(4.0)), &firmware_version_patch, 1.0);};
 };
 
 class ping_message_protocol_version : public ping_message
