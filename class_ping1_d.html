@@ -182,8 +182,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af6ae7b538a0b63f050f3e0e285ad7f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cae4ce8e845295c67c2814b9662f109"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a7cae4ce8e845295c67c2814b9662f109">firmware_version_patch</a> ()</td></tr>
 <tr class="separator:a7cae4ce8e845295c67c2814b9662f109"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b60b0b32f21a0db968f7c67cf6ca9ca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a0b60b0b32f21a0db968f7c67cf6ca9ca">protocol_version</a> ()</td></tr>
-<tr class="separator:a0b60b0b32f21a0db968f7c67cf6ca9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e467800bc673825475b7c8e27e737b1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a4e467800bc673825475b7c8e27e737b1">reserved</a> ()</td></tr>
+<tr class="separator:a4e467800bc673825475b7c8e27e737b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31cf6853ce7dfecdc67da3bac2139112"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a31cf6853ce7dfecdc67da3bac2139112">version_major</a> ()</td></tr>
+<tr class="separator:a31cf6853ce7dfecdc67da3bac2139112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3900af736eeefc8e48c1105c98a41d80"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a3900af736eeefc8e48c1105c98a41d80">version_minor</a> ()</td></tr>
+<tr class="separator:a3900af736eeefc8e48c1105c98a41d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c8be6b91672196d767898a454a0bff7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ping1_d.html#a0c8be6b91672196d767898a454a0bff7">version_patch</a> ()</td></tr>
+<tr class="separator:a0c8be6b91672196d767898a454a0bff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a130792cbfdc4258ad624d8d05f15cc60"></a>
@@ -668,30 +674,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0b60b0b32f21a0db968f7c67cf6ca9ca"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t Ping1D::protocol_version </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Return the latest value received </p>
-
-</div>
-</div>
 <a class="anchor" id="a97f5121aee989b3d7048feb42367efcf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -757,6 +739,30 @@ template&lt;typename T &gt; </div>
 <dd>
 null if the device did not reply with the requested message before the timeout period expired</dd></dl>
 <dl class="section user"><dt>ex.</dt><dd><div class="fragment"><div class="line"><span class="keyword">auto</span> msg = pd.request&lt;<a class="code" href="classping__msg__ping1_d__voltage__5.html">ping_msg_ping1D_voltage_5</a>&gt;();</div></div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4e467800bc673825475b7c8e27e737b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Ping1D::reserved </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
 
 </div>
 </div>
@@ -1145,6 +1151,78 @@ when verify = true: true if a valid reply is received from the device, and the v
 
 <p>Helper to request distance and confidence. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the distance and confidence have been updated successfully </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a31cf6853ce7dfecdc67da3bac2139112"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Ping1D::version_major </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a3900af736eeefc8e48c1105c98a41d80"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Ping1D::version_minor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
+
+</div>
+</div>
+<a class="anchor" id="a0c8be6b91672196d767898a454a0bff7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Ping1D::version_patch </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the latest value received </p>
 
 </div>
 </div>

@@ -110,12 +110,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3ff335d4f3b3d4ba08bf00dacba12f12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ff335d4f3b3d4ba08bf00dacba12f12"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ping_message_protocol_version</b> (const uint8_t *buf, const uint16_t length)</td></tr>
 <tr class="separator:a3ff335d4f3b3d4ba08bf00dacba12f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99ae8ba9a6599856388f8a4bb5f4a833"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99ae8ba9a6599856388f8a4bb5f4a833"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>protocol_version</b> () const </td></tr>
-<tr class="separator:a99ae8ba9a6599856388f8a4bb5f4a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c51c7bda302f84c70ead30c71e5564e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c51c7bda302f84c70ead30c71e5564e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_protocol_version</b> (const uint32_t protocol_version)</td></tr>
-<tr class="separator:a4c51c7bda302f84c70ead30c71e5564e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0401f4b80fdf3615bc97a71dd50a66c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0401f4b80fdf3615bc97a71dd50a66c3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>version_major</b> () const </td></tr>
+<tr class="separator:a0401f4b80fdf3615bc97a71dd50a66c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3db35d2fb0725201cf5374170ca3484"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3db35d2fb0725201cf5374170ca3484"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_version_major</b> (const uint8_t version_major)</td></tr>
+<tr class="separator:ab3db35d2fb0725201cf5374170ca3484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae10fef64067ebff97342c6ec9e78eec7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae10fef64067ebff97342c6ec9e78eec7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>version_minor</b> () const </td></tr>
+<tr class="separator:ae10fef64067ebff97342c6ec9e78eec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a865fcd4ee3edb3fbcfd220af729da4ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a865fcd4ee3edb3fbcfd220af729da4ad"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_version_minor</b> (const uint8_t version_minor)</td></tr>
+<tr class="separator:a865fcd4ee3edb3fbcfd220af729da4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d958e95ba14ee83dcf36a53bf2279c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5d958e95ba14ee83dcf36a53bf2279c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>version_patch</b> () const </td></tr>
+<tr class="separator:ad5d958e95ba14ee83dcf36a53bf2279c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0e164cbdc639cab3cc7d182f05c9b1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0e164cbdc639cab3cc7d182f05c9b1f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_version_patch</b> (const uint8_t version_patch)</td></tr>
+<tr class="separator:ac0e164cbdc639cab3cc7d182f05c9b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42d68e04e95a13d6ca57cb470d406e4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42d68e04e95a13d6ca57cb470d406e4a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>reserved</b> () const </td></tr>
+<tr class="separator:a42d68e04e95a13d6ca57cb470d406e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f084a08904db03c45fdc65f2f2c74c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5f084a08904db03c45fdc65f2f2c74c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_reserved</b> (const uint8_t reserved)</td></tr>
+<tr class="separator:ac5f084a08904db03c45fdc65f2f2c74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classping__message"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classping__message')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classping__message.html">ping_message</a></td></tr>
 <tr class="memitem:a7b1e7a84afa525bfb53a7a175f79daef inherit pub_methods_classping__message"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b1e7a84afa525bfb53a7a175f79daef"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ping_message</b> (const <a class="el" href="classping__message.html">ping_message</a> &amp;msg)</td></tr>
