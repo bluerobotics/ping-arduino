@@ -279,7 +279,22 @@ public:
     /**
      * Return the latest value received
      */
-    uint32_t protocol_version() { return _protocol_version; }
+    uint8_t reserved() { return _reserved; }
+
+    /**
+     * Return the latest value received
+     */
+    uint8_t version_major() { return _version_major; }
+
+    /**
+     * Return the latest value received
+     */
+    uint8_t version_minor() { return _version_minor; }
+
+    /**
+     * Return the latest value received
+     */
+    uint8_t version_patch() { return _version_patch; }
 
 
 private:
@@ -356,8 +371,17 @@ private:
     // Firmware version patch number.
     uint8_t _firmware_version_patch = 0;
 
-    // The protocol version
-    uint32_t _protocol_version = 0;
+    // reserved
+    uint8_t _reserved = 0;
+
+    // Protocol version major number.
+    uint8_t _version_major = 0;
+
+    // Protocol version minor number.
+    uint8_t _version_minor = 0;
+
+    // Protocol version patch number.
+    uint8_t _version_patch = 0;
 
 
     /**

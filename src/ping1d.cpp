@@ -109,6 +109,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
             _firmware_version_major = m.firmware_version_major();
             _firmware_version_minor = m.firmware_version_minor();
             _firmware_version_patch = m.firmware_version_patch();
+            _reserved = m.reserved();
         }
             break;
 
@@ -225,7 +226,10 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         case Ping1DNamespace::Protocol_version:
         {
             ping_msg_ping1D_protocol_version m(*pmsg);
-            _protocol_version = m.protocol_version();
+            _version_major = m.version_major();
+            _version_minor = m.version_minor();
+            _version_patch = m.version_patch();
+            _reserved = m.reserved();
         }
             break;
 

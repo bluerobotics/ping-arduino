@@ -217,11 +217,11 @@ public:
     ping_message_device_information(const ping_message& msg) : ping_message { msg } {}
     ping_message_device_information(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
     ping_message_device_information()
-        : ping_message { static_cast<uint16_t>(15) }
+        : ping_message { static_cast<uint16_t>(16) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 5; // payload size
+        (uint16_t&)msgData[2] = 6; // payload size
         (uint16_t&)msgData[4] = 4; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -237,6 +237,8 @@ public:
     void set_firmware_version_minor(const uint8_t firmware_version_minor) { memcpy((payload_data(3.0)), &firmware_version_minor, 1.0);};
     uint8_t firmware_version_patch() const { uint8_t d; memcpy(&d, (payload_data(4.0)), 1.0); return d; };
     void set_firmware_version_patch(const uint8_t firmware_version_patch) { memcpy((payload_data(4.0)), &firmware_version_patch, 1.0);};
+    uint8_t reserved() const { uint8_t d; memcpy(&d, (payload_data(5.0)), 1.0); return d; };
+    void set_reserved(const uint8_t reserved) { memcpy((payload_data(5.0)), &reserved, 1.0);};
 };
 
 class ping_message_protocol_version : public ping_message
@@ -255,7 +257,13 @@ public:
         msgData[7] = 0;
     }
 
-    uint32_t protocol_version() const { uint32_t d; memcpy(&d, (payload_data(0)), 4.0); return d; };
-    void set_protocol_version(const uint32_t protocol_version) { memcpy((payload_data(0)), &protocol_version, 4.0);};
+    uint8_t version_major() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
+    void set_version_major(const uint8_t version_major) { memcpy((payload_data(0)), &version_major, 1.0);};
+    uint8_t version_minor() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
+    void set_version_minor(const uint8_t version_minor) { memcpy((payload_data(1.0)), &version_minor, 1.0);};
+    uint8_t version_patch() const { uint8_t d; memcpy(&d, (payload_data(2.0)), 1.0); return d; };
+    void set_version_patch(const uint8_t version_patch) { memcpy((payload_data(2.0)), &version_patch, 1.0);};
+    uint8_t reserved() const { uint8_t d; memcpy(&d, (payload_data(3.0)), 1.0); return d; };
+    void set_reserved(const uint8_t reserved) { memcpy((payload_data(3.0)), &reserved, 1.0);};
 };
 

@@ -24,7 +24,7 @@ namespace PingPing360Namespace {
     Q_NAMESPACE
 #endif
     enum ping_ping360_id {
-        Parameters = 2000,
+        DeviceId = 2000,
         DeviceData = 2300,
         Reset = 2600,
         Transducer = 2601,
@@ -34,36 +34,26 @@ namespace PingPing360Namespace {
 #endif
 };
 
-class ping_ping360_parameters : public ping_message
+class ping_ping360_device_id : public ping_message
 {
 public:
-    ping_ping360_parameters(const ping_message& msg) : ping_message { msg } {}
-    ping_ping360_parameters(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    ping_ping360_parameters()
-        : ping_message { static_cast<uint16_t>(22) }
+    ping_ping360_device_id(const ping_message& msg) : ping_message { msg } {}
+    ping_ping360_device_id(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    ping_ping360_device_id()
+        : ping_message { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 12; // payload size
+        (uint16_t&)msgData[2] = 2; // payload size
         (uint16_t&)msgData[4] = 2000; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t mode() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
-    void set_mode(const uint8_t mode) { memcpy((payload_data(0)), &mode, 1.0);};
-    uint8_t gain_setting() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
-    void set_gain_setting(const uint8_t gain_setting) { memcpy((payload_data(1.0)), &gain_setting, 1.0);};
-    uint16_t angle() const { uint16_t d; memcpy(&d, (payload_data(2.0)), 2.0); return d; };
-    void set_angle(const uint16_t angle) { memcpy((payload_data(2.0)), &angle, 2.0);};
-    uint16_t transmit_duration() const { uint16_t d; memcpy(&d, (payload_data(4.0)), 2.0); return d; };
-    void set_transmit_duration(const uint16_t transmit_duration) { memcpy((payload_data(4.0)), &transmit_duration, 2.0);};
-    uint16_t interval() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
-    void set_interval(const uint16_t interval) { memcpy((payload_data(6.0)), &interval, 2.0);};
-    uint16_t transmit_frequency() const { uint16_t d; memcpy(&d, (payload_data(8.0)), 2.0); return d; };
-    void set_transmit_frequency(const uint16_t transmit_frequency) { memcpy((payload_data(8.0)), &transmit_frequency, 2.0);};
-    uint16_t number_of_samples() const { uint16_t d; memcpy(&d, (payload_data(10.0)), 2.0); return d; };
-    void set_number_of_samples(const uint16_t number_of_samples) { memcpy((payload_data(10.0)), &number_of_samples, 2.0);};
+    uint8_t id() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
+    void set_id(const uint8_t id) { memcpy((payload_data(0)), &id, 1.0);};
+    uint8_t reserved() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
+    void set_reserved(const uint8_t reserved) { memcpy((payload_data(1.0)), &reserved, 1.0);};
 };
 
 class ping_ping360_device_data : public ping_message
@@ -110,11 +100,11 @@ public:
     ping_ping360_reset(const ping_message& msg) : ping_message { msg } {}
     ping_ping360_reset(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
     ping_ping360_reset()
-        : ping_message { static_cast<uint16_t>(11) }
+        : ping_message { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 1; // payload size
+        (uint16_t&)msgData[2] = 2; // payload size
         (uint16_t&)msgData[4] = 2600; // ID
         msgData[6] = 0;
         msgData[7] = 0;
@@ -122,6 +112,8 @@ public:
 
     uint8_t bootloader() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
     void set_bootloader(const uint8_t bootloader) { memcpy((payload_data(0)), &bootloader, 1.0);};
+    uint8_t reserved() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
+    void set_reserved(const uint8_t reserved) { memcpy((payload_data(1.0)), &reserved, 1.0);};
 };
 
 class ping_ping360_transducer : public ping_message
@@ -130,19 +122,33 @@ public:
     ping_ping360_transducer(const ping_message& msg) : ping_message { msg } {}
     ping_ping360_transducer(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
     ping_ping360_transducer()
-        : ping_message { static_cast<uint16_t>(14) }
+        : ping_message { static_cast<uint16_t>(24) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 4; // payload size
+        (uint16_t&)msgData[2] = 14; // payload size
         (uint16_t&)msgData[4] = 2601; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t angle() const { uint16_t d; memcpy(&d, (payload_data(0)), 2.0); return d; };
-    void set_angle(const uint16_t angle) { memcpy((payload_data(0)), &angle, 2.0);};
-    uint16_t transmit() const { uint16_t d; memcpy(&d, (payload_data(2.0)), 2.0); return d; };
-    void set_transmit(const uint16_t transmit) { memcpy((payload_data(2.0)), &transmit, 2.0);};
+    uint8_t mode() const { uint8_t d; memcpy(&d, (payload_data(0)), 1.0); return d; };
+    void set_mode(const uint8_t mode) { memcpy((payload_data(0)), &mode, 1.0);};
+    uint8_t gain_setting() const { uint8_t d; memcpy(&d, (payload_data(1.0)), 1.0); return d; };
+    void set_gain_setting(const uint8_t gain_setting) { memcpy((payload_data(1.0)), &gain_setting, 1.0);};
+    uint16_t angle() const { uint16_t d; memcpy(&d, (payload_data(2.0)), 2.0); return d; };
+    void set_angle(const uint16_t angle) { memcpy((payload_data(2.0)), &angle, 2.0);};
+    uint16_t transmit_duration() const { uint16_t d; memcpy(&d, (payload_data(4.0)), 2.0); return d; };
+    void set_transmit_duration(const uint16_t transmit_duration) { memcpy((payload_data(4.0)), &transmit_duration, 2.0);};
+    uint16_t interval() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
+    void set_interval(const uint16_t interval) { memcpy((payload_data(6.0)), &interval, 2.0);};
+    uint16_t transmit_frequency() const { uint16_t d; memcpy(&d, (payload_data(8.0)), 2.0); return d; };
+    void set_transmit_frequency(const uint16_t transmit_frequency) { memcpy((payload_data(8.0)), &transmit_frequency, 2.0);};
+    uint16_t number_of_samples() const { uint16_t d; memcpy(&d, (payload_data(10.0)), 2.0); return d; };
+    void set_number_of_samples(const uint16_t number_of_samples) { memcpy((payload_data(10.0)), &number_of_samples, 2.0);};
+    uint8_t transmit() const { uint8_t d; memcpy(&d, (payload_data(12.0)), 1.0); return d; };
+    void set_transmit(const uint8_t transmit) { memcpy((payload_data(12.0)), &transmit, 1.0);};
+    uint8_t reserved() const { uint8_t d; memcpy(&d, (payload_data(13.0)), 1.0); return d; };
+    void set_reserved(const uint8_t reserved) { memcpy((payload_data(13.0)), &reserved, 1.0);};
 };
 
