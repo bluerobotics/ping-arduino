@@ -81,8 +81,8 @@ public:
     void set_angle(const uint16_t angle) { memcpy((payload_data(2.0)), &angle, 2.0);};
     uint16_t transmit_duration() const { uint16_t d; memcpy(&d, (payload_data(4.0)), 2.0); return d; };
     void set_transmit_duration(const uint16_t transmit_duration) { memcpy((payload_data(4.0)), &transmit_duration, 2.0);};
-    uint16_t interval() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
-    void set_interval(const uint16_t interval) { memcpy((payload_data(6.0)), &interval, 2.0);};
+    uint16_t sample_period() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
+    void set_sample_period(const uint16_t sample_period) { memcpy((payload_data(6.0)), &sample_period, 2.0);};
     uint16_t transmit_frequency() const { uint16_t d; memcpy(&d, (payload_data(8.0)), 2.0); return d; };
     void set_transmit_frequency(const uint16_t transmit_frequency) { memcpy((payload_data(8.0)), &transmit_frequency, 2.0);};
     uint16_t number_of_samples() const { uint16_t d; memcpy(&d, (payload_data(10.0)), 2.0); return d; };
@@ -140,8 +140,8 @@ public:
     void set_angle(const uint16_t angle) { memcpy((payload_data(2.0)), &angle, 2.0);};
     uint16_t transmit_duration() const { uint16_t d; memcpy(&d, (payload_data(4.0)), 2.0); return d; };
     void set_transmit_duration(const uint16_t transmit_duration) { memcpy((payload_data(4.0)), &transmit_duration, 2.0);};
-    uint16_t interval() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
-    void set_interval(const uint16_t interval) { memcpy((payload_data(6.0)), &interval, 2.0);};
+    uint16_t sample_period() const { uint16_t d; memcpy(&d, (payload_data(6.0)), 2.0); return d; };
+    void set_sample_period(const uint16_t sample_period) { memcpy((payload_data(6.0)), &sample_period, 2.0);};
     uint16_t transmit_frequency() const { uint16_t d; memcpy(&d, (payload_data(8.0)), 2.0); return d; };
     void set_transmit_frequency(const uint16_t transmit_frequency) { memcpy((payload_data(8.0)), &transmit_frequency, 2.0);};
     uint16_t number_of_samples() const { uint16_t d; memcpy(&d, (payload_data(10.0)), 2.0); return d; };
