@@ -29,8 +29,8 @@ These are the recommended wiring connections to make between the Ping device and
 |------|---------|
 | red (5V) | 5V |
 | black (Ground) | Ground |
-| white (tx) | pin 10 (SoftwareSerial rx) |
-| green (rx) | pin 9 (SoftwareSerial tx) |
+| white (tx) | pin 9 (SoftwareSerial rx) |
+| green (rx) | pin 10 (SoftwareSerial tx) |
 
 ## Examples
 
