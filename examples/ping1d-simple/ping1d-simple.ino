@@ -13,9 +13,9 @@
 #include "ping1d.h"
 
 // This serial port is used to communicate with the Ping device
-// If you are using and Arduino UNO or Nano, you must use software serial and leave this line commented. 
+// If you are using and Arduino UNO or Nano, you must use software serial and leave this line commented.
 // If you are using a board with multiple hardware serial ports (such as the Mega 2560) you may use
-// hardware serial and uncomment this line. This will allow faster communication. 
+// hardware serial and uncomment this line. This will allow faster communication.
 //#define HARDWARE_SERIAL
 
 
@@ -39,7 +39,6 @@ static const uint8_t ledPin = 13;
 void setup()
 {
     pingSerial.begin(baudRate);
-
     Serial.begin(115200);
     pinMode(ledPin, OUTPUT);
     Serial.println("Blue Robotics ping1d-simple.ino");
