@@ -9,7 +9,7 @@ static const uint8_t ledPin = 13;
 
 void setup()
 {
-  Serial1.begin(115200);
+  Serial1.begin(9600);
   Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
   Serial.println("Blue Robotics ping1d-simple.ino");
