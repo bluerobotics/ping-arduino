@@ -106,7 +106,7 @@ public:
     uint16_t   message_id()                    const { return *(uint16_t*)(msgData + 4); } // This is ok only because alignment is static
     uint8_t    src_device_id()                 const { return *(msgData + 6); }
     uint8_t    dst_device_id()                 const { return *(msgData + 7); }
-    uint8_t*   payload_data(int offset=0)      const { return (msgData + 8 + offset); }
+    uint8_t*   payload_data(uint16_t offset=0)      const { return (msgData + 8 + offset); }
     uint16_t   checksum()                      const { return *(uint16_t*)(msgData + msgDataLength() - checksumLength); }
 
     static const uint8_t headerLength = 8;
@@ -119,8 +119,13 @@ public:
         return checksum() == calculateChecksum();
     }
 
+    void set_checksum(uint16_t checksum)           { msgData[msgDataLength() - checksumLength] = (uint8_t)checksum; msgData[msgDataLength() - checksumLength + 1] = static_cast<uint8_t>(checksum >> 8); }
+
+
     void updateChecksum() {
-        *(uint16_t*)(msgData + msgDataLength() - checksumLength) = calculateChecksum();
+		if(msgDataLength() <= bufferLength()) {
+            set_checksum(calculateChecksum());
+        }
     }
 
     uint16_t calculateChecksum() const {
@@ -128,7 +133,7 @@ public:
 
         if(msgDataLength() <= bufferLength()) {
             for(uint32_t i = 0, data_size = msgDataLength() - checksumLength; i < data_size; i++) {
-                checksum += static_cast<uint8_t>(msgData[i]);
+                checksum += static_cast<uint16_t>(msgData[i]);
             }
         }
 
