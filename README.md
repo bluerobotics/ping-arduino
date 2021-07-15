@@ -9,7 +9,7 @@ The [Blue Robotics Ping Echosounder](https://www.bluerobotics.com/store/sensors-
 
 ## Ping Firmware Setup
 
-[Change](https://docs.bluerobotics.com/ping-viewer/firmware-update/) the Ping device firmware to 9600 baud for this examples.
+[Change](https://docs.bluerobotics.com/ping-viewer/firmware-update) the Ping device firmware to 9600 baud for this examples.
 
 > Note: If your arduino has multiple hardware serial interfaces, you can change the example to run with 115200 baud rate and with a hardware serial port.
 
@@ -56,10 +56,10 @@ To begin communicating with the Ping device, first initialize the serial port wi
 ```cpp
 void setup {
     // Use 9600 bits per second to communicate with the Ping device
-    myPing.begin(9600);
+    pingSerial.begin(9600);
 
     // Use built in Serial port to communicate with the Arduino IDE Serial Monitor
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     // wait until communication with the Ping device is established
     // and the Ping device is successfully initialized
