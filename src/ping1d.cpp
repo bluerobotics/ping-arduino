@@ -212,7 +212,7 @@ void Ping1D::handleMessage(PingMessage* pmsg)
                 if (_profile_data) {
                     free(_profile_data);
                 }
-                _profile_data = (uint8_t*)malloc(_profile_data_length * sizeof(uint8_t));
+                _profile_data = (uint8_t*)malloc(m.profile_data_length() * sizeof(uint8_t));
             }
 
             _profile_data_length = m.profile_data_length();
