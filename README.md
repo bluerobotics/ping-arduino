@@ -9,9 +9,7 @@ The [Blue Robotics Ping Echosounder](https://www.bluerobotics.com/store/sensors-
 
 ## Ping Firmware Setup
 
-[Change](https://docs.bluerobotics.com/ping-viewer/firmware-update) the Ping device firmware to 9600 baud for this examples.
-
-> Note: If your arduino has multiple hardware serial interfaces, you can change the example to run with 115200 baud rate and with a hardware serial port.
+[Ensure your device is running the latest firmware.](https://docs.bluerobotics.com/ping-viewer/firmware-update)
 
 ## Arduino Library Installation
 
@@ -38,7 +36,7 @@ You can begin using your Ping with an Arduino by uploading the [ping1d-simple](/
 
 The built in HardwareSerial port is used to print out data from the ping device over the Arduino's usb port. To view the data, open the Arduino IDE Serial monitor, and set the baudrate to 115200.
 
-The examples use the SoftwareSerial library to communicate with the Ping device, which allows flexibility for the rx/tx pin assignments on the Arduino. The examples use pins 10 and 9. The SoftwareSerial library [**can only communicate with the Ping device at 9600 baud**](#ping-firmware-setup). If you are using a board with more than one HardwareSerial port, like the Arduino MEGA, you may use the second serial port to communicate with a Ping device at 115200 baud.
+The examples use the SoftwareSerial library to communicate with the Ping device, which allows flexibility for the rx/tx pin assignments on the Arduino. The examples use pins 10 and 9. The SoftwareSerial library [**can only communicate with the Ping device at 9600 baud**](#ping-firmware-setup). If you are using a board with more than one HardwareSerial port, like the Arduino MEGA, you may use the second serial port to communicate with a Ping device at 115200 baud, as in [ping1d-simple-mega-115200b.ino](/examples/ping1d-simple/ping1d-simple-mega-115200b.ino).
 
 ## Usage
 
