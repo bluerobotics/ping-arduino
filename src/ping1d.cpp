@@ -38,6 +38,9 @@ size_t Ping1D::write(uint8_t* data, uint16_t length)
 
 bool Ping1D::initialize(uint16_t ping_interval_ms)
 {
+    // allow 'auto' firmware to detect baudrate
+    _stream.write(0b01010101);
+    
     if(!request(Ping1DNamespace::Device_id)) {
         return false;
     }
