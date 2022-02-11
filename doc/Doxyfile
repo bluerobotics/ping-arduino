@@ -44,7 +44,7 @@ PROJECT_NUMBER         =
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "The PingMessage class can be used to communicate via the Blue Robotics Ping Serial Protocol. The Ping1D class can be used to interface with the Blue Robotics Ping1D echosounder."
+PROJECT_BRIEF          = "The ping_message class can be used to communicate via the Blue Robotics Ping Serial Protocol. The Ping1D class can be used to interface with the Blue Robotics Ping1D echosounder."
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55
