@@ -1,13 +1,13 @@
 /**
  *  This example is targeted toward the arduino platform
  *
- *  This example demonstrates usage of the Blue Robotics PingMessage c++ API
+ *  This example demonstrates usage of the Blue Robotics ping_message c++ API
  *
  *  Communication is performed with a Blue Robotics Ping1D Echosounder
  */
 
-#include "pingmessage_all.h"
-#include "ping_parser.h"
+#include "ping-message-all.h"
+#include "ping-parser.h"
 
 #include "SoftwareSerial.h"
 
@@ -23,7 +23,7 @@ static PingParser parser;
 
 static const uint8_t ledPin = 13;
 
-bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400);
+bool waitMessage(enum PingMessageId id, uint16_t timeout_ms = 400);
 
 void setup()
 {
@@ -36,16 +36,16 @@ void setup()
         Serial.println("Blue Robotics pingmessage.ino");
 
         // An empty message is used for the request
-        ping_msg_ping1D_empty m;
+        ping_message m;
 
         // Request a firmware_version message
-        m.set_id(Ping1DNamespace::Firmware_version);
+        m.set_message_id(static_cast<uint16_t>(PingMessageId::PING1D_FIRMWARE_VERSION));
 
         // Prepare the buffer and write to device
         m.updateChecksum();
         pingSerial.write(m.msgData, m.msgDataLength());
         delay(2000);
-    } while(!waitMessage(Ping1DNamespace::Firmware_version)); // wait for the response
+    } while(!waitMessage(PingMessageId::PING1D_FIRMWARE_VERSION)); // wait for the response
 }
 
 void loop()
@@ -53,14 +53,14 @@ void loop()
 
     static uint8_t counter = 0;
 
-    static Ping1DNamespace::msg_ping1D_id requestIds[] = {
-        Ping1DNamespace::Firmware_version,
-        Ping1DNamespace::Voltage_5,
-        Ping1DNamespace::Processor_temperature,
-        Ping1DNamespace::General_info,
+    static PingMessageId requestIds[] = {
+        PingMessageId::PING1D_FIRMWARE_VERSION,
+        PingMessageId::PING1D_VOLTAGE_5,
+        PingMessageId::PING1D_PROCESSOR_TEMPERATURE,
+        PingMessageId::PING1D_GENERAL_INFO,
         // SoftwareSerial cannot handle the long profile messages
         // Uncomment to activate (HardwareSerial recommended)
-        // Ping1DNamespace::Profile
+        // PingMessageId::PING1D_PROFILE
     };
 
     static float gain_settings[] = { 0.6, 1.8, 5.5, 12.9, 30.2, 66.1, 144 };
@@ -71,10 +71,10 @@ void loop()
 
 
     // An empty message is used for the request
-    ping_msg_ping1D_empty m;
+    ping_message m;
 
     // Set the request id
-    m.set_id(requestIds[counter]);
+    m.set_message_id(static_cast<uint16_t>(requestIds[counter]));
 
     // Prepare the buffer and write to device
     m.updateChecksum();
@@ -84,10 +84,10 @@ void loop()
     if(waitMessage(requestIds[counter])) {
 
         // Handle the message
-        switch(parser.rxMsg.message_id()) {
+        switch(static_cast<PingMessageId>(parser.rxMessage.message_id())) {
 
-        case Ping1DNamespace::Firmware_version: {
-            ping_msg_ping1D_firmware_version m(parser.rxMsg);
+        case PingMessageId::PING1D_FIRMWARE_VERSION: {
+            ping1d_firmware_version m(parser.rxMessage);
             Serial.print("> type: ");
             Serial.println(m.device_type());
             Serial.print("> model: ");
@@ -99,22 +99,22 @@ void loop()
             break;
         }
 
-        case Ping1DNamespace::Voltage_5: {
-            ping_msg_ping1D_voltage_5 m(parser.rxMsg);
+        case PingMessageId::PING1D_VOLTAGE_5: {
+            ping1d_voltage_5 m(parser.rxMessage);
             Serial.print("> device voltage: ");
             Serial.println(m.voltage_5());
             break;
         }
 
-        case Ping1DNamespace::Processor_temperature: {
-            ping_msg_ping1D_processor_temperature m(parser.rxMsg);
+        case PingMessageId::PING1D_PROCESSOR_TEMPERATURE: {
+            ping1d_processor_temperature m(parser.rxMessage);
             Serial.print("> processor temperature: ");
             Serial.println(m.processor_temperature());
             break;
         }
 
-        case Ping1DNamespace::General_info: {
-            ping_msg_ping1D_general_info m(parser.rxMsg);
+        case PingMessageId::PING1D_GENERAL_INFO: {
+            ping1d_general_info m(parser.rxMessage);
             Serial.print("> firmware version: ");
             Serial.print(m.firmware_version_major());
             Serial.print(".");
@@ -126,20 +126,20 @@ void loop()
             Serial.print(m.ping_interval());
             Serial.println("ms");
             Serial.print("> gain setting: ");
-            Serial.println(gain_settings[m.gain_index()]);
+            Serial.println(gain_settings[m.gain_setting()]);
             Serial.print("> Mode: ");
             Serial.println(m.mode_auto() ? "Auto" : "Manual");
             break;
         }
 
-        case Ping1DNamespace::Profile: {
-            ping_msg_ping1D_profile m(parser.rxMsg);
+        case PingMessageId::PING1D_PROFILE: {
+            ping1d_profile m(parser.rxMessage);
             Serial.print("> distance: ");
             Serial.println(m.distance());
             Serial.print("> confidence: ");
             Serial.println(m.confidence());
-            Serial.print("> pulse_duration: ");
-            Serial.println(m.pulse_duration());
+            Serial.print("> transmit_duration: ");
+            Serial.println(m.transmit_duration());
             Serial.print("> ping_number: ");
             Serial.println(m.ping_number());
             Serial.print("> start_mm: ");
@@ -147,11 +147,11 @@ void loop()
             Serial.print("> length_mm: ");
             Serial.println(m.scan_length());
             Serial.print("> gain_index: ");
-            Serial.println(m.gain_index());
+            Serial.println(m.gain_setting());
             Serial.print("> profile_data_length: ");
             Serial.println(m.profile_data_length());
             Serial.print("> gain_index: ");
-            Serial.println(m.gain_index());
+            Serial.println(m.gain_setting());
             for(int i =0; i < m.profile_data_length(); i++) {
                 Serial.print("> ");
                 Serial.println(m.profile_data()[i]);
@@ -165,9 +165,9 @@ void loop()
         }
 
         Serial.print("> id: ");
-        Serial.print(parser.rxMsg.message_id());
+        Serial.print(parser.rxMessage.message_id());
         Serial.print("\t Length: ");
-        Serial.print(parser.rxMsg.payload_length());
+        Serial.print(parser.rxMessage.payload_length());
         Serial.print("\t parsed: ");
         Serial.print(parser.parsed);
         Serial.print("\t errors: ");
@@ -178,21 +178,21 @@ void loop()
     digitalWrite(ledPin, !digitalRead(ledPin));
 }
 
-bool waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms = 400)
+bool waitMessage(enum PingMessageId id, uint16_t timeout_ms = 400)
 {
     uint32_t timeout_time = millis() + timeout_ms;
     while (millis() < timeout_time) {
 
         while(pingSerial.available()) {
 
-            if (parser.parseByte(pingSerial.read()) == PingParser::NEW_MESSAGE) {
-                if (parser.rxMsg.message_id() == id) {
+            if (parser.parseByte(pingSerial.read()) == PingParser::State::NEW_MESSAGE) {
+                if (parser.rxMessage.message_id() == static_cast<uint16_t>(id)) {
                     return true;
                 }
             }
         }
     }
     Serial.print("timeout waiting for message id: ");
-    Serial.println(id);
+    Serial.println(static_cast<uint16_t>(id));
     return false;
 }
