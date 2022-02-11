@@ -10,7 +10,8 @@
 */
 
 #include "ping1d.h"
-#include "pingmessage_all.h"
+#include "ping-message-all.h"
+#include "ping-message-ping1d.h"
 
 Ping1D::Ping1D(Stream& ser) : _stream ( ser ) {}
 
@@ -21,11 +22,11 @@ Ping1D::~Ping1D()
     }
 }
 
-PingMessage* Ping1D::read()
+ping_message* Ping1D::read()
 {
     while(_stream.available()) {
-        if (_parser.parseByte(_stream.read()) == PingParser::NEW_MESSAGE) {
-          return &_parser.rxMsg;
+        if (_parser.parseByte(_stream.read()) == PingParser::State::NEW_MESSAGE) {
+          return &_parser.rxMessage;
         }
     }
     return nullptr;
@@ -40,20 +41,20 @@ bool Ping1D::initialize(uint16_t ping_interval_ms)
 {
     // allow 'auto' firmware to detect baudrate
     _stream.write(0b01010101);
-    
-    if(!request(Ping1DNamespace::Device_id)) {
+
+    if(!request(PingMessageId::PING1D_DEVICE_ID)) {
         return false;
     }
 
-    if (!request(Ping1DNamespace::Firmware_version)) {
+    if (!request(PingMessageId::PING1D_FIRMWARE_VERSION)) {
         return false;
     }
 
-    if(!request(Ping1DNamespace::Voltage_5)) {
+    if(!request(PingMessageId::PING1D_VOLTAGE_5)) {
         return false;
     }
 
-    if (!request(Ping1DNamespace::Processor_temperature)) {
+    if (!request(PingMessageId::PING1D_PROCESSOR_TEMPERATURE)) {
         return false;
     }
 
@@ -65,12 +66,12 @@ bool Ping1D::initialize(uint16_t ping_interval_ms)
     return true;
 }
 
-PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
+ping_message* Ping1D::waitMessage(enum PingMessageId id, uint16_t timeout_ms)
 {
     uint32_t tstart = millis();
     while (millis() < tstart + timeout_ms) {
 
-        PingMessage* pmsg = read();
+        ping_message* pmsg = read();
 
         if (!pmsg) {
             continue;
@@ -78,15 +79,15 @@ PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_
 
         handleMessage(pmsg);
 
-        if (pmsg->message_id() == Ping1DNamespace::Nack) {
-            ping_msg_ping1D_nack nack(*pmsg);
+        if (pmsg->message_id() == static_cast<uint16_t>(PingMessageId::COMMON_NACK)) {
+            common_nack nack(*pmsg);
 
-            if (nack.nacked_id() == id) {
+            if (nack.nacked_id() == static_cast<uint16_t>(id)) {
                 return nullptr;
             }
         }
 
-        if (pmsg->message_id() == id) {
+        if (pmsg->message_id() == static_cast<uint16_t>(id)) {
             return pmsg;
         }
     }
@@ -94,19 +95,19 @@ PingMessage* Ping1D::waitMessage(enum Ping1DNamespace::msg_ping1D_id id, uint16_
     return nullptr;
 }
 
-void Ping1D::handleMessage(PingMessage* pmsg)
+void Ping1D::handleMessage(ping_message* pmsg)
 {
-    switch (pmsg->message_id()) {
-        case Ping1DNamespace::Device_id:
+    switch (static_cast<PingMessageId>(pmsg->message_id())) {
+        case PingMessageId::PING1D_DEVICE_ID:
         {
-            ping_msg_ping1D_device_id m(*pmsg);
+            ping1d_device_id m(*pmsg);
             _device_id = m.device_id();
         }
             break;
 
-        case Ping1DNamespace::Device_information:
+        case PingMessageId::COMMON_DEVICE_INFORMATION:
         {
-            ping_msg_ping1D_device_information m(*pmsg);
+            common_device_information m(*pmsg);
             _device_type = m.device_type();
             _device_revision = m.device_revision();
             _firmware_version_major = m.firmware_version_major();
@@ -116,9 +117,9 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Distance:
+        case PingMessageId::PING1D_DISTANCE:
         {
-            ping_msg_ping1D_distance m(*pmsg);
+            ping1d_distance m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
             _transmit_duration = m.transmit_duration();
@@ -129,17 +130,17 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Distance_simple:
+        case PingMessageId::PING1D_DISTANCE_SIMPLE:
         {
-            ping_msg_ping1D_distance_simple m(*pmsg);
+            ping1d_distance_simple m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
         }
             break;
 
-        case Ping1DNamespace::Firmware_version:
+        case PingMessageId::PING1D_FIRMWARE_VERSION:
         {
-            ping_msg_ping1D_firmware_version m(*pmsg);
+            ping1d_firmware_version m(*pmsg);
             _device_type = m.device_type();
             _device_model = m.device_model();
             _firmware_version_major = m.firmware_version_major();
@@ -147,16 +148,16 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Gain_setting:
+        case PingMessageId::PING1D_GAIN_SETTING:
         {
-            ping_msg_ping1D_gain_setting m(*pmsg);
+            ping1d_gain_setting m(*pmsg);
             _gain_setting = m.gain_setting();
         }
             break;
 
-        case Ping1DNamespace::General_info:
+        case PingMessageId::PING1D_GENERAL_INFO:
         {
-            ping_msg_ping1D_general_info m(*pmsg);
+            ping1d_general_info m(*pmsg);
             _firmware_version_major = m.firmware_version_major();
             _firmware_version_minor = m.firmware_version_minor();
             _voltage_5 = m.voltage_5();
@@ -166,44 +167,44 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Mode_auto:
+        case PingMessageId::PING1D_MODE_AUTO:
         {
-            ping_msg_ping1D_mode_auto m(*pmsg);
+            ping1d_mode_auto m(*pmsg);
             _mode_auto = m.mode_auto();
         }
             break;
 
-        case Ping1DNamespace::Pcb_temperature:
+        case PingMessageId::PING1D_PCB_TEMPERATURE:
         {
-            ping_msg_ping1D_pcb_temperature m(*pmsg);
+            ping1d_pcb_temperature m(*pmsg);
             _pcb_temperature = m.pcb_temperature();
         }
             break;
 
-        case Ping1DNamespace::Ping_enable:
+        case PingMessageId::PING1D_PING_ENABLE:
         {
-            ping_msg_ping1D_ping_enable m(*pmsg);
+            ping1d_ping_enable m(*pmsg);
             _ping_enabled = m.ping_enabled();
         }
             break;
 
-        case Ping1DNamespace::Ping_interval:
+        case PingMessageId::PING1D_PING_INTERVAL:
         {
-            ping_msg_ping1D_ping_interval m(*pmsg);
+            ping1d_ping_interval m(*pmsg);
             _ping_interval = m.ping_interval();
         }
             break;
 
-        case Ping1DNamespace::Processor_temperature:
+        case PingMessageId::PING1D_PROCESSOR_TEMPERATURE:
         {
-            ping_msg_ping1D_processor_temperature m(*pmsg);
+            ping1d_processor_temperature m(*pmsg);
             _processor_temperature = m.processor_temperature();
         }
             break;
 
-        case Ping1DNamespace::Profile:
+        case PingMessageId::PING1D_PROFILE:
         {
-            ping_msg_ping1D_profile m(*pmsg);
+            ping1d_profile m(*pmsg);
             _distance = m.distance();
             _confidence = m.confidence();
             _transmit_duration = m.transmit_duration();
@@ -226,9 +227,9 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Protocol_version:
+        case PingMessageId::COMMON_PROTOCOL_VERSION:
         {
-            ping_msg_ping1D_protocol_version m(*pmsg);
+            common_protocol_version m(*pmsg);
             _version_major = m.version_major();
             _version_minor = m.version_minor();
             _version_patch = m.version_patch();
@@ -236,31 +237,31 @@ void Ping1D::handleMessage(PingMessage* pmsg)
         }
             break;
 
-        case Ping1DNamespace::Range:
+        case PingMessageId::PING1D_RANGE:
         {
-            ping_msg_ping1D_range m(*pmsg);
+            ping1d_range m(*pmsg);
             _scan_start = m.scan_start();
             _scan_length = m.scan_length();
         }
             break;
 
-        case Ping1DNamespace::Speed_of_sound:
+        case PingMessageId::PING1D_SPEED_OF_SOUND:
         {
-            ping_msg_ping1D_speed_of_sound m(*pmsg);
+            ping1d_speed_of_sound m(*pmsg);
             _speed_of_sound = m.speed_of_sound();
         }
             break;
 
-        case Ping1DNamespace::Transmit_duration:
+        case PingMessageId::PING1D_TRANSMIT_DURATION:
         {
-            ping_msg_ping1D_transmit_duration m(*pmsg);
+            ping1d_transmit_duration m(*pmsg);
             _transmit_duration = m.transmit_duration();
         }
             break;
 
-        case Ping1DNamespace::Voltage_5:
+        case PingMessageId::PING1D_VOLTAGE_5:
         {
-            ping_msg_ping1D_voltage_5 m(*pmsg);
+            ping1d_voltage_5 m(*pmsg);
             _voltage_5 = m.voltage_5();
         }
             break;
@@ -271,23 +272,23 @@ void Ping1D::handleMessage(PingMessage* pmsg)
     }
 }
 
-// ex ping_msg_ping1D_voltage_5 msg(*pd.request(Ping1DNamespace::Voltage_5));
-PingMessage* Ping1D::request(enum Ping1DNamespace::msg_ping1D_id id, uint16_t timeout_ms)
+// ex ping1d_voltage_5 msg(*pd.request(PingMessageId::PING1D_Voltage_5));
+ping_message* Ping1D::request(enum PingMessageId id, uint16_t timeout_ms)
 {
-    ping_msg_ping1D_empty msg;
-    msg.set_id(id);
+    static common_general_request msg;
+    msg.set_requested_id(static_cast<uint16_t>(id));
     msg.updateChecksum();
     write(msg.msgData, msg.msgDataLength());
     return waitMessage(id, timeout_ms);
 }
 
-// ex auto msg = pd.request<ping_msg_ping1D_voltage_5>();
+// ex auto msg = pd.request<ping1d_voltage_5>();
 template <typename T>
 T* Ping1D::request()
 {
     T resp; // todo there should be some other (static) way to get the message id?
-    static ping_msg_ping1D_empty req;
-    req.set_id(resp.message_id());
+    static common_general_request req;
+    req.set_requested_id(resp.message_id());
     req.updateChecksum();
     write(req.msgData, req.msgDataLength());
     return (T*)waitMessage(resp.message_id());
@@ -295,11 +296,11 @@ T* Ping1D::request()
 
 bool Ping1D::set_device_id(uint8_t device_id, bool verify)
 {
-    ping_msg_ping1D_set_device_id m;
+    ping1d_set_device_id m;
     m.set_device_id(device_id);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Device_id)) {
+    if (!request(PingMessageId::PING1D_DEVICE_ID)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -312,11 +313,11 @@ bool Ping1D::set_device_id(uint8_t device_id, bool verify)
 
 bool Ping1D::set_gain_setting(uint8_t gain_setting, bool verify)
 {
-    ping_msg_ping1D_set_gain_setting m;
+    ping1d_set_gain_setting m;
     m.set_gain_setting(gain_setting);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Gain_setting)) {
+    if (!request(PingMessageId::PING1D_GAIN_SETTING)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -329,11 +330,11 @@ bool Ping1D::set_gain_setting(uint8_t gain_setting, bool verify)
 
 bool Ping1D::set_mode_auto(uint8_t mode_auto, bool verify)
 {
-    ping_msg_ping1D_set_mode_auto m;
+    ping1d_set_mode_auto m;
     m.set_mode_auto(mode_auto);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Mode_auto)) {
+    if (!request(PingMessageId::PING1D_MODE_AUTO)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -346,11 +347,11 @@ bool Ping1D::set_mode_auto(uint8_t mode_auto, bool verify)
 
 bool Ping1D::set_ping_enable(uint8_t ping_enabled, bool verify)
 {
-    ping_msg_ping1D_set_ping_enable m;
+    ping1d_set_ping_enable m;
     m.set_ping_enabled(ping_enabled);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Ping_enable)) {
+    if (!request(PingMessageId::PING1D_PING_ENABLE)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -363,11 +364,11 @@ bool Ping1D::set_ping_enable(uint8_t ping_enabled, bool verify)
 
 bool Ping1D::set_ping_interval(uint16_t ping_interval, bool verify)
 {
-    ping_msg_ping1D_set_ping_interval m;
+    ping1d_set_ping_interval m;
     m.set_ping_interval(ping_interval);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Ping_interval)) {
+    if (!request(PingMessageId::PING1D_PING_INTERVAL)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -380,12 +381,12 @@ bool Ping1D::set_ping_interval(uint16_t ping_interval, bool verify)
 
 bool Ping1D::set_range(uint32_t scan_start, uint32_t scan_length, bool verify)
 {
-    ping_msg_ping1D_set_range m;
+    ping1d_set_range m;
     m.set_scan_start(scan_start);
     m.set_scan_length(scan_length);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Range)) {
+    if (!request(PingMessageId::PING1D_RANGE)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
@@ -399,11 +400,11 @@ bool Ping1D::set_range(uint32_t scan_start, uint32_t scan_length, bool verify)
 
 bool Ping1D::set_speed_of_sound(uint32_t speed_of_sound, bool verify)
 {
-    ping_msg_ping1D_set_speed_of_sound m;
+    ping1d_set_speed_of_sound m;
     m.set_speed_of_sound(speed_of_sound);
     m.updateChecksum();
     write(m.msgData, m.msgDataLength());
-    if (!request(Ping1DNamespace::Speed_of_sound)) {
+    if (!request(PingMessageId::PING1D_SPEED_OF_SOUND)) {
         return false; // no reply from device
     }
     // Read back the data and check that changes have been applied
