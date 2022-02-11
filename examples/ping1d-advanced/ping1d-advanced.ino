@@ -11,22 +11,33 @@
 
 #include "ping1d.h"
 
-#include "SoftwareSerial.h"
-
 // This serial port is used to communicate with the Ping device
-// If you are using and Arduino UNO or Nano, this must be software serial, and you must use
-// 9600 baud communication
-// Here, we use pin 9 as arduino rx (Ping tx, white), 10 as arduino tx (Ping rx, green)
-static const uint8_t arduinoRxPin = 9;
-static const uint8_t arduinoTxPin = 10;
-SoftwareSerial pingSerial = SoftwareSerial(arduinoRxPin, arduinoTxPin);
-static Ping1D ping { pingSerial };
+// If you are using and Arduino UNO or Nano, you must use software serial and leave this line commented.
+// If you are using a board with multiple hardware serial ports (such as the Mega 2560) you may use
+// hardware serial and uncomment this line. This will allow faster communication.
+//#define HARDWARE_SERIAL
+
+
+#ifdef HARDWARE_SERIAL
+  static const uint8_t arduinoRxPin = 19; // Pin 19: Arduino Serial1 RX, Ping TX, white wire
+  static const uint8_t arduinoTxPin = 18; // Pin 18: Arduino Serial1 TX, Ping RX, green wire
+  static const long baudRate = 115200;
+  HardwareSerial& pingSerial = Serial1;
+  static Ping1D ping { pingSerial };
+#else
+  #include "SoftwareSerial.h"
+  static const uint8_t arduinoRxPin = 9;  // Pin 9: Arduino RX, Ping TX, white wire
+  static const uint8_t arduinoTxPin = 10; // Pin 10: Arduino TX, Ping RX, green wire
+  static const long baudRate = 9600;
+  SoftwareSerial pingSerial = SoftwareSerial(arduinoRxPin, arduinoTxPin);
+  static Ping1D ping { pingSerial };
+#endif
 
 static const uint8_t ledPin = 13;
 
 void setup()
 {
-    pingSerial.begin(9600);
+    pingSerial.begin(baudRate);
     Serial.begin(115200);
     pinMode(ledPin, OUTPUT);
     Serial.println("Blue Robotics ping1d-advanced.ino");
@@ -85,17 +96,18 @@ void loop()
     }
 
     // SoftwareSerial cannot handle long profile messages
-    // Uncomment to activate (HardwareSerial recommended)
-    // if (ping.request(Ping1DNamespace::Profile)) {
-    //     Serial.println("got profile");
-    //     Serial.println("profile points: ");
-    //     for (int i = 0; i < ping.profile_data_length(); i++) {
-    //         Serial.print(" > ");
-    //         Serial.println(ping.profile_data()[i]);
-    //     }
-    // } else {
-    //     Serial.println("attempt to get profile failed");
-    // }
+    #ifdef HARDWARE_SERIAL
+      if (ping.request(Ping1DNamespace::Profile)) {
+         Serial.println("got profile");
+         Serial.println("profile points: ");
+         for (int i = 0; i < ping.profile_data_length(); i++) {
+             Serial.print(" > ");
+             Serial.println(ping.profile_data()[i]);
+         }
+      } else {
+         Serial.println("attempt to get profile failed");
+      }
+     #endif
 
     // Toggle the LED to show that the program is running
     digitalWrite(ledPin, !digitalRead(ledPin));
