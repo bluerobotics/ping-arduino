@@ -50,7 +50,7 @@ void loop()
     // If the result is true, we have received an update from the device
     // If the result is true, the accessors processor_temperature() etc.
     // will return the updated value
-    if (ping.request(Ping1DNamespace::Processor_temperature)) {
+    if (ping.request(PingMessageId::PING1D_PROCESSOR_TEMPERATURE)) {
         Serial.println("got processor temperature");
         Serial.print("> processor_temperature: ");
         Serial.println(ping.processor_temperature());
@@ -60,7 +60,7 @@ void loop()
 
     // Get general info
 
-    if (ping.request(Ping1DNamespace::General_info)) {
+    if (ping.request(PingMessageId::PING1D_GENERAL_INFO)) {
         Serial.println("got general info");
 
         Serial.print("> firmware_version_major: ");
@@ -76,7 +76,7 @@ void loop()
         Serial.println(ping.ping_interval());
 
         Serial.print("> gain_index: ");
-        Serial.println(ping.gain_index());
+        Serial.println(ping.gain_setting());
 
         Serial.print("> mode_auto: ");
         Serial.println(ping.mode_auto());
@@ -86,7 +86,7 @@ void loop()
 
     // SoftwareSerial cannot handle long profile messages
     // Uncomment to activate (HardwareSerial recommended)
-    // if (ping.request(Ping1DNamespace::Profile)) {
+    // if (ping.request(PingMessageId::PING1D_PROFILE)) {
     //     Serial.println("got profile");
     //     Serial.println("profile points: ");
     //     for (int i = 0; i < ping.profile_data_length(); i++) {
